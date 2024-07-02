@@ -7,7 +7,9 @@ from prisma.types import (
 )
 from prisma.partials import UserWithoutRelations, PostWithoutRelations
 
-from typing import Optional, List
+from typing import Optional
+
+from api.models.user import UsersList
 
 router = APIRouter()
 
@@ -15,9 +17,9 @@ router = APIRouter()
 # Define a GET endpoint for listing users.
 @router.get(
     "/user",
-    response_model=List[UserWithoutRelations],
+    response_model=UsersList,
 )
-async def list_users(take: int = 10) -> List[User]:
+async def list_users(take: int = 10) -> UsersList:
     """
     This endpoint returns a list of users with specified number of records (`take` parameter).
 
@@ -27,7 +29,9 @@ async def list_users(take: int = 10) -> List[User]:
     :return: A list of UserWithoutRelations instances representing the users.
     :rtype: List[UserWithoutRelations]
     """
-    return await User.prisma().find_many(take=take)
+    list = await User.prisma().find_many(take=take)
+    total = await User.prisma().count()
+    return {"data": list, "total": total}
 
 
 @router.post("/user", response_model=UserWithoutRelations)
