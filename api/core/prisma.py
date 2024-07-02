@@ -4,13 +4,13 @@ from fastapi import FastAPI
 
 from prisma import Prisma
 
-prisma = Prisma(auto_register=True)
+db = Prisma(auto_register=True)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    await prisma.connect()
+    await db.connect()
     yield
     # Clean up the ML models and release the resources
-    if prisma.is_connected():
-        await prisma.disconnect()
+    if db.is_connected():
+        await db.disconnect()

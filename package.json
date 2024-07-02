@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "freeze":"pip freeze > requirements.txt",
+    "pyright":"pyright",
     "backend-install": "pip3 install -r requirements.txt",
     "fastapi-dev": "python3 -m uvicorn api.main:app --reload --port=8910",
     "next-dev": "next dev --port=8100",

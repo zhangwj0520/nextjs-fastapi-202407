@@ -1,5 +1,5 @@
-from fastapi import APIRouter
-
+from fastapi import APIRouter, Depends
+from prisma import Prisma
 from prisma.models import User, Post
 from prisma.types import (
     UserUpdateInput,
@@ -11,6 +11,8 @@ from typing import Optional
 
 from api.models.user import UsersList
 
+from api.core.db import get_db
+
 router = APIRouter()
 
 
@@ -19,7 +21,9 @@ router = APIRouter()
     "/user",
     response_model=UsersList,
 )
-async def list_users(take: int = 10) -> UsersList:
+async def list_users(
+    take: int = 10, skip: int = 0, db: Prisma = Depends(get_db)
+) -> UsersList:
     """
     This endpoint returns a list of users with specified number of records (`take` parameter).
 
@@ -29,13 +33,35 @@ async def list_users(take: int = 10) -> UsersList:
     :return: A list of UserWithoutRelations instances representing the users.
     :rtype: List[UserWithoutRelations]
     """
-    list = await User.prisma().find_many(take=take)
+    list = await User.prisma().find_many(take=take, skip=skip)
     total = await User.prisma().count()
     return {"data": list, "total": total}
 
 
+@router.get(
+    "/user/{user_id}",
+    response_model=UserWithoutRelations | None,
+)
+async def get_user(user_id: int, db: Prisma = Depends(get_db)) -> Optional[User]:
+
+    # res = await db.user.find_unique(
+    #     where={
+    #         "id": user_id,
+    #     },
+    # )
+    # print("res11111", res)
+    return await User.prisma().find_unique(
+        where={
+            "id": user_id,
+        },
+    )
+
+
 @router.post("/user", response_model=UserWithoutRelations)
 async def create_user(user: UserCreateInput) -> User:
+    print("user", user, user.keys, user.items)
+    # list = [item[0] for item in user.items()]
+    # print("list", list)
     return await User.prisma().create(user)
 
 
@@ -83,18 +109,6 @@ async def delete_user(user_id: int):
         },
         include={
             "posts": True,
-        },
-    )
-
-
-@router.get(
-    "/user/{user_id}",
-    response_model=UserWithoutRelations,
-)
-async def get_user(user_id: int) -> Optional[User]:
-    return await User.prisma().find_unique(
-        where={
-            "id": user_id,
         },
     )
 
