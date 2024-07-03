@@ -27,7 +27,7 @@ class UserCreate(BaseModel):
 
 # Define a GET endpoint for listing users.
 @router.get(
-    "/user",
+    "",
     response_model=UsersList,
 )
 async def list_users(
