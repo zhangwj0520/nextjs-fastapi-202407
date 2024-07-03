@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, status, HTTPException
 from prisma import Prisma
+from pydantic import BaseModel
 from prisma.models import User
 from prisma.types import (
     UserUpdateInput,
@@ -13,7 +14,15 @@ from api.models.user import UsersList
 
 from api.core.db import get_db
 
+from api.core.security import get_password_hash
+
 router = APIRouter()
+
+
+class UserCreate(BaseModel):
+    username: str
+    password: str
+    email: str | None = None
 
 
 # Define a GET endpoint for listing users.
@@ -22,20 +31,11 @@ router = APIRouter()
     response_model=UsersList,
 )
 async def list_users(
-    take: int = 10, skip: int = 0, db: Prisma = Depends(get_db)
+    take: int = 10,
+    skip: int = 0,
 ) -> UsersList:
-    """
-    This endpoint returns a list of users with specified number of records (`take` parameter).
-
-    :param take: The number of user records to return. Defaults to `10`.
-    :type take: int
-
-    :return: A list of UserWithoutRelations instances representing the users.
-    :rtype: List[UserWithoutRelations]
-    """
     list = await User.prisma().find_many(take=take, skip=skip)
     total = await User.prisma().count()
-    # return {"data": list, "total": total}
     return UsersList(list=list, total=total)
 
 
@@ -43,14 +43,7 @@ async def list_users(
     "/user/{user_id}",
     response_model=UserWithoutRelations | None,
 )
-async def get_user(user_id: int) -> Optional[User]:
-
-    # res = await db.user.find_unique(
-    #     where={
-    #         "id": user_id,
-    #     },
-    # )
-    # print("res11111", res)
+async def get_user(user_id: int, db: Prisma = Depends(get_db)) -> Optional[User]:
 
     user = await User.prisma().find_unique(
         where={
@@ -62,33 +55,29 @@ async def get_user(user_id: int) -> Optional[User]:
     return user
 
 
-@router.post(
-    "/user", status_code=status.HTTP_201_CREATED, response_model=UserWithoutRelations
-)
-async def create_user(user: UserCreateInput) -> User:
-    print("user", user, user.keys, user.items)
-    # list = [item[0] for item in user.items()]
-    # print("list", list)
-    return await User.prisma().create(user)
-
-
-@router.put(
-    "/user",
-    response_model=UserWithoutRelations,
-)
-async def update_user_byid(user: UserUpdateInput) -> UserWithoutRelations:
-    """
-    根据用户ID更新用户信息。
-
-    :param user: UserUpdateInput - 用户ID和更新后的用户信息。
-    :return: UserWithoutRelations - 更新后的用户信息。
-    """
-    id = user["id"]
-    del user["id"]
-    return await User.prisma().update(
-        where={"id": id},
-        data=user,
+@router.post("", status_code=status.HTTP_201_CREATED, response_model=User)
+async def create_user(user: UserCreate) -> User:
+    print("user", user)
+    u = await User.prisma().find_unique(
+        where={
+            "username": user.username,
+        }
     )
+    if u is not None:
+        raise HTTPException(
+            status_code=400,
+            detail="用户已存在",
+        )
+
+    [hashed_password, salt] = get_password_hash(user.password)
+    create_user: UserCreateInput = {
+        "username": user.username,
+        "hashed_password": hashed_password,
+        "email": user.email,
+        "salt": salt,
+    }
+
+    return await User.prisma().create(create_user, include={"posts": False})
 
 
 @router.put(

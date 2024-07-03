@@ -5,5 +5,5 @@ from prisma.partials import UserWithoutRelations, PostWithoutRelations
 
 
 class UsersList(BaseModel):
-    data: List[UserWithoutRelations]
+    list: List[User]
     total: int
