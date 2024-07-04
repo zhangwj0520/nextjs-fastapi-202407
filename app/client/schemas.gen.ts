@@ -55,24 +55,6 @@ export const $Body_loginForm_api_login_form_post = {
     title: 'Body_loginForm_api_login_form_post'
 } as const;
 
-export const $Body_update_item_api_demo_items2__item_id__put = {
-    properties: {
-        item: {
-            '$ref': '#/components/schemas/Item'
-        },
-        user: {
-            '$ref': '#/components/schemas/User-Input'
-        },
-        importance: {
-            type: 'integer',
-            title: 'Importance'
-        }
-    },
-    type: 'object',
-    required: ['item', 'user', 'importance'],
-    title: 'Body_update_item_api_demo_items2__item_id__put'
-} as const;
-
 export const $HTTPValidationError = {
     properties: {
         detail: {
@@ -85,44 +67,6 @@ export const $HTTPValidationError = {
     },
     type: 'object',
     title: 'HTTPValidationError'
-} as const;
-
-export const $Item = {
-    properties: {
-        name: {
-            type: 'string',
-            title: 'Name'
-        },
-        description: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Description'
-        },
-        price: {
-            type: 'number',
-            title: 'Price'
-        },
-        tax: {
-            anyOf: [
-                {
-                    type: 'number'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Tax'
-        }
-    },
-    type: 'object',
-    required: ['name', 'price'],
-    title: 'Item'
 } as const;
 
 export const $LoginModel = {
@@ -176,7 +120,7 @@ export const $Post = {
         author: {
             anyOf: [
                 {
-                    '$ref': '#/components/schemas/User-Output'
+                    '$ref': '#/components/schemas/User'
                 },
                 {
                     type: 'null'
@@ -199,41 +143,6 @@ export const $Post = {
     required: ['id', 'created_at', 'updated_at', 'title', 'published'],
     title: 'Post',
     description: 'Represents a Post record'
-} as const;
-
-export const $PostCreateManyNestedWithoutRelationsInput = {
-    properties: {
-        create: {
-            anyOf: [
-                {
-                    '$ref': '#/components/schemas/PostCreateWithoutRelationsInput'
-                },
-                {
-                    items: {
-                        '$ref': '#/components/schemas/PostCreateWithoutRelationsInput'
-                    },
-                    type: 'array'
-                }
-            ],
-            title: 'Create'
-        },
-        connect: {
-            anyOf: [
-                {
-                    '$ref': '#/components/schemas/_PostWhereUnique_id_Input'
-                },
-                {
-                    items: {
-                        '$ref': '#/components/schemas/_PostWhereUnique_id_Input'
-                    },
-                    type: 'array'
-                }
-            ],
-            title: 'Connect'
-        }
-    },
-    type: 'object',
-    title: 'PostCreateManyNestedWithoutRelationsInput'
 } as const;
 
 export const $PostCreateWithoutRelationsInput = {
@@ -337,30 +246,7 @@ export const $Token = {
     title: 'Token'
 } as const;
 
-export const $User_Input = {
-    properties: {
-        username: {
-            type: 'string',
-            title: 'Username'
-        },
-        full_name: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Full Name'
-        }
-    },
-    type: 'object',
-    required: ['username'],
-    title: 'User'
-} as const;
-
-export const $User_Output = {
+export const $User = {
     properties: {
         id: {
             type: 'integer',
@@ -435,45 +321,6 @@ export const $UserCreate = {
     type: 'object',
     required: ['username', 'password'],
     title: 'UserCreate'
-} as const;
-
-export const $UserCreateInput = {
-    properties: {
-        id: {
-            type: 'integer',
-            title: 'Id'
-        },
-        email: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Email'
-        },
-        disabled: {
-            type: 'boolean',
-            title: 'Disabled'
-        },
-        posts: {
-            '$ref': '#/components/schemas/PostCreateManyNestedWithoutRelationsInput'
-        },
-        username: {
-            type: 'string',
-            title: 'Username'
-        },
-        hashed_password: {
-            type: 'string',
-            title: 'Hashed Password'
-        }
-    },
-    type: 'object',
-    required: ['username', 'hashed_password'],
-    title: 'UserCreateInput',
-    description: 'Required arguments to the User create method'
 } as const;
 
 export const $UserUpdateInput = {

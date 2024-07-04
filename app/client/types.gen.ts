@@ -9,21 +9,8 @@ export type Body_loginForm_api_login_form_post = {
     client_secret?: string | null;
 };
 
-export type Body_update_item_api_demo_items2__item_id__put = {
-    item: Item;
-    user: User_Input;
-    importance: number;
-};
-
 export type HTTPValidationError = {
     detail?: Array<ValidationError>;
-};
-
-export type Item = {
-    name: string;
-    description?: string | null;
-    price: number;
-    tax?: number | null;
 };
 
 export type LoginModel = {
@@ -41,13 +28,8 @@ export type Post = {
     updated_at: string;
     title: string;
     published: boolean;
-    author?: User_Output | null;
+    author?: User | null;
     author_id?: number | null;
-};
-
-export type PostCreateManyNestedWithoutRelationsInput = {
-    create?: PostCreateWithoutRelationsInput | Array<PostCreateWithoutRelationsInput>;
-    connect?: _PostWhereUnique_id_Input | Array<_PostWhereUnique_id_Input>;
 };
 
 /**
@@ -75,15 +57,10 @@ export type Token = {
     token_type?: string;
 };
 
-export type User_Input = {
-    username: string;
-    full_name?: string | null;
-};
-
 /**
  * Represents a User record
  */
-export type User_Output = {
+export type User = {
     id: number;
     username: string;
     hashed_password: string;
@@ -96,18 +73,6 @@ export type UserCreate = {
     username: string;
     password: string;
     email?: string | null;
-};
-
-/**
- * Required arguments to the User create method
- */
-export type UserCreateInput = {
-    id?: number;
-    email?: string | null;
-    disabled?: boolean;
-    posts?: PostCreateManyNestedWithoutRelationsInput;
-    username: string;
-    hashed_password: string;
 };
 
 /**
@@ -186,7 +151,7 @@ export type LoginApiLoginPostResponse = Token;
 
 export type LoginApiLoginPostError = HTTPValidationError;
 
-export type ReadUsersMeApiUserMeGetResponse = User_Output;
+export type ReadUsersMeApiUserMeGetResponse = User;
 
 export type ReadUsersMeApiUserMeGetError = unknown;
 
@@ -211,7 +176,7 @@ export type CreateUserApiUserPostData = {
     body: UserCreate;
 };
 
-export type CreateUserApiUserPostResponse = User_Output;
+export type CreateUserApiUserPostResponse = User;
 
 export type CreateUserApiUserPostError = HTTPValidationError;
 
@@ -242,168 +207,13 @@ export type DeleteUserApiUserUserIdDeleteData = {
     };
 };
 
-export type DeleteUserApiUserUserIdDeleteResponse = User_Output;
+export type DeleteUserApiUserUserIdDeleteResponse = User;
 
 export type DeleteUserApiUserUserIdDeleteError = HTTPValidationError;
 
 export type RootApiStreamGetResponse = unknown;
 
 export type RootApiStreamGetError = unknown;
-
-export type ReadRootApiDemoGetResponse = unknown;
-
-export type ReadRootApiDemoGetError = unknown;
-
-export type ReadItemApiDemoItemsItemIdGetData = {
-    path: {
-        item_id: number;
-    };
-    query?: {
-        q?: string | null;
-    };
-};
-
-export type ReadItemApiDemoItemsItemIdGetResponse = unknown;
-
-export type ReadItemApiDemoItemsItemIdGetError = HTTPValidationError;
-
-export type UpdateItem12ApiDemoItemsItemIdPutData = {
-    body: Item;
-    path: {
-        item_id: number;
-    };
-    query?: {
-        q?: string | null;
-    };
-};
-
-export type UpdateItem12ApiDemoItemsItemIdPutResponse = unknown;
-
-export type UpdateItem12ApiDemoItemsItemIdPutError = HTTPValidationError;
-
-export type CreateItemApiDemoItemsPostData = {
-    body: Item;
-};
-
-export type CreateItemApiDemoItemsPostResponse = unknown;
-
-export type CreateItemApiDemoItemsPostError = HTTPValidationError;
-
-export type UpdateItemApiDemoItems2ItemIdPutData = {
-    body: Body_update_item_api_demo_items2__item_id__put;
-    path: {
-        item_id: number;
-    };
-};
-
-export type UpdateItemApiDemoItems2ItemIdPutResponse = unknown;
-
-export type UpdateItemApiDemoItems2ItemIdPutError = HTTPValidationError;
-
-export type ReadItemsApiDemoItems3QueryGetData = {
-    query?: {
-        q?: string | null;
-    };
-};
-
-export type ReadItemsApiDemoItems3QueryGetResponse = unknown;
-
-export type ReadItemsApiDemoItems3QueryGetError = HTTPValidationError;
-
-export type ReadItems2ApiDemoItems3DefaultGetData = {
-    query: {
-        q: string;
-    };
-};
-
-export type ReadItems2ApiDemoItems3DefaultGetResponse = unknown;
-
-export type ReadItems2ApiDemoItems3DefaultGetError = HTTPValidationError;
-
-export type ReadItemsDepApiDemoDepGetData = {
-    query?: {
-        limit?: number;
-        q?: string | null;
-        skip?: number;
-    };
-};
-
-export type ReadItemsDepApiDemoDepGetResponse = unknown;
-
-export type ReadItemsDepApiDemoDepGetError = HTTPValidationError;
-
-export type ReadItemsDep22ApiDemoDep2GetData = {
-    headers: {
-        'x-token': string;
-    };
-    query?: {
-        limit?: number;
-        q?: string | null;
-        skip?: number;
-    };
-};
-
-export type ReadItemsDep22ApiDemoDep2GetResponse = unknown;
-
-export type ReadItemsDep22ApiDemoDep2GetError = HTTPValidationError;
-
-export type ListUsersApiPrismaUserGetData = {
-    query?: {
-        skip?: number;
-        take?: number;
-    };
-};
-
-export type ListUsersApiPrismaUserGetResponse = UsersList;
-
-export type ListUsersApiPrismaUserGetError = HTTPValidationError;
-
-export type CreateUserApiPrismaUserPostData = {
-    body: UserCreateInput;
-};
-
-export type CreateUserApiPrismaUserPostResponse = UserWithoutRelations;
-
-export type CreateUserApiPrismaUserPostError = HTTPValidationError;
-
-export type UpdateUserByidApiPrismaUserPutData = {
-    body: UserUpdateInput;
-};
-
-export type UpdateUserByidApiPrismaUserPutResponse = UserWithoutRelations;
-
-export type UpdateUserByidApiPrismaUserPutError = HTTPValidationError;
-
-export type GetUserApiPrismaUserUserIdGetData = {
-    path: {
-        user_id: number;
-    };
-};
-
-export type GetUserApiPrismaUserUserIdGetResponse = UserWithoutRelations | null;
-
-export type GetUserApiPrismaUserUserIdGetError = HTTPValidationError;
-
-export type UpdateUserApiPrismaUserUserIdPutData = {
-    body: UserUpdateInput;
-    path: {
-        user_id: number;
-    };
-};
-
-export type UpdateUserApiPrismaUserUserIdPutResponse = UserWithoutRelations;
-
-export type UpdateUserApiPrismaUserUserIdPutError = HTTPValidationError;
-
-export type DeleteUserApiPrismaUserUserIdDeleteData = {
-    path: {
-        user_id: number;
-    };
-};
-
-export type DeleteUserApiPrismaUserUserIdDeleteResponse = User_Output;
-
-export type DeleteUserApiPrismaUserUserIdDeleteError = HTTPValidationError;
 
 export type $OpenApiTs = {
     '/api/login-form': {
@@ -442,7 +252,7 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                '200': User_Output;
+                '200': User;
             };
         };
     };
@@ -478,7 +288,7 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                '201': User_Output;
+                '201': User;
                 /**
                  * Validation Error
                  */
@@ -519,7 +329,7 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                '200': User_Output;
+                '200': User;
                 /**
                  * Validation Error
                  */
@@ -534,216 +344,6 @@ export type $OpenApiTs = {
                  * Successful Response
                  */
                 '200': unknown;
-            };
-        };
-    };
-    '/api/demo': {
-        get: {
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': unknown;
-            };
-        };
-    };
-    '/api/demo/items/{item_id}': {
-        get: {
-            req: ReadItemApiDemoItemsItemIdGetData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': unknown;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-        put: {
-            req: UpdateItem12ApiDemoItemsItemIdPutData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': unknown;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
-    '/api/demo/items': {
-        post: {
-            req: CreateItemApiDemoItemsPostData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': unknown;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
-    '/api/demo/items2/{item_id}': {
-        put: {
-            req: UpdateItemApiDemoItems2ItemIdPutData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': unknown;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
-    '/api/demo/items3/query': {
-        get: {
-            req: ReadItemsApiDemoItems3QueryGetData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': unknown;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
-    '/api/demo/items3/default': {
-        get: {
-            req: ReadItems2ApiDemoItems3DefaultGetData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': unknown;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
-    '/api/demo/dep/': {
-        get: {
-            req: ReadItemsDepApiDemoDepGetData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': unknown;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
-    '/api/demo/dep2/': {
-        get: {
-            req: ReadItemsDep22ApiDemoDep2GetData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': unknown;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
-    '/api/prisma/user': {
-        get: {
-            req: ListUsersApiPrismaUserGetData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': UsersList;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-        post: {
-            req: CreateUserApiPrismaUserPostData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '201': UserWithoutRelations;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-        put: {
-            req: UpdateUserByidApiPrismaUserPutData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': UserWithoutRelations;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-    };
-    '/api/prisma/user/{user_id}': {
-        get: {
-            req: GetUserApiPrismaUserUserIdGetData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': UserWithoutRelations | null;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-        put: {
-            req: UpdateUserApiPrismaUserUserIdPutData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': UserWithoutRelations;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
-            };
-        };
-        delete: {
-            req: DeleteUserApiPrismaUserUserIdDeleteData;
-            res: {
-                /**
-                 * Successful Response
-                 */
-                '200': User_Output;
-                /**
-                 * Validation Error
-                 */
-                '422': HTTPValidationError;
             };
         };
     };
