@@ -15,46 +15,35 @@ router = APIRouter()
 class LoginModel(BaseModel):
     username: str
     password: str
+    scopes: list[str] = ["me1"]
 
 
 @router.post("/login-form", response_model=Token)
 async def loginForm(
-    body: Annotated[OAuth2PasswordRequestForm, Depends()],
+    form_data: OAuth2PasswordRequestForm = Depends(),
 ) -> Token:
-    """
-    处理用户登录表单提交
-
-    参数: 包含用户登录信息的表单对象
-
-    返回: 登录成功后生成的访问令牌对象
-
-    异常: 用户名不存在或密码错误时抛出 HTTP 异常
-
-    调用: 通过 FastAPI 路由器进行调度
-
-    用法示例:
-    ```python
-    form_data = OAuth2PasswordRequestForm(username="your_username", password="your_password")
-    token = await loginForm(form_data)
-    ```
-    """
+    print("form_data,scopes", form_data.scopes, form_data.username, form_data.password)
 
     user = await User.prisma().find_unique(
         where={
-            "username": body.username,
+            "username": form_data.username,
         },
     )
     if not user:
         raise HTTPException(status_code=400, detail="用户名不存在")
-    if not verify_password(body.password, user.hashed_password):
+    if not verify_password(form_data.password, user.hashed_password):
         raise HTTPException(status_code=400, detail="密码错误")
-    token = create_access_token(user)
+    # token = create_access_token(user)
+    token = create_access_token(
+        data={"sub": user.id, "scopes": ["me"]},
+    )
     return Token(access_token=token)
 
 
 @router.post("/login", response_model=Token)
 async def login(body: LoginModel) -> Token:
 
+    print("body,scopes", body.scopes, body.username, body.password)
     user = await User.prisma().find_unique(
         where={
             "username": body.username,
@@ -64,5 +53,7 @@ async def login(body: LoginModel) -> Token:
         raise HTTPException(status_code=400, detail="用户名不存在")
     if not verify_password(body.password, user.hashed_password):
         raise HTTPException(status_code=400, detail="密码错误")
-    token = create_access_token(user.id)
+    token = create_access_token(
+        data={"sub": user.id, "scopes": body.scopes},
+    )
     return Token(access_token=token)

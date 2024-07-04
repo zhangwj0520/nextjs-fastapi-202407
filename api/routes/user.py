@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, status, HTTPException, Security
 from prisma import Prisma
 
 from pydantic import BaseModel
@@ -27,6 +27,13 @@ class UserCreate(BaseModel):
 @router.get("/me", response_model=User)
 async def read_users_me(current_user: User = Depends(get_current_active_user)) -> User:
     return current_user
+
+
+@router.get("/me/items")
+async def read_own_items(
+    current_user: User = Security(get_current_active_user, scopes=["me"]),
+) -> list[dict[str, str]]:
+    return [{"item_id": "Foo", "owner": current_user.username}]
 
 
 @router.get("", response_model=UsersList)

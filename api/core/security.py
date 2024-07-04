@@ -1,12 +1,14 @@
 from passlib.context import CryptContext
 from prisma.models import User
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Security
 from jwt.exceptions import InvalidTokenError
 import jwt
 from typing import Annotated, Literal, Any
 from datetime import datetime, timedelta, timezone
 from api.core.deps import oauth2_scheme
 from api.models.base import TokenData
+
+from fastapi.security import SecurityScopes
 
 # openssl rand -hex 32
 SECRET_KEY = "2b4633e4ffd2b65911cd57863d575a19a703cb2aeae35d4e00aae544525c0eb7"
@@ -38,15 +40,23 @@ async def authenticate_user(username: str, password: str) -> Literal[False] | Us
 
 
 def create_access_token(
-    subject: str | Any,
+    data: dict,
 ) -> str:
+    to_encode = data.copy()
     expire = datetime.now(timezone.utc) + timedelta(minutes=15)
-    to_encode = {"exp": expire, "sub": str(subject)}
+    to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, key=SECRET_KEY, algorithm=ALGORITHM)  # type: ignore
     return encoded_jwt
 
 
-async def get_current_user(token: str = Depends(oauth2_scheme)):
+async def get_current_user(
+    security_scopes: SecurityScopes, token: str = Depends(oauth2_scheme)
+) -> User:
+    if security_scopes.scopes:
+        authenticate_value = f'Bearer scope="{security_scopes.scope_str}"'
+    else:
+        authenticate_value = "Bearer"
+
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -57,7 +67,9 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         user_id: int = payload.get("sub")
         if user_id is None:
             raise credentials_exception
-        token_data = TokenData(user_id=user_id)
+        token_scopes = payload.get("scopes", [])
+        print("token_scopes", token_scopes)
+        token_data = TokenData(scopes=token_scopes, user_id=user_id)
     except InvalidTokenError:
         raise credentials_exception
 
@@ -68,12 +80,19 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     )
     if user is None:
         raise credentials_exception
+    for scope in security_scopes.scopes:
+        if scope not in token_data.scopes:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Not enough permissions",
+                headers={"WWW-Authenticate": authenticate_value},
+            )
     return user
 
 
 async def get_current_active_user(
-    current_user: Annotated[User, Depends(get_current_user)],
-):
+    current_user: User = Security(get_current_user, scopes=["me"]),
+) -> User:
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="用户已被禁用")
     return current_user
