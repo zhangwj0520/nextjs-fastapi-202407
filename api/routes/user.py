@@ -6,7 +6,7 @@ from prisma.types import (
     UserUpdateInput,
     UserCreateInput,
 )
-from prisma.partials import UserWithoutRelations
+from prisma.partials import UserWithoutRelations, UserWihoutPassword
 
 from typing import Optional
 
@@ -25,27 +25,25 @@ class UserCreate(BaseModel):
     email: str | None = None
 
 
-# Define a GET endpoint for listing users.
-@router.get(
-    "",
-    response_model=UsersList,
-)
+@router.get("", response_model=UsersList)
 async def list_users(
     take: int = 10,
     skip: int = 0,
 ) -> UsersList:
-    list = await User.prisma().find_many(take=take, skip=skip)
-    total = await User.prisma().count()
+    list = await UserWihoutPassword.prisma().find_many(take=take, skip=skip)
+    total = await UserWihoutPassword.prisma().count()
     return UsersList(list=list, total=total)
 
 
 @router.get(
-    "/user/{user_id}",
-    response_model=UserWithoutRelations | None,
+    "/{user_id}",
+    response_model=UserWihoutPassword | None,
 )
-async def get_user(user_id: int, db: Prisma = Depends(get_db)) -> Optional[User]:
+async def get_user(
+    user_id: int, db: Prisma = Depends(get_db)
+) -> Optional[UserWihoutPassword]:
 
-    user = await User.prisma().find_unique(
+    user = await UserWihoutPassword.prisma().find_unique(
         where={
             "id": user_id,
         },
@@ -81,7 +79,7 @@ async def create_user(user: UserCreate) -> User:
 
 
 @router.put(
-    "/user/{user_id}",
+    "/{user_id}",
     response_model=UserWithoutRelations,
 )
 async def update_user(user_id: int, user: UserUpdateInput):
@@ -94,7 +92,7 @@ async def update_user(user_id: int, user: UserUpdateInput):
 
 
 @router.delete(
-    "/user/{user_id}",
+    "/{user_id}",
     response_model=User,
 )
 async def delete_user(user_id: int):
@@ -107,79 +105,3 @@ async def delete_user(user_id: int):
             "posts": True,
         },
     )
-
-
-# @router.get(
-#     "/users/{user_id}/posts",
-#     response_model=List[PostWithoutRelations],
-# )
-# async def get_user_posts(user_id: str) -> List[Post]:
-#     user = await User.prisma().find_unique(
-#         where={
-#             "id": user_id,
-#         },
-#         include={
-#             "posts": True,
-#         },
-#     )
-#     if user is not None:
-#         # we are including the posts, so they will never be None
-#         assert user.posts is not None
-#         return user.posts
-#     return []
-
-
-# @router.post(
-#     "/users/{user_id}/posts",
-#     response_model=PostWithoutRelations,
-# )
-# async def create_post(user_id: str, title: str, published: bool) -> Post:
-#     return await Post.prisma().create(
-#         data={
-#             "title": title,
-#             "published": published,
-#             "author": {
-#                 "connect": {
-#                     "id": user_id,
-#                 },
-#             },
-#         }
-#     )
-
-
-# @router.get(
-#     "/posts",
-#     response_model=List[PostWithoutRelations],
-# )
-# async def list_posts(take: int = 10) -> List[Post]:
-#     return await Post.prisma().find_many(take=take)
-
-
-# @router.get(
-#     "/posts/{post_id}",
-#     response_model=Post,
-# )
-# async def get_post(post_id: str) -> Optional[Post]:
-#     return await Post.prisma().find_unique(
-#         where={
-#             "id": post_id,
-#         },
-#         include={
-#             "author": True,
-#         },
-#     )
-
-
-# @router.delete(
-#     "/posts/{post_id}",
-#     response_model=Post,
-# )
-# async def delete_post(post_id: str) -> Optional[Post]:
-#     return await Post.prisma().delete(
-#         where={
-#             "id": post_id,
-#         },
-#         include={
-#             "author": True,
-#         },
-#     )
