@@ -21,8 +21,9 @@ from prisma.models import User, Post
 User.create_partial("UserWithoutRelations", exclude_relational_fields=True)
 User.create_partial(
     "UserWihoutPassword",
-    exclude={"salt", "hashed_password"},
+    exclude={"hashed_password"},
     exclude_relational_fields=True,
 )
+User.create_partial("UserInLogin", include={"username"})
 
 Post.create_partial("PostWithoutRelations", exclude_relational_fields=True)

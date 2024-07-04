@@ -14,7 +14,7 @@ model User {
   username  String @unique
   hashed_password String 
   email String?
-  salt String 
+  disabled Boolean @default(false)
   posts Post[]
 }
 

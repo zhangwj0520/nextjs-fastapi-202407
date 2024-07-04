@@ -1,9 +1,8 @@
-from fastapi import FastAPI, Header, HTTPException, Depends
+from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from api.core.prisma import lifespan
 from api.core.route import api_router
-from api.core.db import get_db
 
 
 async def verify_token(x_token: str = Header()):

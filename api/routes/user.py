@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, status, HTTPException
 from prisma import Prisma
+
 from pydantic import BaseModel
 from prisma.models import User
 from prisma.types import (
@@ -11,10 +12,8 @@ from prisma.partials import UserWithoutRelations, UserWihoutPassword
 from typing import Optional
 
 from api.models.user import UsersList
-
 from api.core.db import get_db
-
-from api.core.security import get_password_hash
+from api.core.security import get_password_hash, get_current_active_user
 
 router = APIRouter()
 
@@ -23,6 +22,11 @@ class UserCreate(BaseModel):
     username: str
     password: str
     email: str | None = None
+
+
+@router.get("/me", response_model=User)
+async def read_users_me(current_user: User = Depends(get_current_active_user)) -> User:
+    return current_user
 
 
 @router.get("", response_model=UsersList)
@@ -67,12 +71,11 @@ async def create_user(user: UserCreate) -> User:
             detail="用户已存在",
         )
 
-    [hashed_password, salt] = get_password_hash(user.password)
+    hashed_password = get_password_hash(user.password)
     create_user: UserCreateInput = {
         "username": user.username,
         "hashed_password": hashed_password,
         "email": user.email,
-        "salt": salt,
     }
 
     return await User.prisma().create(create_user, include={"posts": False})
