@@ -171,153 +171,239 @@ export type _PostWhereUnique_id_Input = {
 };
 
 export type LoginFormApiLoginFormPostData = {
-    formData: Body_loginForm_api_login_form_post;
+    body: Body_loginForm_api_login_form_post;
 };
 
 export type LoginFormApiLoginFormPostResponse = Token;
 
+export type LoginFormApiLoginFormPostError = HTTPValidationError;
+
 export type LoginApiLoginPostData = {
-    requestBody: LoginModel;
+    body: LoginModel;
 };
 
 export type LoginApiLoginPostResponse = Token;
 
+export type LoginApiLoginPostError = HTTPValidationError;
+
 export type ReadUsersMeApiUserMeGetResponse = User_Output;
+
+export type ReadUsersMeApiUserMeGetError = unknown;
 
 export type ReadOwnItemsApiUserMeItemsGetResponse = Array<{
     [key: string]: (string);
 }>;
 
+export type ReadOwnItemsApiUserMeItemsGetError = unknown;
+
 export type ListUsersApiUserGetData = {
-    skip?: number;
-    take?: number;
+    query?: {
+        skip?: number;
+        take?: number;
+    };
 };
 
 export type ListUsersApiUserGetResponse = UsersList;
 
+export type ListUsersApiUserGetError = HTTPValidationError;
+
 export type CreateUserApiUserPostData = {
-    requestBody: UserCreate;
+    body: UserCreate;
 };
 
 export type CreateUserApiUserPostResponse = User_Output;
 
+export type CreateUserApiUserPostError = HTTPValidationError;
+
 export type GetUserApiUserUserIdGetData = {
-    userId: number;
+    path: {
+        user_id: number;
+    };
 };
 
 export type GetUserApiUserUserIdGetResponse = UserWihoutPassword | null;
 
+export type GetUserApiUserUserIdGetError = HTTPValidationError;
+
 export type UpdateUserApiUserUserIdPutData = {
-    requestBody: UserUpdateInput;
-    userId: number;
+    body: UserUpdateInput;
+    path: {
+        user_id: number;
+    };
 };
 
 export type UpdateUserApiUserUserIdPutResponse = UserWithoutRelations;
 
+export type UpdateUserApiUserUserIdPutError = HTTPValidationError;
+
 export type DeleteUserApiUserUserIdDeleteData = {
-    userId: number;
+    path: {
+        user_id: number;
+    };
 };
 
 export type DeleteUserApiUserUserIdDeleteResponse = User_Output;
 
+export type DeleteUserApiUserUserIdDeleteError = HTTPValidationError;
+
 export type RootApiStreamGetResponse = unknown;
+
+export type RootApiStreamGetError = unknown;
 
 export type ReadRootApiDemoGetResponse = unknown;
 
+export type ReadRootApiDemoGetError = unknown;
+
 export type ReadItemApiDemoItemsItemIdGetData = {
-    itemId: number;
-    q?: string | null;
+    path: {
+        item_id: number;
+    };
+    query?: {
+        q?: string | null;
+    };
 };
 
 export type ReadItemApiDemoItemsItemIdGetResponse = unknown;
 
+export type ReadItemApiDemoItemsItemIdGetError = HTTPValidationError;
+
 export type UpdateItem12ApiDemoItemsItemIdPutData = {
-    itemId: number;
-    q?: string | null;
-    requestBody: Item;
+    body: Item;
+    path: {
+        item_id: number;
+    };
+    query?: {
+        q?: string | null;
+    };
 };
 
 export type UpdateItem12ApiDemoItemsItemIdPutResponse = unknown;
 
+export type UpdateItem12ApiDemoItemsItemIdPutError = HTTPValidationError;
+
 export type CreateItemApiDemoItemsPostData = {
-    requestBody: Item;
+    body: Item;
 };
 
 export type CreateItemApiDemoItemsPostResponse = unknown;
 
+export type CreateItemApiDemoItemsPostError = HTTPValidationError;
+
 export type UpdateItemApiDemoItems2ItemIdPutData = {
-    itemId: number;
-    requestBody: Body_update_item_api_demo_items2__item_id__put;
+    body: Body_update_item_api_demo_items2__item_id__put;
+    path: {
+        item_id: number;
+    };
 };
 
 export type UpdateItemApiDemoItems2ItemIdPutResponse = unknown;
 
+export type UpdateItemApiDemoItems2ItemIdPutError = HTTPValidationError;
+
 export type ReadItemsApiDemoItems3QueryGetData = {
-    q?: string | null;
+    query?: {
+        q?: string | null;
+    };
 };
 
 export type ReadItemsApiDemoItems3QueryGetResponse = unknown;
 
+export type ReadItemsApiDemoItems3QueryGetError = HTTPValidationError;
+
 export type ReadItems2ApiDemoItems3DefaultGetData = {
-    q: string;
+    query: {
+        q: string;
+    };
 };
 
 export type ReadItems2ApiDemoItems3DefaultGetResponse = unknown;
 
+export type ReadItems2ApiDemoItems3DefaultGetError = HTTPValidationError;
+
 export type ReadItemsDepApiDemoDepGetData = {
-    limit?: number;
-    q?: string | null;
-    skip?: number;
+    query?: {
+        limit?: number;
+        q?: string | null;
+        skip?: number;
+    };
 };
 
 export type ReadItemsDepApiDemoDepGetResponse = unknown;
 
+export type ReadItemsDepApiDemoDepGetError = HTTPValidationError;
+
 export type ReadItemsDep22ApiDemoDep2GetData = {
-    limit?: number;
-    q?: string | null;
-    skip?: number;
-    xToken: string;
+    headers: {
+        'x-token': string;
+    };
+    query?: {
+        limit?: number;
+        q?: string | null;
+        skip?: number;
+    };
 };
 
 export type ReadItemsDep22ApiDemoDep2GetResponse = unknown;
 
+export type ReadItemsDep22ApiDemoDep2GetError = HTTPValidationError;
+
 export type ListUsersApiPrismaUserGetData = {
-    skip?: number;
-    take?: number;
+    query?: {
+        skip?: number;
+        take?: number;
+    };
 };
 
 export type ListUsersApiPrismaUserGetResponse = UsersList;
 
+export type ListUsersApiPrismaUserGetError = HTTPValidationError;
+
 export type CreateUserApiPrismaUserPostData = {
-    requestBody: UserCreateInput;
+    body: UserCreateInput;
 };
 
 export type CreateUserApiPrismaUserPostResponse = UserWithoutRelations;
 
+export type CreateUserApiPrismaUserPostError = HTTPValidationError;
+
 export type UpdateUserByidApiPrismaUserPutData = {
-    requestBody: UserUpdateInput;
+    body: UserUpdateInput;
 };
 
 export type UpdateUserByidApiPrismaUserPutResponse = UserWithoutRelations;
 
+export type UpdateUserByidApiPrismaUserPutError = HTTPValidationError;
+
 export type GetUserApiPrismaUserUserIdGetData = {
-    userId: number;
+    path: {
+        user_id: number;
+    };
 };
 
 export type GetUserApiPrismaUserUserIdGetResponse = UserWithoutRelations | null;
 
+export type GetUserApiPrismaUserUserIdGetError = HTTPValidationError;
+
 export type UpdateUserApiPrismaUserUserIdPutData = {
-    requestBody: UserUpdateInput;
-    userId: number;
+    body: UserUpdateInput;
+    path: {
+        user_id: number;
+    };
 };
 
 export type UpdateUserApiPrismaUserUserIdPutResponse = UserWithoutRelations;
 
+export type UpdateUserApiPrismaUserUserIdPutError = HTTPValidationError;
+
 export type DeleteUserApiPrismaUserUserIdDeleteData = {
-    userId: number;
+    path: {
+        user_id: number;
+    };
 };
 
 export type DeleteUserApiPrismaUserUserIdDeleteResponse = User_Output;
+
+export type DeleteUserApiPrismaUserUserIdDeleteError = HTTPValidationError;
 
 export type $OpenApiTs = {
     '/api/login-form': {
@@ -327,11 +413,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: Token;
+                '200': Token;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
     };
@@ -342,11 +428,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: Token;
+                '200': Token;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
     };
@@ -356,7 +442,7 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: User_Output;
+                '200': User_Output;
             };
         };
     };
@@ -366,7 +452,7 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: Array<{
+                '200': Array<{
                     [key: string]: (string);
                 }>;
             };
@@ -379,11 +465,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: UsersList;
+                '200': UsersList;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
         post: {
@@ -392,11 +478,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                201: User_Output;
+                '201': User_Output;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
     };
@@ -407,11 +493,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: UserWihoutPassword | null;
+                '200': UserWihoutPassword | null;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
         put: {
@@ -420,11 +506,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: UserWithoutRelations;
+                '200': UserWithoutRelations;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
         delete: {
@@ -433,11 +519,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: User_Output;
+                '200': User_Output;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
     };
@@ -447,7 +533,7 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: unknown;
+                '200': unknown;
             };
         };
     };
@@ -457,7 +543,7 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: unknown;
+                '200': unknown;
             };
         };
     };
@@ -468,11 +554,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: unknown;
+                '200': unknown;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
         put: {
@@ -481,11 +567,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: unknown;
+                '200': unknown;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
     };
@@ -496,11 +582,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: unknown;
+                '200': unknown;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
     };
@@ -511,11 +597,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: unknown;
+                '200': unknown;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
     };
@@ -526,11 +612,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: unknown;
+                '200': unknown;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
     };
@@ -541,11 +627,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: unknown;
+                '200': unknown;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
     };
@@ -556,11 +642,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: unknown;
+                '200': unknown;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
     };
@@ -571,11 +657,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: unknown;
+                '200': unknown;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
     };
@@ -586,11 +672,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: UsersList;
+                '200': UsersList;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
         post: {
@@ -599,11 +685,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                201: UserWithoutRelations;
+                '201': UserWithoutRelations;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
         put: {
@@ -612,11 +698,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: UserWithoutRelations;
+                '200': UserWithoutRelations;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
     };
@@ -627,11 +713,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: UserWithoutRelations | null;
+                '200': UserWithoutRelations | null;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
         put: {
@@ -640,11 +726,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: UserWithoutRelations;
+                '200': UserWithoutRelations;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
         delete: {
@@ -653,11 +739,11 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: User_Output;
+                '200': User_Output;
                 /**
                  * Validation Error
                  */
-                422: HTTPValidationError;
+                '422': HTTPValidationError;
             };
         };
     };
