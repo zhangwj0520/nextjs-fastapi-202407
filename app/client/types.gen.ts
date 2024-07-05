@@ -91,6 +91,7 @@ export type UserWihoutPassword = {
     id: number;
     username: string;
     email?: string | null;
+    disabled: boolean;
 };
 
 export type UserWithoutRelations = {
@@ -98,6 +99,7 @@ export type UserWithoutRelations = {
     username: string;
     hashed_password: string;
     email?: string | null;
+    disabled: boolean;
 };
 
 export type UsersList = {
@@ -135,114 +137,86 @@ export type _PostWhereUnique_id_Input = {
     id: number;
 };
 
-export type LoginFormApiLoginFormPostData = {
-    body: Body_loginForm_api_login_form_post;
+export type PostLoginformApiData = {
+    formData: Body_loginForm_api_login_form_post;
 };
 
-export type LoginFormApiLoginFormPostResponse = Token;
+export type PostLoginformApiResponse = Token;
 
-export type LoginFormApiLoginFormPostError = HTTPValidationError;
-
-export type LoginApiLoginPostData = {
-    body: LoginModel;
+export type PostLoginApiData = {
+    requestBody: LoginModel;
 };
 
-export type LoginApiLoginPostResponse = Token;
+export type PostLoginApiResponse = Token;
 
-export type LoginApiLoginPostError = HTTPValidationError;
+export type GetReadUsersMeApiResponse = User;
 
-export type ReadUsersMeApiUserMeGetResponse = User;
-
-export type ReadUsersMeApiUserMeGetError = unknown;
-
-export type ReadOwnItemsApiUserMeItemsGetResponse = Array<{
+export type GetReadOwnItemsApiResponse = Array<{
     [key: string]: (string);
 }>;
 
-export type ReadOwnItemsApiUserMeItemsGetError = unknown;
-
-export type ListUsersApiUserGetData = {
-    query?: {
-        skip?: number;
-        take?: number;
-    };
+export type GetListUsersApiData = {
+    skip?: number;
+    take?: number;
 };
 
-export type ListUsersApiUserGetResponse = UsersList;
+export type GetListUsersApiResponse = UsersList;
 
-export type ListUsersApiUserGetError = HTTPValidationError;
-
-export type CreateUserApiUserPostData = {
-    body: UserCreate;
+export type PostCreateUserApiData = {
+    requestBody: UserCreate;
 };
 
-export type CreateUserApiUserPostResponse = User;
+export type PostCreateUserApiResponse = User;
 
-export type CreateUserApiUserPostError = HTTPValidationError;
-
-export type GetUserApiUserUserIdGetData = {
-    path: {
-        user_id: number;
-    };
+export type GetGetUserApiData = {
+    userId: number;
 };
 
-export type GetUserApiUserUserIdGetResponse = UserWihoutPassword | null;
+export type GetGetUserApiResponse = UserWihoutPassword | null;
 
-export type GetUserApiUserUserIdGetError = HTTPValidationError;
-
-export type UpdateUserApiUserUserIdPutData = {
-    body: UserUpdateInput;
-    path: {
-        user_id: number;
-    };
+export type PutUpdateUserApiData = {
+    requestBody: UserUpdateInput;
+    userId: number;
 };
 
-export type UpdateUserApiUserUserIdPutResponse = UserWithoutRelations;
+export type PutUpdateUserApiResponse = UserWithoutRelations;
 
-export type UpdateUserApiUserUserIdPutError = HTTPValidationError;
-
-export type DeleteUserApiUserUserIdDeleteData = {
-    path: {
-        user_id: number;
-    };
+export type DeleteDeleteUserApiData = {
+    userId: number;
 };
 
-export type DeleteUserApiUserUserIdDeleteResponse = User;
+export type DeleteDeleteUserApiResponse = User;
 
-export type DeleteUserApiUserUserIdDeleteError = HTTPValidationError;
-
-export type RootApiStreamGetResponse = unknown;
-
-export type RootApiStreamGetError = unknown;
+export type GetRootApiResponse = unknown;
 
 export type $OpenApiTs = {
     '/api/login-form': {
         post: {
-            req: LoginFormApiLoginFormPostData;
+            req: PostLoginformApiData;
             res: {
                 /**
                  * Successful Response
                  */
-                '200': Token;
+                200: Token;
                 /**
                  * Validation Error
                  */
-                '422': HTTPValidationError;
+                422: HTTPValidationError;
             };
         };
     };
     '/api/login': {
         post: {
-            req: LoginApiLoginPostData;
+            req: PostLoginApiData;
             res: {
                 /**
                  * Successful Response
                  */
-                '200': Token;
+                200: Token;
                 /**
                  * Validation Error
                  */
-                '422': HTTPValidationError;
+                422: HTTPValidationError;
             };
         };
     };
@@ -252,7 +226,7 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                '200': User;
+                200: User;
             };
         };
     };
@@ -262,7 +236,7 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                '200': Array<{
+                200: Array<{
                     [key: string]: (string);
                 }>;
             };
@@ -270,70 +244,70 @@ export type $OpenApiTs = {
     };
     '/api/user': {
         get: {
-            req: ListUsersApiUserGetData;
+            req: GetListUsersApiData;
             res: {
                 /**
                  * Successful Response
                  */
-                '200': UsersList;
+                200: UsersList;
                 /**
                  * Validation Error
                  */
-                '422': HTTPValidationError;
+                422: HTTPValidationError;
             };
         };
         post: {
-            req: CreateUserApiUserPostData;
+            req: PostCreateUserApiData;
             res: {
                 /**
                  * Successful Response
                  */
-                '201': User;
+                201: User;
                 /**
                  * Validation Error
                  */
-                '422': HTTPValidationError;
+                422: HTTPValidationError;
             };
         };
     };
     '/api/user/{user_id}': {
         get: {
-            req: GetUserApiUserUserIdGetData;
+            req: GetGetUserApiData;
             res: {
                 /**
                  * Successful Response
                  */
-                '200': UserWihoutPassword | null;
+                200: UserWihoutPassword | null;
                 /**
                  * Validation Error
                  */
-                '422': HTTPValidationError;
+                422: HTTPValidationError;
             };
         };
         put: {
-            req: UpdateUserApiUserUserIdPutData;
+            req: PutUpdateUserApiData;
             res: {
                 /**
                  * Successful Response
                  */
-                '200': UserWithoutRelations;
+                200: UserWithoutRelations;
                 /**
                  * Validation Error
                  */
-                '422': HTTPValidationError;
+                422: HTTPValidationError;
             };
         };
         delete: {
-            req: DeleteUserApiUserUserIdDeleteData;
+            req: DeleteDeleteUserApiData;
             res: {
                 /**
                  * Successful Response
                  */
-                '200': User;
+                200: User;
                 /**
                  * Validation Error
                  */
-                '422': HTTPValidationError;
+                422: HTTPValidationError;
             };
         };
     };
@@ -343,7 +317,7 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                '200': unknown;
+                200: unknown;
             };
         };
     };

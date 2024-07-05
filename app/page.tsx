@@ -6,26 +6,24 @@ import {LoginService, UserService} from '@/app/client'
 export default function Home() {
 
   const login = async () => {
-    // const res=await LoginService.loginApiLoginPost({
-    //     requestBody:{ 
-    //       "username":"zhangsan",
-    //       "password":"Qwer1234"
-    //     }
-    //  })
-    const res1=await UserService.updateUserApiUserUserIdPut({
-        path:{
-            "user_id":1
-        },
-        body:{ 
-          "username":"zhangsan",
-        }
-    })
-    const res=await LoginService.loginApiLoginPost({
-        body:{ 
+    const res=await LoginService.postLoginApi({
+        requestBody:{ 
           "username":"zhangsan",
           "password":"Qwer1234"
         }
      })
+    const res1=await UserService.putUpdateUserApi({
+        userId:1,
+        requestBody:{ 
+            "username":"zhangsan",
+          }
+    })
+    // const res=await LoginService.loginApiLoginPost({
+    //     body:{ 
+    //       "username":"zhangsan",
+    //       "password":"Qwer1234"
+    //     }
+    //  })
   }
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">

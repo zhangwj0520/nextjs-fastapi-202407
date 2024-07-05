@@ -8,7 +8,7 @@ export default {
   types: {
     enums: 'javascript',
   },
-  client:'@hey-api/client-fetch',//@hey-api/client-fetch
+  // client:'@hey-api/client-fetch',//@hey-api/client-fetch
   schemas: {
     type: 'json'
   },

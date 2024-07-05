@@ -400,10 +400,14 @@ export const $UserWihoutPassword = {
                 }
             ],
             title: 'Email'
+        },
+        disabled: {
+            type: 'boolean',
+            title: 'Disabled'
         }
     },
     type: 'object',
-    required: ['id', 'username'],
+    required: ['id', 'username', 'disabled'],
     title: 'UserWihoutPassword'
 } as const;
 
@@ -431,10 +435,14 @@ export const $UserWithoutRelations = {
                 }
             ],
             title: 'Email'
+        },
+        disabled: {
+            type: 'boolean',
+            title: 'Disabled'
         }
     },
     type: 'object',
-    required: ['id', 'username', 'hashed_password'],
+    required: ['id', 'username', 'hashed_password', 'disabled'],
     title: 'UserWithoutRelations'
 } as const;
 

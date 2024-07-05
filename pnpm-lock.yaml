@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@hey-api/client-fetch':
-        specifier: ^0.1.7
-        version: 0.1.7
       axios:
         specifier: ^1.7.2
         version: 1.7.2
@@ -24,9 +21,6 @@ importers:
         specifier: ^18
         version: 18.3.1(react@18.3.1)
     devDependencies:
-      '@hey-api/openapi-ts':
-        specifier: ^0.48.2
-        version: 0.48.2(typescript@5.5.2)
       '@types/node':
         specifier: ^20
         version: 20.14.9
@@ -36,6 +30,9 @@ importers:
       '@types/react-dom':
         specifier: ^18
         version: 18.3.0
+      '@zhangwj0520/openapi-ts':
+        specifier: ^0.0.1
+        version: 0.0.1(typescript@5.5.2)
       concurrently:
         specifier: ^8.2.2
         version: 8.2.2
@@ -51,6 +48,9 @@ importers:
       tailwindcss:
         specifier: ^3.4.1
         version: 3.4.4
+      turbo-with-changesets:
+        specifier: github:zhangwj0520/openapi-ts
+        version: git+https://git@github.com:zhangwj0520/openapi-ts.git#a21ee3ba81597ab0f238c826da2050523a7fffe5
       typescript:
         specifier: ^5
         version: 5.5.2
@@ -86,16 +86,6 @@ packages:
   '@eslint/js@8.57.0':
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-
-  '@hey-api/client-fetch@0.1.7':
-    resolution: {integrity: sha512-WXQrj63YyTjfjR469fyFUdXyRw3vYfvFoQzg6I6mKyZBCbzLnOuz+BUVOeRbIe7fRij7g0uLS33JHusMTuRjiA==}
-
-  '@hey-api/openapi-ts@0.48.2':
-    resolution: {integrity: sha512-pjJb0kzjTyKAdKGfi3GkOqD4AklImS5xz7xx1grZQMlNv87iV12g2pccEsml6WYDxQ1qJ7DFWa8FexAPDbzvZg==}
-    engines: {node: ^18.0.0 || >=20.0.0}
-    hasBin: true
-    peerDependencies:
-      typescript: ^5.x
 
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
@@ -271,6 +261,13 @@ packages:
 
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
+
+  '@zhangwj0520/openapi-ts@0.0.1':
+    resolution: {integrity: sha512-yDiANAH2IygGNQzqyvXRLSiPzs9zeQ2PhJsUS1fRY3nqPGaodl9+RD7s9XYcWU+eiVHa6cKM0PbAswdLivKaUw==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    hasBin: true
+    peerDependencies:
+      typescript: ^5.x
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -1705,6 +1702,11 @@ packages:
   tslib@2.6.3:
     resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
 
+  turbo-with-changesets@git+https://git@github.com:zhangwj0520/openapi-ts.git#a21ee3ba81597ab0f238c826da2050523a7fffe5:
+    resolution: {commit: a21ee3ba81597ab0f238c826da2050523a7fffe5, repo: git@github.com:zhangwj0520/openapi-ts.git, type: git}
+    version: 0.0.0
+    engines: {node: '>=18'}
+
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
@@ -1852,19 +1854,6 @@ snapshots:
       - supports-color
 
   '@eslint/js@8.57.0': {}
-
-  '@hey-api/client-fetch@0.1.7': {}
-
-  '@hey-api/openapi-ts@0.48.2(typescript@5.5.2)':
-    dependencies:
-      '@apidevtools/json-schema-ref-parser': 11.6.4
-      c12: 1.11.1
-      camelcase: 8.0.0
-      commander: 12.1.0
-      handlebars: 4.7.8
-      typescript: 5.5.2
-    transitivePeerDependencies:
-      - magicast
 
   '@humanwhocodes/config-array@0.11.14':
     dependencies:
@@ -2023,6 +2012,17 @@ snapshots:
       eslint-visitor-keys: 3.4.3
 
   '@ungap/structured-clone@1.2.0': {}
+
+  '@zhangwj0520/openapi-ts@0.0.1(typescript@5.5.2)':
+    dependencies:
+      '@apidevtools/json-schema-ref-parser': 11.6.4
+      c12: 1.11.1
+      camelcase: 8.0.0
+      commander: 12.1.0
+      handlebars: 4.7.8
+      typescript: 5.5.2
+    transitivePeerDependencies:
+      - magicast
 
   acorn-jsx@5.3.2(acorn@8.12.0):
     dependencies:
@@ -3702,6 +3702,8 @@ snapshots:
       strip-bom: 3.0.0
 
   tslib@2.6.3: {}
+
+  turbo-with-changesets@git+https://git@github.com:zhangwj0520/openapi-ts.git#a21ee3ba81597ab0f238c826da2050523a7fffe5: {}
 
   type-check@0.4.0:
     dependencies:
