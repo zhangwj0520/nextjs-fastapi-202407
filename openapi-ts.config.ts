@@ -1,4 +1,4 @@
-/** @type {import('@hey-api/openapi-ts').UserConfig} */
+/** @type {import('@zhangwj0520/openapi-ts').UserConfig} */
 export default {
   input: 'http://127.0.0.1:8910/openapi.json',
   output: {
@@ -8,7 +8,6 @@ export default {
   types: {
     enums: 'javascript',
   },
-  // client:'@hey-api/client-fetch',//@hey-api/client-fetch
   schemas: {
     type: 'json'
   },
