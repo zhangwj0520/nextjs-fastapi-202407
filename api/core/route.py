@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from api.routes import demo, prisma, stream, user, login
+from api.routes import demo, stream, user, login
 
 
 from pydantic import BaseModel

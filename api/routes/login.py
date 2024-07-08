@@ -33,10 +33,7 @@ async def login_form(
         raise HTTPException(status_code=400, detail="用户名不存在")
     if not verify_password(form_data.password, user.hashed_password):
         raise HTTPException(status_code=400, detail="密码错误")
-    # token = create_access_token(user)
-    token = create_access_token(
-        data={"sub": user.id, "scopes": ["me"]},
-    )
+    token = create_access_token(user.id)
     return Token(access_token=token)
 
 
@@ -60,7 +57,5 @@ async def login(body: LoginModel) -> Token:
         raise HTTPException(status_code=400, detail="用户名不存在")
     if not verify_password(body.password, user.hashed_password):
         raise HTTPException(status_code=400, detail="密码错误")
-    token = create_access_token(
-        data={"sub": user.id},
-    )
+    token = create_access_token(user.id)
     return Token(access_token=token)

@@ -2,6 +2,7 @@ from fastapi import Depends, HTTPException, status, Security
 from jwt.exceptions import InvalidTokenError
 from typing import Annotated, Literal, Any
 from datetime import datetime, timedelta, timezone
+from api.core.config import Settings
 from api.models.base import TokenData
 from prisma import Prisma
 from prisma.models import User
@@ -9,7 +10,7 @@ from prisma.models import User
 from fastapi.security import SecurityScopes, OAuth2PasswordBearer
 import jwt
 
-from api.core.security import SECRET_KEY, ALGORITHM
+from api.core.security import ALGORITHM
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/login-form")
 
@@ -18,33 +19,33 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/login-form")
 TokenDep = Annotated[str, Depends(oauth2_scheme)]
 
 
-async def get_current_user(security_scopes: SecurityScopes, token: TokenDep) -> User:
-    if security_scopes.scopes:
-        authenticate_value = f'Bearer scope="{security_scopes.scope_str}"'
-    else:
-        authenticate_value = "Bearer"
-
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"Authenticate": "Bearer"},
-    )
+async def get_current_user(token: TokenDep) -> User:
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user_id: int = payload.get("sub")
-        if user_id is None:
-            raise credentials_exception
-        token_data = TokenData(user_id=user_id)
+        payload = jwt.decode(token, Settings.SECRET_KEY, algorithms=[ALGORITHM])
+        token_data = TokenData(**payload)
+
     except InvalidTokenError:
-        raise credentials_exception
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Could not validate credentials",
+        )
 
     user = await User.prisma().find_unique(
         where={
             "id": token_data.user_id,
         },
     )
-    if user is None:
-        raise credentials_exception
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not validate credentials",
+            headers={"Authenticate": "Bearer"},
+        )
+    if not user.disabled:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Inactive user"
+        )
 
     return user
 

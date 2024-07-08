@@ -22,27 +22,19 @@ app = FastAPI(
     title=settings.PROJECT_NAME,
     version="1.0",
     description="A simple api server using Langchain's Runnable interfaces",
-    openapi_url=f"{settings.API_V1_STR}/openapi.json",
     generate_unique_id_function=custom_generate_unique_id,
     lifespan=lifespan,
 )
 
 
-# Configure CORS
-origins = [
-    "http://localhost",
-    "http://localhost:8910",
-    "http://localhost:8100",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=[str(origin).strip("/") for origin in settings.BACKEND_CORS_ORIGINS],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-app.include_router(api_router, prefix="/api")
+app.include_router(api_router, prefix=settings.API_V1_STR)
 
 print("Starting server...")

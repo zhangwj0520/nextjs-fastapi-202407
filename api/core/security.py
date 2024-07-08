@@ -2,17 +2,13 @@ from passlib.context import CryptContext
 from prisma.models import User
 
 import jwt
-from typing import Annotated, Literal, Any
+from typing import Literal, Any
 from datetime import datetime, timedelta, timezone
-from api.models.base import TokenData
-
-from fastapi.security import SecurityScopes, OAuth2PasswordBearer
+from api.core.config import Settings
 
 
 # openssl rand -hex 32
-SECRET_KEY = "2b4633e4ffd2b65911cd57863d575a19a703cb2aeae35d4e00aae544525c0eb7"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -39,11 +35,10 @@ async def authenticate_user(username: str, password: str) -> Literal[False] | Us
 
 
 def create_access_token(
-    data: dict,
+    subject: int | Any,
 ) -> str:
-    to_encode = data.copy()
-    # expire =  timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-    expire = datetime.now(timezone.utc) + timedelta(minutes=15)
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, key=SECRET_KEY, algorithm=ALGORITHM)  # type: ignore
+    expires_delta = timedelta(minutes=Settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    expire = datetime.now(timezone.utc) + expires_delta
+    to_encode = {"exp": expire, "sub": int(subject)}
+    encoded_jwt = jwt.encode(to_encode, key=Settings.SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
