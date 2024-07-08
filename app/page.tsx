@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 
-import {LoginService, UserService} from '@/app/client'
+import {LoginService, UserService} from '@/client'
 import { Button } from "@/components/ui/button"
 
 

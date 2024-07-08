@@ -2,7 +2,7 @@
 export default {
   input: 'http://127.0.0.1:8910/openapi.json',
   output: {
-      path:"app/client",
+      path:"client",
       format: 'biome' 
   },
   types: {
