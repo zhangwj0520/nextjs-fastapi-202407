@@ -6,7 +6,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from api.core.security import verify_password, create_access_token
 from api.models.base import Token
 from pydantic import BaseModel
-from typing import Annotated
+from typing import Annotated, Optional
 
 
 router = APIRouter()
@@ -36,8 +36,8 @@ async def login_form(
     return Token(access_token=token)
 
 
-@router.post("/login", response_model=Token)
-async def login(body: LoginModel) -> Token:
+@router.post("/login", response_model=User)
+async def login(body: LoginModel) -> Optional[User]:
     """
     登录
 
@@ -52,9 +52,10 @@ async def login(body: LoginModel) -> Token:
             "username": body.username,
         },
     )
-    if not user:
-        raise HTTPException(status_code=400, detail="用户名不存在")
-    if not verify_password(body.password, user.hashed_password):
-        raise HTTPException(status_code=400, detail="密码错误")
-    token = create_access_token(user.id)
-    return Token(access_token=token)
+    return user
+    # if not user:
+    #     raise HTTPException(status_code=400, detail="用户名不存在")
+    # if not verify_password(body.password, user.hashed_password):
+    #     raise HTTPException(status_code=400, detail="密码错误")
+    # token = create_access_token(user.id)
+    # return Token(access_token=token)

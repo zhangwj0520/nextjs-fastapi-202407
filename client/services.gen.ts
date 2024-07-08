@@ -34,7 +34,7 @@ export class LoginService {
      * - **scopes**: 权限
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns Token Successful Response
+     * @returns User Successful Response
      * @throws ApiError
      */
     public static postLoginApi(data: PostLoginApiData): CancelablePromise<PostLoginApiResponse> {

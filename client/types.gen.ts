@@ -154,7 +154,7 @@ export type PostLoginApiData = {
     requestBody: LoginModel;
 };
 
-export type PostLoginApiResponse = Token;
+export type PostLoginApiResponse = User;
 
 export type GetReadUsersMeApiResponse = User;
 
@@ -225,7 +225,7 @@ export type $OpenApiTs = {
                 /**
                  * Successful Response
                  */
-                200: Token;
+                200: User;
                 /**
                  * Validation Error
                  */
