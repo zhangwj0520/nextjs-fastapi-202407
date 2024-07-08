@@ -19,7 +19,7 @@ class LoginModel(BaseModel):
 
 
 @router.post("/login-form", response_model=Token)
-async def loginForm(
+async def login_form(
     form_data: OAuth2PasswordRequestForm = Depends(),
 ) -> Token:
     print("form_data,scopes", form_data.scopes, form_data.username, form_data.password)
@@ -42,6 +42,14 @@ async def loginForm(
 
 @router.post("/login", response_model=Token)
 async def login(body: LoginModel) -> Token:
+    """
+    登录
+
+    - **username**: 用户名
+    - **password**: 密码
+    - **scopes**: 权限
+
+    """
 
     print("body,scopes", body.scopes, body.username, body.password)
     user = await User.prisma().find_unique(

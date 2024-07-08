@@ -5,10 +5,11 @@ from jwt.exceptions import InvalidTokenError
 import jwt
 from typing import Annotated, Literal, Any
 from datetime import datetime, timedelta, timezone
-from api.core.deps import oauth2_scheme
 from api.models.base import TokenData
 
-from fastapi.security import SecurityScopes
+from fastapi.security import SecurityScopes, OAuth2PasswordBearer
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/login-form")
 
 # openssl rand -hex 32
 SECRET_KEY = "2b4633e4ffd2b65911cd57863d575a19a703cb2aeae35d4e00aae544525c0eb7"

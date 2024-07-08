@@ -41,6 +41,16 @@ async def list_users(
     take: int = 10,
     skip: int = 0,
 ) -> UsersList:
+    """
+    这个函数的用途是从数据库中检索用户列表
+
+    参数:
+    take (int): 表示要检索的用户数量，默认为10
+    skip (int): 表示要跳过的用户数量，用于分页，默认为0
+
+    返回值:
+    UsersList: 一个包含检索到的用户列表和总用户数的对象
+    """
     list = await UserWihoutPassword.prisma().find_many(take=take, skip=skip)
     total = await UserWihoutPassword.prisma().count()
     return UsersList(list=list, total=total)
