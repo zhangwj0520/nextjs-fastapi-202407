@@ -54,9 +54,8 @@ class Settings(BaseSettings):
     SMTP_PORT: int = 587
     SMTP_HOST: str | None = None
     SMTP_USER: str | None = None
-    SMTP_PASSWORD: str | None = None
+    SMTP_PASS: str | None = None
     # TODO: update type to EmailStr when sqlmodel supports it
-    EMAILS_FROM_EMAIL: str | None = None
     EMAILS_FROM_NAME: str | None = None
 
     @model_validator(mode="after")
@@ -70,7 +69,7 @@ class Settings(BaseSettings):
     @computed_field  # type: ignore[misc]
     @property
     def emails_enabled(self) -> bool:
-        return bool(self.SMTP_HOST and self.EMAILS_FROM_EMAIL)
+        return bool(self.SMTP_HOST)
 
     # TODO: update type to EmailStr when sqlmodel supports it
     EMAIL_TEST_USER: str = "test@example.com"
