@@ -15,7 +15,6 @@ router = APIRouter()
 class LoginModel(BaseModel):
     username: str
     password: str
-    # scopes: list[str] = ["me1"]
 
 
 @router.post("/login-form", response_model=Token)

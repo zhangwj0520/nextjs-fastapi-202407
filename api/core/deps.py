@@ -2,7 +2,7 @@ from fastapi import Depends, HTTPException, status, Security
 from jwt.exceptions import InvalidTokenError
 from typing import Annotated, Literal, Any
 from datetime import datetime, timedelta, timezone
-from api.core.config import Settings
+from api.core.config import settings
 from api.models.base import TokenData
 from prisma import Prisma
 from prisma.models import User
@@ -21,7 +21,7 @@ TokenDep = Annotated[str, Depends(oauth2_scheme)]
 
 async def get_current_user(token: TokenDep) -> User:
     try:
-        payload = jwt.decode(token, Settings.SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[ALGORITHM])
         token_data = TokenData(**payload)
 
     except InvalidTokenError:

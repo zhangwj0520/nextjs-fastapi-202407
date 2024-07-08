@@ -3,6 +3,19 @@ import Image from "next/image";
 
 import {LoginService, UserService} from '@/app/client'
 
+async function getData() {
+  const res = await fetch('https://api.example.com/...')
+  // The return value is *not* serialized
+  // You can return Date, Map, Set, etc.
+ 
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to fetch data')
+  }
+ 
+  return res.json()
+}
+
 export default function Home() {
 
   const login = async () => {
@@ -12,12 +25,12 @@ export default function Home() {
           "password":"Qwer1234"
         }
      })
-    const res1=await UserService.putUpdateUserApi({
-        userId:1,
-        requestBody:{ 
-            "username":"zhangsan",
-          }
-    })
+    // const res1=await UserService.putUpdateUserApi({
+    //     userId:1,
+    //     requestBody:{ 
+    //         "username":"zhangsan",
+    //       }
+    // })
     // const res=await LoginService.loginApiLoginPost({
     //     body:{ 
     //       "username":"zhangsan",

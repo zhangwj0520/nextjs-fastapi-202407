@@ -1,6 +1,6 @@
 // 文件由@zhangwj0520/openapi-ts生成
 
-export type Body_loginForm_api_login_form_post = {
+export type Body_login_login_form = {
     grant_type?: string | null;
     username: string;
     password: string;
@@ -16,7 +16,10 @@ export type HTTPValidationError = {
 export type LoginModel = {
     username: string;
     password: string;
-    scopes?: Array<(string)>;
+};
+
+export type Message = {
+    message: string;
 };
 
 /**
@@ -50,6 +53,10 @@ export type PostUpdateManyWithoutRelationsInput = {
     set?: Array<_PostWhereUnique_id_Input>;
     disconnect?: Array<_PostWhereUnique_id_Input>;
     delete?: Array<_PostWhereUnique_id_Input>;
+};
+
+export type SendEmail = {
+    email_to: string;
 };
 
 export type Token = {
@@ -137,11 +144,11 @@ export type _PostWhereUnique_id_Input = {
     id: number;
 };
 
-export type PostLoginformApiData = {
-    formData: Body_loginForm_api_login_form_post;
+export type PostLoginFormApiData = {
+    formData: Body_login_login_form;
 };
 
-export type PostLoginformApiResponse = Token;
+export type PostLoginFormApiResponse = Token;
 
 export type PostLoginApiData = {
     requestBody: LoginModel;
@@ -189,10 +196,16 @@ export type DeleteDeleteUserApiResponse = User;
 
 export type GetRootApiResponse = unknown;
 
+export type PostTestEmailApiData = {
+    requestBody: SendEmail;
+};
+
+export type PostTestEmailApiResponse = Message;
+
 export type $OpenApiTs = {
     '/api/login-form': {
         post: {
-            req: PostLoginformApiData;
+            req: PostLoginFormApiData;
             res: {
                 /**
                  * Successful Response
@@ -318,6 +331,21 @@ export type $OpenApiTs = {
                  * Successful Response
                  */
                 200: unknown;
+            };
+        };
+    };
+    '/api/utils/test-email': {
+        post: {
+            req: PostTestEmailApiData;
+            res: {
+                /**
+                 * Successful Response
+                 */
+                201: Message;
+                /**
+                 * Validation Error
+                 */
+                422: HTTPValidationError;
             };
         };
     };

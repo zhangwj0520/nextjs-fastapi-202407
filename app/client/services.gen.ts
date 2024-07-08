@@ -3,17 +3,17 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { PostLoginformApiData, PostLoginformApiResponse, PostLoginApiData, PostLoginApiResponse, GetReadUsersMeApiResponse, GetReadOwnItemsApiResponse, GetListUsersApiData, GetListUsersApiResponse, PostCreateUserApiData, PostCreateUserApiResponse, GetGetUserApiData, GetGetUserApiResponse, PutUpdateUserApiData, PutUpdateUserApiResponse, DeleteDeleteUserApiData, DeleteDeleteUserApiResponse, GetRootApiResponse } from './types.gen';
+import type { PostLoginFormApiData, PostLoginFormApiResponse, PostLoginApiData, PostLoginApiResponse, GetReadUsersMeApiResponse, GetReadOwnItemsApiResponse, GetListUsersApiData, GetListUsersApiResponse, PostCreateUserApiData, PostCreateUserApiResponse, GetGetUserApiData, GetGetUserApiResponse, PutUpdateUserApiData, PutUpdateUserApiResponse, DeleteDeleteUserApiData, DeleteDeleteUserApiResponse, GetRootApiResponse, PostTestEmailApiData, PostTestEmailApiResponse } from './types.gen';
 
 export class LoginService {
     /**
-     * Loginform
+     * Login Form
      * @param data The data for the request.
      * @param data.formData
      * @returns Token Successful Response
      * @throws ApiError
      */
-    public static postLoginformApi(data: PostLoginformApiData): CancelablePromise<PostLoginformApiResponse> {
+    public static postLoginFormApi(data: PostLoginFormApiData): CancelablePromise<PostLoginFormApiResponse> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/login-form',
@@ -27,6 +27,11 @@ export class LoginService {
     
     /**
      * Login
+     * 登录
+     *
+     * - **username**: 用户名
+     * - **password**: 密码
+     * - **scopes**: 权限
      * @param data The data for the request.
      * @param data.requestBody
      * @returns Token Successful Response
@@ -73,6 +78,14 @@ export class UserService {
     
     /**
      * List Users
+     * 这个函数的用途是从数据库中检索用户列表
+     *
+     * 参数:
+     * take (int): 表示要检索的用户数量，默认为10
+     * skip (int): 表示要跳过的用户数量，用于分页，默认为0
+     *
+     * 返回值:
+     * UsersList: 一个包含检索到的用户列表和总用户数的对象
      * @param data The data for the request.
      * @param data.take
      * @param data.skip
@@ -187,6 +200,29 @@ export class StreamService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/stream'
+        });
+    }
+    
+}
+
+export class UtilsService {
+    /**
+     * Test Email
+     * Test emails.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static postTestEmailApi(data: PostTestEmailApiData): CancelablePromise<PostTestEmailApiResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/utils/test-email',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
         });
     }
     

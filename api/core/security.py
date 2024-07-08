@@ -4,7 +4,7 @@ from prisma.models import User
 import jwt
 from typing import Literal, Any
 from datetime import datetime, timedelta, timezone
-from api.core.config import Settings
+from api.core.config import settings
 
 
 # openssl rand -hex 32
@@ -37,8 +37,8 @@ async def authenticate_user(username: str, password: str) -> Literal[False] | Us
 def create_access_token(
     subject: int | Any,
 ) -> str:
-    expires_delta = timedelta(minutes=Settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    expires_delta = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     expire = datetime.now(timezone.utc) + expires_delta
     to_encode = {"exp": expire, "sub": int(subject)}
-    encoded_jwt = jwt.encode(to_encode, key=Settings.SECRET_KEY, algorithm=ALGORITHM)
+    encoded_jwt = jwt.encode(to_encode, key=settings.SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt

@@ -1,6 +1,6 @@
 // 文件由@zhangwj0520/openapi-ts生成
 
-export const $Body_loginForm_api_login_form_post = {
+export const $Body_login_login_form = {
     properties: {
         grant_type: {
             anyOf: [
@@ -52,7 +52,7 @@ export const $Body_loginForm_api_login_form_post = {
     },
     type: 'object',
     required: ['username', 'password'],
-    title: 'Body_loginForm_api_login_form_post'
+    title: 'Body_login-login_form'
 } as const;
 
 export const $HTTPValidationError = {
@@ -78,19 +78,23 @@ export const $LoginModel = {
         password: {
             type: 'string',
             title: 'Password'
-        },
-        scopes: {
-            items: {
-                type: 'string'
-            },
-            type: 'array',
-            title: 'Scopes',
-            default: ['me1']
         }
     },
     type: 'object',
     required: ['username', 'password'],
     title: 'LoginModel'
+} as const;
+
+export const $Message = {
+    properties: {
+        message: {
+            type: 'string',
+            title: 'Message'
+        }
+    },
+    type: 'object',
+    required: ['message'],
+    title: 'Message'
 } as const;
 
 export const $Post = {
@@ -227,6 +231,18 @@ export const $PostUpdateManyWithoutRelationsInput = {
     },
     type: 'object',
     title: 'PostUpdateManyWithoutRelationsInput'
+} as const;
+
+export const $SendEmail = {
+    properties: {
+        email_to: {
+            type: 'string',
+            title: 'Email To'
+        }
+    },
+    type: 'object',
+    required: ['email_to'],
+    title: 'SendEmail'
 } as const;
 
 export const $Token = {
