@@ -12,8 +12,8 @@ from prisma.partials import UserWithoutRelations, UserWihoutPassword
 from typing import Optional
 
 from api.models.user import UsersList
-from api.core.db import get_db
-from api.core.security import get_password_hash, get_current_active_user
+from api.core.security import get_password_hash
+from api.core.deps import CurrentUser, DB, TokenDep
 
 router = APIRouter()
 
@@ -25,19 +25,20 @@ class UserCreate(BaseModel):
 
 
 @router.get("/me", response_model=User)
-async def read_users_me(current_user: User = Depends(get_current_active_user)) -> User:
+async def read_users_me(current_user: CurrentUser) -> User:
     return current_user
 
 
 @router.get("/me/items")
 async def read_own_items(
-    current_user: User = Security(get_current_active_user, scopes=["me"]),
+    current_user: CurrentUser,
 ) -> list[dict[str, str]]:
     return [{"item_id": "Foo", "owner": current_user.username}]
 
 
 @router.get("", response_model=UsersList)
 async def list_users(
+    token: TokenDep,
     take: int = 10,
     skip: int = 0,
 ) -> UsersList:
@@ -60,9 +61,7 @@ async def list_users(
     "/{user_id}",
     response_model=UserWihoutPassword | None,
 )
-async def get_user(
-    user_id: int, db: Prisma = Depends(get_db)
-) -> Optional[UserWihoutPassword]:
+async def get_user(user_id: int, db: DB) -> Optional[UserWihoutPassword]:
 
     user = await UserWihoutPassword.prisma().find_unique(
         where={

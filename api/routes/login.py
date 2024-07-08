@@ -15,7 +15,7 @@ router = APIRouter()
 class LoginModel(BaseModel):
     username: str
     password: str
-    scopes: list[str] = ["me1"]
+    # scopes: list[str] = ["me1"]
 
 
 @router.post("/login-form", response_model=Token)
@@ -51,7 +51,6 @@ async def login(body: LoginModel) -> Token:
 
     """
 
-    print("body,scopes", body.scopes, body.username, body.password)
     user = await User.prisma().find_unique(
         where={
             "username": body.username,
@@ -62,6 +61,6 @@ async def login(body: LoginModel) -> Token:
     if not verify_password(body.password, user.hashed_password):
         raise HTTPException(status_code=400, detail="密码错误")
     token = create_access_token(
-        data={"sub": user.id, "scopes": body.scopes},
+        data={"sub": user.id},
     )
     return Token(access_token=token)
