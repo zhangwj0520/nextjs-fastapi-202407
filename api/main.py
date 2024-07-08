@@ -1,28 +1,30 @@
 from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.routing import APIRoute
+
 
 from api.core.prisma import lifespan
 from api.core.route import api_router
+from api.core.config import settings
+
+import sentry_sdk
 
 
-async def verify_token(x_token: str = Header()):
-    if x_token != "fake-super-secret-token":
-        raise HTTPException(status_code=400, detail="X-Token header invalid")
+def custom_generate_unique_id(route: APIRoute) -> str:
+    return f"{route.tags[0]}-{route.name}"
 
 
-async def verify_key(x_key: str = Header()):
-    if x_key != "fake-super-secret-key":
-        raise HTTPException(status_code=400, detail="X-Key header invalid")
-    return x_key
+if settings.SENTRY_DSN and settings.ENVIRONMENT != "local":
+    sentry_sdk.init(dsn=str(settings.SENTRY_DSN), enable_tracing=True)
 
 
 app = FastAPI(
-    title="Gen UI Backend",
+    title=settings.PROJECT_NAME,
     version="1.0",
     description="A simple api server using Langchain's Runnable interfaces",
+    openapi_url=f"{settings.API_V1_STR}/openapi.json",
+    generate_unique_id_function=custom_generate_unique_id,
     lifespan=lifespan,
-    # dependencies=Depends(get_db),
-    # dependencies=[Depends(verify_token), Depends(verify_key)],
 )
 
 

@@ -38,7 +38,7 @@ async def read_own_items(
 
 @router.get("", response_model=UsersList)
 async def list_users(
-    token: TokenDep,
+    token: CurrentUser,
     take: int = 10,
     skip: int = 0,
 ) -> UsersList:
