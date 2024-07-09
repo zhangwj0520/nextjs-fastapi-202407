@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { redirect } from 'next/navigation'
 
-import { auth,signOut } from '@/auth'
+import { auth,signOut ,signIn} from '@/auth'
 import Image from 'next/image';
 import {
   DropdownMenu,
@@ -19,10 +19,8 @@ export async function User() {
   const session = (await auth()) as Session
 
   if (!session) {
-
     redirect('/login')
   }
-  console.log('session', session)
   let user = session?.user;
 
   return (
@@ -53,16 +51,23 @@ export async function User() {
             <form
               action={async () => {
                 'use server';
-                await signOut();
-                redirect('/login')
+                await signOut({redirect:true,});
               }}
             >
-              <button type="submit">Sign Out</button>
+              <button type="submit">登出</button>
             </form>
           </DropdownMenuItem>
         ) : (
           <DropdownMenuItem>
-            <Link href="/login">Sign In</Link>
+            {/* <Link href="/login">Sign In</Link> */}
+            <form
+            action={async () => {
+              "use server"
+              await signIn()
+            }}
+          >
+               <button type="submit">Sign In</button>
+    </form>
           </DropdownMenuItem>
         )}
       </DropdownMenuContent>
