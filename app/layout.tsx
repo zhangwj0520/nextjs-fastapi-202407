@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter as FontSans } from 'next/font/google'
 import { Toaster } from '@/components/ui/sonner'
+import { Providers } from '@/components/providers'
+import { TailwindIndicator } from '@/components/tailwind-indicator'
 
 import { cn } from '@/lib/utils'
 
@@ -29,8 +31,17 @@ export default function RootLayout({
           fontSans.variable,
         )}
       >
-        {children}
-        <Toaster />
+
+        <Providers
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <TailwindIndicator />
+        </Providers>
+        <Toaster position="top-center" />
       </body>
     </html>
   )
