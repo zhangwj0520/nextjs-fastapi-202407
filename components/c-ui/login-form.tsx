@@ -1,9 +1,8 @@
 'use client'
 
-import {useActionState} from 'react'
+import { useActionState, useEffect } from 'react'
 import { useFormStatus } from 'react-dom'
 import Link from 'next/link'
-import { useEffect } from 'react'
 import { toast } from 'sonner'
 import { redirect, useRouter } from 'next/navigation'
 import { getMessageFromCode } from '@/lib/utils'
@@ -19,7 +18,8 @@ export default function LoginForm() {
         toast.error(getMessageFromCode(result.resultCode))
       } else {
         toast.success(getMessageFromCode(result.resultCode))
-        router.refresh()
+        // router.refresh()
+        redirect('/')
       }
     }
   }, [result, router])

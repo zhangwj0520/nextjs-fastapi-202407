@@ -14,7 +14,7 @@ export default async function LoginPage() {
   return (
     <main className="flex flex-col p-4">
       <LoginForm />
-      {/* <LoginFormServer/> */}
+      {/* <LoginFormServer /> */}
     </main>
   )
 }

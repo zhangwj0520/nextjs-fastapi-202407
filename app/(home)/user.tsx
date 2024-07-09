@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
+import {SignOut} from '@/components/auth-components'
 
 
 export async function User() {
@@ -41,35 +42,23 @@ export async function User() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>{user?.usename}</DropdownMenuLabel>
+        <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Settings</DropdownMenuItem>
         <DropdownMenuItem>Support</DropdownMenuItem>
         <DropdownMenuSeparator />
-        {user ? (
-          <DropdownMenuItem>
-            <form
+        
+        <DropdownMenuItem>
+                    <SignOut />
+            {/* <form
               action={async () => {
                 'use server';
                 await signOut({redirect:true,});
               }}
             >
               <button type="submit">登出</button>
-            </form>
+            </form> */}
           </DropdownMenuItem>
-        ) : (
-          <DropdownMenuItem>
-            {/* <Link href="/login">Sign In</Link> */}
-            <form
-            action={async () => {
-              "use server"
-              await signIn()
-            }}
-          >
-               <button type="submit">Sign In</button>
-    </form>
-          </DropdownMenuItem>
-        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

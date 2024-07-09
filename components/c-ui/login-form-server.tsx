@@ -1,20 +1,21 @@
-
-
-import { signIn } from "@/auth"
 import Link from 'next/link'
 
 import { toast } from 'sonner'
+import { signIn } from '@/auth'
 
 export default function LoginForm() {
-  
-
   return (
     <form
       action={async (formData) => {
-        "use server"
-        console.log("formData",formData)
-        await signIn("credentials", formData)
-      
+        'use server'
+        const username = formData.get('username')
+        const password = formData.get('password')
+        await signIn('credentials', {
+          username,
+          password,
+          // redirect: true,
+          redirectTo: '/',
+        })
       }}
       className="flex flex-col items-center gap-4 space-y-3"
     >
@@ -74,8 +75,6 @@ export default function LoginForm() {
 }
 
 function LoginButton() {
-
-
   return (
     <button
       className="my-4 flex h-10 w-full flex-row items-center justify-center rounded-md bg-zinc-900 p-2 text-sm font-semibold text-zinc-100 hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"

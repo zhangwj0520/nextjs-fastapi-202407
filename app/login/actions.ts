@@ -5,7 +5,6 @@ import { z } from 'zod'
 import { signIn } from '@/auth'
 import { ResultCode } from '@/lib/utils'
 
-
 interface Result {
   type: string
   resultCode: ResultCode
@@ -30,7 +29,7 @@ export async function authenticate(
       })
 
     if (parsedCredentials.success) {
-    await signIn('credentials', {
+      await signIn('credentials', {
         username,
         password,
         redirect: false,
