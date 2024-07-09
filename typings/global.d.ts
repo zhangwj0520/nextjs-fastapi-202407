@@ -6,9 +6,11 @@ type ServerActionResult<Result> = Promise<
 >
 
 interface Session {
-  user: {
+  user?: {
     id: string
+    usename: string
     email: string
+    disabled:boolean
   }
 }
 

@@ -1,9 +1,7 @@
 import NextAuth from 'next-auth'
-import Credentials, { type CredentialInput } from 'next-auth/providers/credentials'
+import Credentials from 'next-auth/providers/credentials'
 import { z } from 'zod'
-import { authConfig } from './auth.config'
-import { getStringFromBuffer } from './lib/utils'
-import { UserService ,LoginService} from './client'
+import { LoginService } from './client'
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
   // ...authConfig,
@@ -29,6 +27,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
 
           return {
             ...user,
+            name: user.username,
             id: "" + user.id
           }
         }
