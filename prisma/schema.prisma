@@ -11,6 +11,7 @@ generator db {
 
 model User {
   id    Int     @id @default(autoincrement())
+  name  String 
   username  String @unique
   hashed_password String 
   email String?
