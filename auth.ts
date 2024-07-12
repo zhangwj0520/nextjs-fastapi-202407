@@ -8,7 +8,8 @@ import type { NextAuthConfig } from 'next-auth'
 import { LoginService } from './client'
 
 const providers: Provider[] = [
-  GitHub({ clientId: 'Ov23li0yT0Oql8axH9wQ', clientSecret: '9d9e1a7541fb0aff6dc901edc0539408bf93a9cc' }),
+  // GitHub({ clientId: 'Ov23li0yT0Oql8axH9wQ', clientSecret: '9d9e1a7541fb0aff6dc901edc0539408bf93a9cc' }),
+  GitHub({ clientId: process.env.AUTH_GITHUB_ID, clientSecret: process.env.AUTH_GITHUB_SECRET }),
   Credentials({
     async authorize(credentials) {
       const parsedCredentials = z
@@ -49,6 +50,13 @@ const authConfig = {
   },
   callbacks: {
     async authorized({ auth, request: { nextUrl } }) {
+      const isAuthPage = nextUrl.pathname.startsWith('/auth')
+      if (isAuthPage) {
+        return true
+      }
+      if (!auth?.user) {
+        return false
+      }
       const isLoggedIn = !!auth?.user
       const isOnLoginPage = nextUrl.pathname.startsWith('/login')
       const isOnSignupPage = nextUrl.pathname.startsWith('/signup')
@@ -76,7 +84,8 @@ const authConfig = {
         token.name = session.user.name
       return token
     },
-    async session({ session, token }) {
+    async session(config) {
+      let { session, token } = config
       if (token) {
         const { id } = token as { id: string }
         const { user } = session

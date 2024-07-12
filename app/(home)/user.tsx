@@ -16,11 +16,9 @@ import { SignOut } from '@/components/auth-components'
 export async function User() {
   const session = (await auth()) as Session
 
-  if (!session) {
-    redirect('/login')
-  }
-  const user = session?.user
-  console.log('session', session)
+  // if (!session) {
+  //   redirect('/login')
+  // }
 
   return (
     <DropdownMenu>
@@ -30,32 +28,35 @@ export async function User() {
           size="icon"
           className="overflow-hidden rounded-full"
         >
-          <Image
-            src="/placeholder-user.jpg"
+          {/* <Image
+            src={
+              session?.user?.image
+              ?? '/placeholder-user.jpg'
+            }
             width={36}
             height={36}
             alt="Avatar"
+            className="overflow-hidden rounded-full"
+          /> */}
+          <img
+            src={
+              session?.user?.image
+              ?? 'placeholder-user.jpg'
+            }
             className="overflow-hidden rounded-full"
           />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
+        <DropdownMenuLabel>{session?.user?.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Settings</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
+        <DropdownMenuItem>用户信息</DropdownMenuItem>
+        <DropdownMenuItem>设置</DropdownMenuItem>
+
         <DropdownMenuSeparator />
 
         <DropdownMenuItem>
           <SignOut />
-          {/* <form
-              action={async () => {
-                'use server';
-                await signOut({redirect:true,});
-              }}
-            >
-              <button type="submit">登出</button>
-            </form> */}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

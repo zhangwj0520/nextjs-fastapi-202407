@@ -4,8 +4,6 @@ import { auth, providerMap, signIn } from '@/auth'
 import LoginForm from '@/components/c-ui/login-form'
 import { Button } from '@/components/ui/button'
 
-console.log('providerMap', providerMap)
-
 export default async function LoginPage() {
   // https://authjs.dev/getting-started/session-management/get-session
   const session = await auth()

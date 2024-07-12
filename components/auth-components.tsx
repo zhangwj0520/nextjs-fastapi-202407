@@ -17,7 +17,7 @@ export function SignIn({
   )
 }
 
-export function SignOut(props: React.ComponentPropsWithRef<typeof Button>) {
+export function SignOut() {
   return (
     <form
       action={async () => {
@@ -26,9 +26,7 @@ export function SignOut(props: React.ComponentPropsWithRef<typeof Button>) {
       }}
       className="w-full"
     >
-      <Button variant="ghost" className="w-full p-0" {...props}>
-        Sign Out
-      </Button>
+      <button type="submit">登出</button>
     </form>
   )
 }
