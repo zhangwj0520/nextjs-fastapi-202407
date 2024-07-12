@@ -1,6 +1,5 @@
 import Link from 'next/link'
 
-import { toast } from 'sonner'
 import { signIn } from '@/auth'
 
 export default function LoginForm() {

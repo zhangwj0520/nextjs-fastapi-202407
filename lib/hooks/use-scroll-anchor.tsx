@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-export const useScrollAnchor = () => {
+export function useScrollAnchor() {
   const messagesRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
   const visibilityRef = useRef<HTMLDivElement>(null)
@@ -12,7 +12,7 @@ export const useScrollAnchor = () => {
     if (messagesRef.current) {
       messagesRef.current.scrollIntoView({
         block: 'end',
-        behavior: 'smooth'
+        behavior: 'smooth',
       })
     }
   }, [])
@@ -21,7 +21,7 @@ export const useScrollAnchor = () => {
     if (messagesRef.current) {
       if (isAtBottom && !isVisible) {
         messagesRef.current.scrollIntoView({
-          block: 'end'
+          block: 'end',
         })
       }
     }
@@ -34,14 +34,14 @@ export const useScrollAnchor = () => {
       const handleScroll = (event: Event) => {
         const target = event.target as HTMLDivElement
         const offset = 25
-        const isAtBottom =
-          target.scrollTop + target.clientHeight >= target.scrollHeight - offset
+        const isAtBottom
+          = target.scrollTop + target.clientHeight >= target.scrollHeight - offset
 
         setIsAtBottom(isAtBottom)
       }
 
       current.addEventListener('scroll', handleScroll, {
-        passive: true
+        passive: true,
       })
 
       return () => {
@@ -52,9 +52,9 @@ export const useScrollAnchor = () => {
 
   useEffect(() => {
     if (visibilityRef.current) {
-      let observer = new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
             if (entry.isIntersecting) {
               setIsVisible(true)
             } else {
@@ -63,8 +63,8 @@ export const useScrollAnchor = () => {
           })
         },
         {
-          rootMargin: '0px 0px -150px 0px'
-        }
+          rootMargin: '0px 0px -150px 0px',
+        },
       )
 
       observer.observe(visibilityRef.current)
@@ -81,6 +81,6 @@ export const useScrollAnchor = () => {
     visibilityRef,
     scrollToBottom,
     isAtBottom,
-    isVisible
+    isVisible,
   }
 }

@@ -2,7 +2,6 @@ import { redirect } from 'next/navigation'
 import { AuthError } from 'next-auth'
 import { auth, providerMap, signIn } from '@/auth'
 import LoginForm from '@/components/c-ui/login-form'
-import LoginFormServer from '@/components/c-ui/login-form-server'
 import { Button } from '@/components/ui/button'
 
 console.log('providerMap', providerMap)

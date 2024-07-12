@@ -1,9 +1,8 @@
 import { redirect } from 'next/navigation'
 import Image from 'next/image'
-import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
-import { auth, signIn, signOut } from '@/auth'
+import { auth } from '@/auth'
 import {
   DropdownMenu,
   DropdownMenuContent,

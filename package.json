@@ -13,7 +13,8 @@
     "dev-old": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint",
+    "fix": "eslint --fix"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.1",

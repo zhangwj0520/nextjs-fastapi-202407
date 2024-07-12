@@ -4,14 +4,14 @@ import * as React from 'react'
 
 const LOCAL_STORAGE_KEY = 'sidebar'
 
-interface SidebarContext {
+interface SidebarContextType {
   isSidebarOpen: boolean
   toggleSidebar: () => void
   isLoading: boolean
 }
 
-const SidebarContext = React.createContext<SidebarContext | undefined>(
-  undefined
+const SidebarContext = React.createContext<SidebarContextType | undefined>(
+  undefined,
 )
 
 export function useSidebar() {
@@ -39,7 +39,7 @@ export function SidebarProvider({ children }: SidebarProviderProps) {
   }, [])
 
   const toggleSidebar = () => {
-    setSidebarOpen(value => {
+    setSidebarOpen((value) => {
       const newState = !value
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newState))
       return newState
@@ -52,6 +52,7 @@ export function SidebarProvider({ children }: SidebarProviderProps) {
 
   return (
     <SidebarContext.Provider
+      // eslint-disable-next-line react/no-unstable-context-value
       value={{ isSidebarOpen, toggleSidebar, isLoading }}
     >
       {children}

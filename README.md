@@ -6,7 +6,7 @@
 ### 安装
 
 1. 安装mysqlclient失败
-  
+
 ```zsh
 # Assume you are activating Python 3 venv
 brew install mysql-client pkg-config

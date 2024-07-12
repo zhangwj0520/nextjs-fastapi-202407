@@ -10,7 +10,7 @@ interface Session {
     id: string
     usename: string
     email: string
-    disabled:boolean
+    disabled: boolean
   }
 }
 

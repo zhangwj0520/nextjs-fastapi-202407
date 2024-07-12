@@ -1,15 +1,15 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { File, PlusCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { File, PlusCircle } from 'lucide-react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Button } from '@/components/ui/button'
 // import { ProductsTable } from './products-table';
 
 export default async function ProductsPage({
-  searchParams
+  searchParams,
 }: {
-  searchParams: { q: string; offset: string };
+  searchParams: { q: string, offset: string }
 }) {
-  const search = searchParams.q ?? '';
-  const offset = searchParams.offset ?? 0;
+  const search = searchParams.q ?? ''
+  const offset = searchParams.offset ?? 0
   // const { products, newOffset, totalProducts } = await getProducts(
   //   search,
   //   Number(offset)
@@ -51,5 +51,5 @@ export default async function ProductsPage({
         /> */}
       </TabsContent>
     </Tabs>
-  );
+  )
 }
