@@ -5,21 +5,14 @@
   "version": "0.2.0",
   "compounds": [
     {
-      "name": "Start",
-      "configurations": ["Backend", "Frontend"],
-      // "preLaunchTask": "${defaultBuildTask}",
+      "name": "调试全栈应用",
+      "configurations": ["Python 调试程序: FastAPI", "Node 调试程序: NextJS"],
       "stopAll": true
     }
   ],
   "configurations": [
     {
-      "command": "pnpm run dev",
-      "name": "Frontend",
-      "request": "launch",
-      "type": "node-terminal"
-    },
-    {
-      "name": "Backend",
+      "name": "Python 调试程序: FastAPI",
       "type": "debugpy",
       "request": "launch",
       "module": "uvicorn",
@@ -31,6 +24,23 @@
 
       "jinja": true,
       "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "name": "Node 调试程序: NextJS",
+      "command": "pnpm run dev",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "name": "Node 调试程序: 运行NextJS同时打开浏览器",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm run dev-no-browser",
+      "serverReadyAction": {
+        "pattern": "- Local:.+(https?://.+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome"
+      }
     }
   ]
 

@@ -18,3 +18,11 @@ pipx install mysqlclient
 ### prisma
 
 1. prisma db push 同步数据库
+
+## 问题
+###  1.停止端口
+
+```zsh
+lsof -i :8900
+kill -9 <PID>
+```
