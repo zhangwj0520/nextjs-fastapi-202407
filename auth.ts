@@ -8,7 +8,7 @@ import type { NextAuthConfig } from 'next-auth'
 import { LoginService } from './client'
 
 const providers: Provider[] = [
-  GitHub({ clientId: process.env.GITHUB_ID, clientSecret: process.env.GITHUB_SECRET }),
+  GitHub({ clientId: 'Ov23li0yT0Oql8axH9wQ', clientSecret: '9d9e1a7541fb0aff6dc901edc0539408bf93a9cc' }),
   Credentials({
     async authorize(credentials) {
       const parsedCredentials = z
@@ -42,6 +42,7 @@ const providers: Provider[] = [
 
 const authConfig = {
   secret: process.env.AUTH_SECRET,
+  basePath: '/auth',
   pages: {
     signIn: '/login',
     newUser: '/signup',
@@ -60,11 +61,19 @@ const authConfig = {
 
       return true
     },
-    async jwt({ token, user }) {
+    // async jwt({ token, user }) {
+    //   if (user) {
+    //     token = { ...token, id: user.id }
+    //   }
+
+    //   return token
+    // },
+    async jwt({ token, trigger, session, user }) {
       if (user) {
         token = { ...token, id: user.id }
       }
-
+      if (trigger === 'update')
+        token.name = session.user.name
       return token
     },
     async session({ session, token }) {

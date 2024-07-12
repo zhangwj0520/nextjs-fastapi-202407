@@ -1,28 +1,27 @@
-import { Button } from '@/components/ui/button';
 import { redirect } from 'next/navigation'
+import Image from 'next/image'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
-import { auth,signOut ,signIn} from '@/auth'
-import Image from 'next/image';
+import { auth, signIn, signOut } from '@/auth'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
-import Link from 'next/link';
-import {SignOut} from '@/components/auth-components'
-
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { SignOut } from '@/components/auth-components'
 
 export async function User() {
-
   const session = (await auth()) as Session
 
   if (!session) {
     redirect('/login')
   }
-  let user = session?.user;
+  const user = session?.user
+  console.log('session', session)
 
   return (
     <DropdownMenu>
@@ -33,7 +32,7 @@ export async function User() {
           className="overflow-hidden rounded-full"
         >
           <Image
-            src={'/placeholder-user.jpg'}
+            src="/placeholder-user.jpg"
             width={36}
             height={36}
             alt="Avatar"
@@ -47,10 +46,10 @@ export async function User() {
         <DropdownMenuItem>Settings</DropdownMenuItem>
         <DropdownMenuItem>Support</DropdownMenuItem>
         <DropdownMenuSeparator />
-        
+
         <DropdownMenuItem>
-                    <SignOut />
-            {/* <form
+          <SignOut />
+          {/* <form
               action={async () => {
                 'use server';
                 await signOut({redirect:true,});
@@ -58,8 +57,8 @@ export async function User() {
             >
               <button type="submit">登出</button>
             </form> */}
-          </DropdownMenuItem>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

@@ -2,16 +2,16 @@
 export default {
   input: 'http://127.0.0.1:8910/openapi.json',
   output: {
-      path:"client",
-      format: 'biome' 
+    path: 'client',
+    format: 'biome',
   },
   types: {
     enums: 'javascript',
   },
   schemas: {
-    type: 'json'
+    type: 'json',
   },
   services: {
     asClass: true,
   },
-};
+}
