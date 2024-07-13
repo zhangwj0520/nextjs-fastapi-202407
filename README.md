@@ -23,6 +23,6 @@ pipx install mysqlclient
 ###  1.停止端口
 
 ```zsh
-lsof -i :8900
+lsof -i :9100
 kill -9 <PID>
 ```
