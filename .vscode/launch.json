@@ -17,12 +17,13 @@
       "request": "launch",
       "module": "uvicorn",
       "args": [
-        "api.main:app",
+        "app.main:app",
         "--reload",
         "--port=8910"
       ],
 
       "jinja": true,
+      "cwd": "${workspaceFolder}/backend",
       "envFile": "${workspaceFolder}/.env"
     },
     {

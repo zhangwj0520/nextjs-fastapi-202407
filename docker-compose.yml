@@ -10,27 +10,43 @@ services:
   #   restart: always
   #   networks:
   #     - nest_admin_net
-
-  mysql:
-    image: mysql:latest
-    container_name: nextjs-fastapi
+  db:
+    image: postgres:latest
+    container_name: postgres
     restart: always
-    # env_file:
-    #   - .env
+    env_file:
+      - .env
     environment:
-      - MYSQL_HOST=127.0.0.1
-      - MYSQL_PORT=23306
-      - MYSQL_DATABASE=FastAPI
-      - MYSQL_USERNAME=root
-      - MYSQL_PASSWORD=Qwer1234
-      - MYSQL_ROOT_PASSWORD=Qwer1234
-
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
     ports:
-      - '23306:3306'
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci # 设置utf8字符集
-    # volumes:
-    # - ./__data/mysql/:/var/lib/mysql/ # ./__data/mysql/ 路径可以替换成自己的路径
-    # - ./deploy/sql/:/docker-entrypoint-initdb.d/ # 初始化的脚本，若 ./__data/mysql/ 文件夹存在数据，则不会执行初始化脚本
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - app-db-data:/var/lib/postgresql/data/pgdata
+  
+
+  # mysql:
+  #   image: mysql:latest
+  #   container_name: nextjs-fastapi
+  #   restart: always
+  #   # env_file:
+  #   #   - .env
+  #   environment:
+  #     - MYSQL_HOST=127.0.0.1
+  #     - MYSQL_PORT=23306
+  #     - MYSQL_DATABASE=FastAPI
+  #     - MYSQL_USERNAME=root
+  #     - MYSQL_PASSWORD=Qwer1234
+  #     - MYSQL_ROOT_PASSWORD=Qwer1234
+
+  #   ports:
+  #     - '23306:3306'
+  #   command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci # 设置utf8字符集
+  #   # volumes:
+  #   # - ./__data/mysql/:/var/lib/mysql/ # ./__data/mysql/ 路径可以替换成自己的路径
+  #   # - ./deploy/sql/:/docker-entrypoint-initdb.d/ # 初始化的脚本，若 ./__data/mysql/ 文件夹存在数据，则不会执行初始化脚本
 
   # nest-admin-server:
   # build: 从当前路径构建镜像
@@ -66,3 +82,11 @@ services:
 #   nest_admin_net:
 #     name: nest_admin_net
 #     # driver: custom-driver-1
+
+volumes:
+  app-db-data:
+
+networks:
+  traefik-public:
+    # Allow setting it to false for testing
+    external: true

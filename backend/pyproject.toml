@@ -4,10 +4,18 @@ version = "0.1.0"
 description = ""
 authors = ["zhangwj0520 <zhangwj0520@hotmail.com>"]
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.11"
 fastapi = "^0.111.0"
+sentry-sdk = "^2.9.0"
+prisma = "^0.13.1"
+pydantic-settings = "^2.3.4"
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+pyjwt = "^2.8.0"
+pip = "^24.1.2"
+emails = "^0.6"
 
 
 [build-system]
