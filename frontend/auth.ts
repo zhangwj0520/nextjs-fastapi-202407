@@ -7,10 +7,12 @@ import { z } from 'zod'
 import type { NextAuthConfig } from 'next-auth'
 import { LoginService } from './client'
 
+// process.env.NEXTAUTH_URL = 'http://localhost:9100'
+// process.env.AUTH_GITHUB_ID = 'Ov23litnOdDyW03DniYK'
+// process.env.AUTH_GITHUB_SECRET = '579bf2b4409050b2cd1dd50ffefe8b7660197da5'
 console.log('process.env', process.env)
 const providers: Provider[] = [
-  GitHub({ clientId: 'Ov23litnOdDyW03DniYK', clientSecret: '579bf2b4409050b2cd1dd50ffefe8b7660197da5' }),
-  // GitHub({ clientId: process.env.AUTH_GITHUB_ID, clientSecret: process.env.AUTH_GITHUB_SECRET }),
+  GitHub({ clientId: process.env.AUTH_GITHUB_ID, clientSecret: process.env.AUTH_GITHUB_SECRET }),
   Credentials({
     async authorize(credentials) {
       const parsedCredentials = z
