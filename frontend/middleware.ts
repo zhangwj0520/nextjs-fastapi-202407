@@ -1,4 +1,9 @@
-export { auth as middleware } from '@/auth'
+// export { auth as middleware } from '@/auth'
+import NextAuth from 'next-auth'
+import authConfig from './auth.config'
+
+export const { auth: middleware } = NextAuth(authConfig)
+
 // Or like this if you need to do something here.
 // export default auth((req) => {
 //   console.log(req.auth) //  { session: { user: { ... } } }
