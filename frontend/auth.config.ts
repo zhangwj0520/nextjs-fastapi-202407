@@ -15,24 +15,27 @@ export default {
   },
   callbacks: {
     async authorized({ auth, request: { nextUrl } }) {
+      const isLoggedIn = !!auth?.user
+      // oauth回调页面
       const isAuthPage = nextUrl.pathname.startsWith('/auth')
       if (isAuthPage) {
         return true
       }
-      if (!auth?.user) {
-        return false
-      }
-      const isLoggedIn = !!auth?.user
-      const isOnLoginPage = nextUrl.pathname.startsWith('/login')
+      // 注册页面,登录页面
       const isOnSignupPage = nextUrl.pathname.startsWith('/signup')
-
+      const isOnLoginPage = nextUrl.pathname.startsWith('/login')
       if (isLoggedIn) {
         if (isOnLoginPage || isOnSignupPage) {
           return Response.redirect(new URL('/', nextUrl))
         }
+        return true
       }
 
-      return true
+      if (isOnSignupPage) {
+        return true
+      }
+
+      return false
     },
     // async jwt({ token, user }) {
     //   if (user) {

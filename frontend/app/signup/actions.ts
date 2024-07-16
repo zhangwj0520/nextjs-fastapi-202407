@@ -2,8 +2,8 @@
 
 import { z } from 'zod'
 import { AuthError } from 'next-auth'
-import { getUser } from '../login/actions'
-import prisma from '@/lib/prisma'
+// import { getUser } from '../login/actions'
+// import prisma from '@/lib/prisma'
 import { ResultCode, getStringFromBuffer } from '@/lib/utils'
 import { signIn } from '@/auth'
 
@@ -12,7 +12,7 @@ export async function createUser(
   hashedPassword: string,
   salt: string,
 ) {
-  const existingUser = await getUser(email)
+  // const existingUser = await getUser(email)
 
   if (existingUser) {
     return {
@@ -20,13 +20,13 @@ export async function createUser(
       resultCode: ResultCode.UserAlreadyExists,
     }
   } else {
-    await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        salt,
-      },
-    })
+    // await prisma.user.create({
+    //   data: {
+    //     email,
+    //     password: hashedPassword,
+    //     salt,
+    //   },
+    // })
     return {
       type: 'success',
       resultCode: ResultCode.UserCreated,

@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import SignupForm from '@/components/c-ui/signup-form'
+import SignupForm from '@/components/auth/signup-form'
 import { auth } from '@/auth'
 
 export default async function SignupPage() {
@@ -10,7 +10,7 @@ export default async function SignupPage() {
     redirect('/')
   }
   return (
-    <main className="flex flex-col p-4">
+    <main className="h-screen w-screen mt-[25vh]">
       <SignupForm />
     </main>
   )
