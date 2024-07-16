@@ -47,9 +47,10 @@ export default function SignupForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: '',
-      password: '',
-      email: '',
+      username: 'zhangsan',
+      password: 'Qwer1234@@',
+      confirmPassword: 'Qwer1234@@',
+      email: 'zhangwj0520@hotmail.com',
     },
   })
 
@@ -59,7 +60,7 @@ export default function SignupForm() {
     const res = await UserService.postCreateUserApi({
       requestBody: data,
     })
-    console.log('res')
+    console.log('res', res)
   }
 
   return (

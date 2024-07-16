@@ -34,6 +34,10 @@ export default {
       if (isOnSignupPage) {
         return true
       }
+      const isApiPage = nextUrl.pathname.startsWith('/api')
+      if (isApiPage) {
+        return true
+      }
 
       return false
     },
