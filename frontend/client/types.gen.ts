@@ -26,23 +26,27 @@ export interface Message {
  * Represents a Post record
  */
 export interface Post {
-  id: number
+  id: string
   created_at: string
   updated_at: string
   title: string
   published: boolean
   author?: User | null
-  author_id?: number | null
+  authorId?: string | null
+  createdAt: string
+  updatedAt: string
 }
 
 /**
  * Required arguments to the Post create method, without relations
  */
 export interface PostCreateWithoutRelationsInput {
-  id?: number
+  id?: string
   created_at?: string
   updated_at?: string
-  author_id?: number | null
+  authorId?: string | null
+  createdAt?: string
+  updatedAt?: string
   title: string
   published: boolean
 }
@@ -68,12 +72,16 @@ export interface Token {
  * Represents a User record
  */
 export interface User {
-  id: number
+  id: string
+  name?: string | null
+  email: string
   username: string
   hashed_password: string
-  email?: string | null
   disabled: boolean
+  image?: string | null
   posts?: Array<Post> | null
+  createdAt: string
+  updatedAt: string
 }
 
 export interface UserCreate {
@@ -86,27 +94,41 @@ export interface UserCreate {
  * Optional arguments for updating a record
  */
 export interface UserUpdateInput {
-  id?: _IntSetInput | _IntDivideInput | _IntMultiplyInput | _IntIncrementInput | _IntDecrementInput | number
+  id?: string
+  name?: string | null
+  email?: string
   username?: string
   hashed_password?: string
-  email?: string | null
   disabled?: boolean
+  image?: string | null
   posts?: PostUpdateManyWithoutRelationsInput
+  createdAt?: string
+  updatedAt?: string
 }
 
 export interface UserWihoutPassword {
-  id: number
-  username: string
+  id: string
+  name?: string | null
   email?: string | null
+  emailVerified?: string | null
+  username: string
   disabled: boolean
+  image?: string | null
+  createdAt: string
+  updatedAt: string
 }
 
 export interface UserWithoutRelations {
-  id: number
+  id: string
+  name?: string | null
+  email?: string | null
+  emailVerified?: string | null
   username: string
   hashed_password: string
-  email?: string | null
   disabled: boolean
+  image?: string | null
+  createdAt: string
+  updatedAt: string
 }
 
 export interface UsersList {
@@ -120,28 +142,8 @@ export interface ValidationError {
   type: string
 }
 
-export interface _IntDecrementInput {
-  decrement: number
-}
-
-export interface _IntDivideInput {
-  divide: number
-}
-
-export interface _IntIncrementInput {
-  increment: number
-}
-
-export interface _IntMultiplyInput {
-  multiply: number
-}
-
-export interface _IntSetInput {
-  set: number
-}
-
 export interface _PostWhereUnique_id_Input {
-  id: number
+  id: string
 }
 
 export interface PostLoginFormApiData {

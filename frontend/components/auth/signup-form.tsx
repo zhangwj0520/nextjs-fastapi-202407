@@ -15,14 +15,32 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
+import { UserService } from '@/client'
+
 const FormSchema = z.object({
   username: z.string().min(3, {
     message: '用户名至少3个字符',
   }),
-  password: z.string().min(5, {
-    message: '密码至少5个字符',
-  }),
   email: z.string().email({ message: '请输入正确的Email地址' }).trim(),
+  password: z
+    .string()
+    .min(8, { message: '密码至少8个字符' })
+    .regex(/[a-z]/i, { message: '至少包含一个字母' })
+    .regex(/\d/, { message: '至少包含一个数字' })
+    .regex(/[^a-z0-9]/i, {
+      message: '至少包含一个特殊字符',
+    })
+    .trim(),
+  confirmPassword: z
+    .string(),
+}).superRefine(({ confirmPassword, password }, ctx) => {
+  if (confirmPassword !== password) {
+    ctx.addIssue({
+      code: 'custom',
+      message: '两次输入的密码不一致',
+      path: ['confirmPassword'],
+    })
+  }
 })
 
 export default function SignupForm() {
@@ -35,23 +53,28 @@ export default function SignupForm() {
     },
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log('data', data)
+
+    const res = await UserService.postCreateUserApi({
+      requestBody: data,
+    })
+    console.log('res')
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col items-center gap-4 space-y-3">
         <div className="w-full flex-1 rounded-lg border bg-white px-6 pb-4 pt-8 shadow-md md:w-96 dark:bg-zinc-950">
-          <h1 className="mb-3 text-2xl font-bold">注册</h1>
+          <h1 className="mb-4 text-2xl font-bold">注册</h1>
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem className="mt-6">
-                <FormLabel className="">邮箱</FormLabel>
+              <FormItem className="">
+                <FormLabel className="" required>邮箱</FormLabel>
                 <FormControl>
-                  <Input placeholder="请输入" {...field} />
+                  <Input placeholder="请输入" {...field} type="email" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -61,8 +84,8 @@ export default function SignupForm() {
             control={form.control}
             name="username"
             render={({ field }) => (
-              <FormItem className="mt-6">
-                <FormLabel className="">用户名</FormLabel>
+              <FormItem className="">
+                <FormLabel className="" required>用户名</FormLabel>
                 <FormControl>
                   <Input placeholder="请输入" {...field} />
                 </FormControl>
@@ -75,58 +98,29 @@ export default function SignupForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="">密码</FormLabel>
+                <FormLabel className="" required>密码</FormLabel>
                 <FormControl>
-                  <Input placeholder="请输入" {...field} />
+                  <Input placeholder="请输入" {...field} type="password" />
                 </FormControl>
-                {/* <FormDescription>
-                  This is your public display name.
-                </FormDescription> */}
                 <FormMessage />
               </FormItem>
             )}
           />
-          {/* <div className="w-full">
-            <div>
-              <label
-                className="mb-3 mt-5 block text-xs font-medium text-zinc-400"
-                htmlFor="email"
-              >
-                Email
-              </label>
-              <div className="relative">
-                <input
-                  className="peer block w-full rounded-md border bg-zinc-50 px-2 py-[9px] text-sm outline-none placeholder:text-zinc-500 dark:border-zinc-800 dark:bg-zinc-950"
-                  id="email"
-                  type="email"
-                  name="email"
-                  placeholder="Enter your email address"
-                  required
-                />
-              </div>
-            </div>
-            <div className="mt-4">
-              <label
-                className="mb-3 mt-5 block text-xs font-medium text-zinc-400"
-                htmlFor="password"
-              >
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  className="peer block w-full rounded-md border bg-zinc-50 px-2 py-[9px] text-sm outline-none placeholder:text-zinc-500 dark:border-zinc-800 dark:bg-zinc-950"
-                  id="password"
-                  type="password"
-                  name="password"
-                  placeholder="Enter password"
-                  required
-                  minLength={6}
-                />
-              </div>
-            </div>
-          </div> */}
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="" required>确认密码</FormLabel>
+                <FormControl>
+                  <Input placeholder="请输入" {...field} type="password" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <LoginButton />
-          {/* <Button type="submit" className="w-full">Submit</Button> */}
         </div>
 
       </form>

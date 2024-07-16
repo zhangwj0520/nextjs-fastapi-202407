@@ -1,8 +1,8 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 
-  @layer base {
+
     
 @layer base {
   :root {
@@ -51,13 +51,27 @@
   }
 }
 
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+
+  .form-item-required::before{
+    color: #ff4d4f;
+    content: "*";
+    display: inline-block;
+    font-family: SimSun, sans-serif;
+    font-size: 14px;
+    line-height: 1;
+    margin-inline-end: 4px
   }
 
-  @layer base {
-    * {
-      @apply border-border;
-    }
-    body {
-      @apply bg-background text-foreground;
-    }
-  }
+}

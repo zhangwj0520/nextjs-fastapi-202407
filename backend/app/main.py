@@ -25,7 +25,7 @@ app = FastAPI(
     version="1.0",
     description="A simple api server using Langchain's Runnable interfaces",
     generate_unique_id_function=custom_generate_unique_id,
-    lifespan=lifespan,
+    # lifespan=lifespan,
 )
 
 

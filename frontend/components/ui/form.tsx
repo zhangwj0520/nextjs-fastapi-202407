@@ -1,5 +1,3 @@
-'use client'
-
 import * as React from 'react'
 import type * as LabelPrimitive from '@radix-ui/react-label'
 import { Slot } from '@radix-ui/react-slot'
@@ -82,22 +80,25 @@ const FormItem = React.forwardRef<
 
   return (
     <FormItemContext.Provider value={{ id }}>
-      <div ref={ref} className={cn('space-y-2 my-5', className)} {...props} />
+      <div ref={ref} className={cn('space-y-2', className)} {...props} />
     </FormItemContext.Provider>
   )
 })
 FormItem.displayName = 'FormItem'
 
+type FormLabelPropType = React.ForwardRefExoticComponent<{ required?: boolean } & LabelPrimitive.LabelProps & React.RefAttributes<HTMLLabelElement>>
+
 const FormLabel = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
+  React.ComponentPropsWithoutRef<FormLabelPropType>
 >(({ className, ...props }, ref) => {
   const { error, formItemId } = useFormField()
 
   return (
     <Label
       ref={ref}
-      className={cn(error && 'text-destructive', '', className)}
+      // className={cn(error && 'text-destructive', className)}
+      className={cn(props.required && 'form-item-required', className)}
       htmlFor={formItemId}
       {...props}
     />
@@ -152,14 +153,14 @@ const FormMessage = React.forwardRef<
   const body = error ? String(error?.message) : children
 
   if (!body) {
-    return null
+    return <p className="h-6 !mt-[2px]"></p>
   }
 
   return (
     <p
       ref={ref}
       id={formMessageId}
-      className={cn('text-[0.8rem] font-medium text-destructive', className)}
+      className={cn('text-[0.8rem] text-destructive !mt-[2px] h-5', className)}
       {...props}
     >
       {body}
