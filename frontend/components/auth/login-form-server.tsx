@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import LoginButton from './login-buttom'
+import { LoginButton } from './auth-buttom'
 
 import { signIn } from '@/auth'
 
@@ -33,6 +33,7 @@ export default function LoginForm() {
                 className="peer block w-full rounded-md border bg-zinc-50 px-2 py-[9px] text-sm outline-none placeholder:text-zinc-500 dark:border-zinc-800 dark:bg-zinc-950"
                 id="username"
                 name="username"
+                defaultValue="zhangsan"
                 placeholder="请输入"
                 required
               />
@@ -51,6 +52,7 @@ export default function LoginForm() {
                 id="password"
                 type="password"
                 name="password"
+                defaultValue="Qwer1234@@"
                 placeholder="请输入"
                 required
                 minLength={6}

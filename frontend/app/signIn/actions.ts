@@ -17,6 +17,7 @@ export async function authenticate(
   try {
     const username = formData.get('username')
     const password = formData.get('password')
+    const origin = formData.get('origin')
 
     const parsedCredentials = z
       .object({
@@ -32,6 +33,7 @@ export async function authenticate(
       await signIn('credentials', {
         username,
         password,
+        origin,
         redirect: false,
       })
       return {

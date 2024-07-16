@@ -1,4 +1,3 @@
-/* eslint-disable import/no-mutable-exports */
 import type { ApiRequestOptions } from './ApiRequestOptions'
 
 type Headers = Record<string, string>
@@ -55,13 +54,7 @@ export let OpenAPI: OpenAPIConfig = {
     response: new Interceptors(),
   },
 }
-// OpenAPI.interceptors.response.use(async (req) => {
-//   console.log('req111', req)
-//   // console.log("req",req.body())
-//   const res = await req.json()
-//   console.log(111, res)
-//   return req
-// })
+
 export function setClientConfig(config: Partial<OpenAPIConfig>) {
   OpenAPI = { ...OpenAPI, ...config }
 }

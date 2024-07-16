@@ -1,10 +1,11 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import LoginButton from './login-buttom'
+import { SignupButton } from './auth-buttom'
 import {
   Form,
   FormControl,
@@ -55,8 +56,6 @@ export default function SignupForm() {
   })
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log('data', data)
-
     const res = await UserService.postCreateUserApi({
       requestBody: data,
     })
@@ -120,9 +119,16 @@ export default function SignupForm() {
               </FormItem>
             )}
           />
-
-          <LoginButton />
+          <SignupButton />
         </div>
+        <Link
+          href="/"
+          className="flex flex-row gap-1 text-sm text-zinc-400"
+        >
+          已有账户
+          {' '}
+          <div className="font-semibold underline text-primary">登录</div>
+        </Link>
 
       </form>
     </Form>

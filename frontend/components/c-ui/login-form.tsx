@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { toast } from 'sonner'
 import { redirect, useRouter } from 'next/navigation'
 import { getMessageFromCode } from '@/lib/utils'
-import { authenticate } from '@/app/login/actions'
+import { authenticate } from '@/app/signIn/actions'
 
 export default function LoginForm() {
   const router = useRouter()

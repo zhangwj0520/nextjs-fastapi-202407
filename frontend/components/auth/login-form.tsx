@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { toast } from 'sonner'
 import { redirect, useRouter } from 'next/navigation'
 import { getMessageFromCode } from '@/lib/utils'
-import { authenticate } from '@/app/login/actions'
+import { authenticate } from '@/app/signIn/actions'
 import { Button } from '@/components/ui/button'
 
 export default function LoginForm() {
@@ -30,6 +30,13 @@ export default function LoginForm() {
       action={dispatch}
       className="flex flex-col items-center gap-4 space-y-3"
     >
+      <input
+        className="hidden"
+        id="origin"
+        name="origin"
+        defaultValue={location.origin}
+      />
+
       <div className="w-full flex-1 rounded-lg border bg-white px-6 pb-4 pt-8 shadow-md  md:w-96 dark:bg-zinc-950">
         <h1 className="mb-3 text-2xl font-bold">请登录</h1>
         <div className="w-full">
@@ -44,6 +51,7 @@ export default function LoginForm() {
                 className="peer block w-full rounded-md border bg-zinc-50 px-2 py-[9px] text-sm outline-none placeholder:text-zinc-500 dark:border-zinc-800 dark:bg-zinc-950"
                 id="username"
                 name="username"
+                defaultValue="zhangsan"
                 placeholder="请输入"
                 required
               />
@@ -62,6 +70,7 @@ export default function LoginForm() {
                 id="password"
                 type="password"
                 name="password"
+                defaultValue="Qwer1234@@"
                 placeholder="请输入"
                 required
                 minLength={6}

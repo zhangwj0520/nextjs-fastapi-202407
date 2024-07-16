@@ -10,7 +10,7 @@ export default async function SignupPage() {
     redirect('/')
   }
   return (
-    <main className="h-screen w-screen mt-[25vh]">
+    <main className="h-screen w-screen pt-[25vh]">
       <SignupForm />
     </main>
   )

@@ -4,18 +4,28 @@ import Credentials from 'next-auth/providers/credentials'
 
 import { z } from 'zod'
 import { LoginService } from './client'
+import { OpenAPI, setClientConfig } from '@/client/core/OpenAPI'
+
+const openapiPage = [
+  '/openapi.json',
+  '/docs',
+]
 
 // Notice this is only an object, not a full Auth.js instance
 export default {
   secret: process.env.AUTH_SECRET,
   basePath: '/auth',
   pages: {
-    signIn: '/login',
+    signIn: '/signIn',
     newUser: '/signup',
   },
   callbacks: {
     async authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user
+      if (openapiPage.includes(nextUrl.pathname)) {
+        return true
+      }
+
       // oauth回调页面
       const isAuthPage = nextUrl.pathname.startsWith('/auth')
       if (isAuthPage) {
@@ -23,7 +33,7 @@ export default {
       }
       // 注册页面,登录页面
       const isOnSignupPage = nextUrl.pathname.startsWith('/signup')
-      const isOnLoginPage = nextUrl.pathname.startsWith('/login')
+      const isOnLoginPage = nextUrl.pathname.startsWith('/signIn')
       if (isLoggedIn) {
         if (isOnLoginPage || isOnSignupPage) {
           return Response.redirect(new URL('/', nextUrl))
@@ -34,10 +44,10 @@ export default {
       if (isOnSignupPage) {
         return true
       }
-      const isApiPage = nextUrl.pathname.startsWith('/api')
-      if (isApiPage) {
-        return true
-      }
+      // const isApiPage = nextUrl.pathname.startsWith('/api')
+      // if (isApiPage) {
+      //   return true
+      // }
 
       return false
     },
@@ -70,35 +80,41 @@ export default {
       return session
     },
   },
-  providers: [GitHub({ clientId: process.env.AUTH_GITHUB_ID, clientSecret: process.env.AUTH_GITHUB_SECRET }), Credentials({
-    async authorize(credentials) {
-      const parsedCredentials = z
-        .object({
-          username: z.string(),
-          password: z.string().min(6),
-        })
-        .safeParse(credentials)
+  providers: [
+    // GitHub({ clientId: process.env.AUTH_GITHUB_ID, clientSecret: process.env.AUTH_GITHUB_SECRET }),
+    Credentials({
+      async authorize(credentials) {
+        const parsedCredentials = z
+          .object({
+            username: z.string(),
+            password: z.string().min(6),
+            origin: z.string().optional(),
+          })
+          .safeParse(credentials)
 
-      if (parsedCredentials.success) {
-        const { username, password } = parsedCredentials.data
-        const user = await LoginService.postLoginApi({ requestBody: {
-          username,
-          password,
-        } })
+        if (parsedCredentials.success) {
+          const { username, password } = parsedCredentials.data
+          setClientConfig({
+            BASE: process.env.BACKEND_URL,
+          })
+          const user = await LoginService.postLoginApi({ requestBody: {
+            username,
+            password,
+          } })
+          if (!user)
+            return Promise.resolve(null)
 
-        if (!user)
-          return Promise.resolve(null)
-
-        return {
-          ...user,
-          name: user.username,
-          id: `${user.id}`,
+          return {
+            ...user,
+            name: user.username,
+            id: `${user.id}`,
+          }
         }
-      }
 
-      return Promise.resolve(null)
-    },
-  })],
+        return Promise.resolve(null)
+      },
+    }),
+  ],
 } satisfies NextAuthConfig
 
 declare module 'next-auth' {

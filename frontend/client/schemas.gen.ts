@@ -465,27 +465,8 @@ export const $UserWihoutPassword = {
             title: 'Name'
         },
         email: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
+            type: 'string',
             title: 'Email'
-        },
-        emailVerified: {
-            anyOf: [
-                {
-                    type: 'string',
-                    format: 'date-time'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Emailverified'
         },
         username: {
             type: 'string',
@@ -518,7 +499,7 @@ export const $UserWihoutPassword = {
         }
     },
     type: 'object',
-    required: ['id', 'username', 'disabled', 'createdAt', 'updatedAt'],
+    required: ['id', 'email', 'username', 'disabled', 'createdAt', 'updatedAt'],
     title: 'UserWihoutPassword'
 } as const;
 
@@ -540,27 +521,8 @@ export const $UserWithoutRelations = {
             title: 'Name'
         },
         email: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
+            type: 'string',
             title: 'Email'
-        },
-        emailVerified: {
-            anyOf: [
-                {
-                    type: 'string',
-                    format: 'date-time'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Emailverified'
         },
         username: {
             type: 'string',
@@ -597,7 +559,7 @@ export const $UserWithoutRelations = {
         }
     },
     type: 'object',
-    required: ['id', 'username', 'hashed_password', 'disabled', 'createdAt', 'updatedAt'],
+    required: ['id', 'email', 'username', 'hashed_password', 'disabled', 'createdAt', 'updatedAt'],
     title: 'UserWithoutRelations'
 } as const;
 
