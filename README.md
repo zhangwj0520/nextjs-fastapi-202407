@@ -19,6 +19,18 @@ pipx install mysqlclient
 
 1. prisma db push 同步数据库
 
+2. 前端集成
+
+```zsh
+pnpm exec prisma migrate dev # 链接数据库,生成客户端
+pnpm exec prisma generate # 可以再次生成客户端
+
+pnpm exec prisma migrate dev # 更改时再次执行
+```
+
+
+
+
 ## 问题
 ###  1.停止端口
 
@@ -26,3 +38,4 @@ pipx install mysqlclient
 lsof -i :9100
 kill -9 <PID>
 ```
+
