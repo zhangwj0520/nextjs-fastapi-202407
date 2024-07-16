@@ -1,5 +1,7 @@
 import { File, PlusCircle } from 'lucide-react'
 
+import { UserList } from './user-list'
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 // import { ProductsTable } from './products-table';
@@ -44,7 +46,8 @@ export default async function ProductsPage({
       </div>
       <TabsContent value="all">
 
-        <div>1111</div>
+        {/* <div>1111</div> */}
+        <UserList />
         {/* <ProductsTable
           products={products}
           offset={newOffset ?? 0}
