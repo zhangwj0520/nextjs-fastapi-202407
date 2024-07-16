@@ -52,8 +52,10 @@ export default {
         token.name = session.user.name
       return token
     },
-    async session(config) {
-      let { session, token } = config
+    async session({ session, token }) {
+      if (token?.accessToken) {
+        session.accessToken = token.accessToken
+      }
       if (token) {
         const { id } = token as { id: string }
         const { user } = session
@@ -94,3 +96,15 @@ export default {
     },
   })],
 } satisfies NextAuthConfig
+
+declare module 'next-auth' {
+  interface Session {
+    accessToken?: any
+  }
+}
+
+declare module 'next-auth/jwt' {
+  interface JWT {
+    accessToken?: string
+  }
+}
