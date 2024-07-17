@@ -10,8 +10,8 @@ class Token(BaseModel):
     user: User
 
 
-class TokenData(BaseModel):
-    user_id: int
+class TokenPayload(BaseModel):
+    sub: str
 
 
 class Message(BaseModel):

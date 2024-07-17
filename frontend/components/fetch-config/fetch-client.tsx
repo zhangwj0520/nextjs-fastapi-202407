@@ -1,6 +1,7 @@
 'use client'
 import { toast } from 'sonner'
 import { OpenAPI, setClientConfig } from '@/client/core/OpenAPI'
+import { auth } from '@/auth'
 
 OpenAPI.interceptors.response.use(async (req) => {
   if (req.status === 400) {
@@ -11,9 +12,9 @@ OpenAPI.interceptors.response.use(async (req) => {
 })
 setClientConfig({
   BASE: process.env.NEXT_PUBLIC_BACKEND_URL,
-  TOKEN: () => {
-    return Promise.resolve('11111')
-    // return Promise.resolve(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15))
+  TOKEN: async () => {
+    const session = await auth()
+    return `${session?.accessToken}`
   },
 })
 

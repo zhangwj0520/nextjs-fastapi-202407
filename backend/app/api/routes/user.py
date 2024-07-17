@@ -21,7 +21,7 @@ router = APIRouter()
 class UserCreate(BaseModel):
     username: str
     password: str
-    email: str | None = None
+    email: str
 
 
 @router.get("/me", response_model=User)
@@ -61,7 +61,7 @@ async def list_users(
     "/{user_id}",
     response_model=UserWihoutPassword | None,
 )
-async def get_user(user_id: int, db: DB) -> Optional[UserWihoutPassword]:
+async def get_user(user_id: str, db: DB) -> Optional[UserWihoutPassword]:
 
     user = await UserWihoutPassword.prisma().find_unique(
         where={
@@ -101,7 +101,7 @@ async def create_user(user: UserCreate) -> User:
     "/{user_id}",
     response_model=UserWithoutRelations,
 )
-async def update_user(user_id: int, user: UserUpdateInput):
+async def update_user(user_id: str, user: UserUpdateInput):
     return await User.prisma().update(
         where={
             "id": user_id,
@@ -114,7 +114,7 @@ async def update_user(user_id: int, user: UserUpdateInput):
     "/{user_id}",
     response_model=User,
 )
-async def delete_user(user_id: int):
+async def delete_user(user_id: str):
     print("user_id", user_id)
     return await User.prisma().delete(
         where={

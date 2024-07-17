@@ -3,7 +3,7 @@ from jwt.exceptions import InvalidTokenError
 from typing import Annotated, Literal, Any
 from datetime import datetime, timedelta, timezone
 from app.core.config import settings
-from app.models.base import TokenData
+from app.models.base import TokenPayload
 from prisma import Prisma
 from prisma.models import User
 
@@ -12,39 +12,35 @@ import jwt
 
 from app.core.security import ALGORITHM
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/login-form")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/login")
 
 
 # token
 TokenDep = Annotated[str, Depends(oauth2_scheme)]
 
-
 async def get_current_user(token: TokenDep) -> User:
     try:
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[ALGORITHM])
-        token_data = TokenData(**payload)
-
+        token_data = TokenPayload(**payload)
     except InvalidTokenError:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Could not validate credentials",
         )
-
     user = await User.prisma().find_unique(
         where={
-            "id": token_data.user_id,
+            "id": token_data.sub,
         },
     )
-
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
             headers={"Authenticate": "Bearer"},
         )
-    if not user.disabled:
+    if user.disabled is not False:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail="Inactive user"
+            status_code=status.HTTP_400_BAD_REQUEST, detail="用户被禁用"
         )
 
     return user
