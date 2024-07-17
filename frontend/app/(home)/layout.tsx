@@ -10,7 +10,6 @@ import {
   Users2,
 } from 'lucide-react'
 
-import { User } from './user'
 import { NavItem } from './nav-item'
 import { SearchInput } from './search'
 import {
@@ -29,6 +28,9 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 
+import { ThemeChange } from '@/components/home/theme'
+import { User } from '@/components/home/user'
+
 import { VercelLogo } from '@/components/icons'
 
 export default function DashboardLayout({
@@ -45,6 +47,7 @@ export default function DashboardLayout({
           <MobileNav />
           <DashboardBreadcrumb />
           <SearchInput />
+          <ThemeChange />
           <User />
         </header>
         <main className="grid flex-1 items-start gap-2 p-4 sm:px-6 sm:py-0 md:gap-4 bg-muted/40">

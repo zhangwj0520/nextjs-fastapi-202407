@@ -28,7 +28,7 @@ export async function User() {
           size="icon"
           className="overflow-hidden rounded-full"
         >
-          {/* <Image
+          <Image
             src={
               session?.user?.image
               ?? '/placeholder-user.jpg'
@@ -36,13 +36,6 @@ export async function User() {
             width={36}
             height={36}
             alt="Avatar"
-            className="overflow-hidden rounded-full"
-          /> */}
-          <img
-            src={
-              session?.user?.image
-              ?? 'placeholder-user.jpg'
-            }
             className="overflow-hidden rounded-full"
           />
         </Button>
