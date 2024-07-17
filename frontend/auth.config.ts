@@ -1,11 +1,10 @@
 // import GitHub from 'next-auth/providers/github'
-import type { JWT, NextAuthConfig } from 'next-auth'
+import type { NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 
 import { z } from 'zod'
 import { LoginService } from './client'
 import { setClientConfig } from '@/client/core/OpenAPI'
-import type { User as UserType } from '@/client'
 
 const openapiPage = [
   '/openapi.json',

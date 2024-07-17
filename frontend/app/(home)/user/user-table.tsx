@@ -1,6 +1,6 @@
-'use client'
+// 'use client'
 
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { User } from './user'
 import {
@@ -21,31 +21,38 @@ import {
 import { Button } from '@/components/ui/button'
 import type { UserWihoutPassword } from '@/client'
 
-export default function UserTable({
+export function UserTable({
   users,
   skip,
+  take,
   total,
 }: {
   users: UserWihoutPassword[]
   skip: number
+  take: number
   total: number
 }) {
-  const router = useRouter()
-
-  function prevPage() {
-    router.back()
+  async function prevPage() {
+    'use server'
+    const newSikp = skip - 2 * take
+    if (newSikp <= 0) {
+      redirect(`/user`)
+    } else {
+      redirect(`/user?skip=${newSikp}`)
+    }
   }
 
-  function nextPage() {
-    router.push(`/user?skip=${skip}`, { scroll: false })
+  async function nextPage() {
+    'use server'
+    redirect(`/user?skip=${skip}`)
   }
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Products</CardTitle>
+        <CardTitle>用户列表</CardTitle>
         <CardDescription>
-          Manage your products and view their sales performance.
+          管理用户
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -86,7 +93,7 @@ export default function UserTable({
               variant="ghost"
               size="sm"
               type="submit"
-              // disabled={skip === total}
+              disabled={skip - take <= 0}
             >
               <ChevronLeft className="mr-2 h-4 w-4" />
               Prev
@@ -96,7 +103,7 @@ export default function UserTable({
               variant="ghost"
               size="sm"
               type="submit"
-              // disabled={skip + productsPerPage > total}
+              disabled={skip >= total}
             >
               Next
               <ChevronRight className="ml-2 h-4 w-4" />

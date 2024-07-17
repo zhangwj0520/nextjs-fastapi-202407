@@ -1,5 +1,5 @@
 import { File, PlusCircle } from 'lucide-react'
-import UserTable from './user-table'
+import { UserTable } from './user-table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 import { UserService } from '@/client'
@@ -11,9 +11,10 @@ export default async function UserPage({
 }) {
   const search = searchParams.q ?? ''
   const skip = searchParams.skip ?? 0
+  const take = searchParams.take ?? 3
   // const { list, total, newOffset } = await getUserList()
   const { list, total, newSikp } = await UserService.getListUsersApi({
-    take: 10,
+    take: 3,
     skip: Number(skip),
   })
 
@@ -47,6 +48,7 @@ export default async function UserPage({
         <UserTable
           users={list}
           skip={newSikp ?? 0}
+          take={Number(take) ?? 0}
           total={total}
         />
       </TabsContent>
