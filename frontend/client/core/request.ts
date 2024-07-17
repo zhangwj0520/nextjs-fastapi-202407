@@ -183,6 +183,7 @@ export async function sendRequest(config: OpenAPIConfig,	options: ApiRequestOpti
   if (config.WITH_CREDENTIALS) {
     request.credentials = config.CREDENTIALS
   }
+  console.log('url', url)
 
   for (const fn of config.interceptors.request._fns) {
     request = await fn(request)

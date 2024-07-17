@@ -16,9 +16,9 @@ import { SignOut } from '@/components/auth-components'
 export async function User() {
   const session = (await auth()) as Session
 
-  // if (!session) {
-  //   redirect('/login')
-  // }
+  if (!session) {
+    redirect('/login')
+  }
 
   return (
     <DropdownMenu>

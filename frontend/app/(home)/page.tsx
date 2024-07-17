@@ -1,10 +1,28 @@
 import { File, PlusCircle } from 'lucide-react'
 
+import { toast } from 'sonner'
 import { UserList } from './user-list'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 // import { ProductsTable } from './products-table';
+
+// import { OpenAPI, setClientConfig } from '@/client/core/OpenAPI'
+
+// OpenAPI.interceptors.response.use(async (req) => {
+//   if (req.status === 400) {
+//     const res = await req.clone().json()
+//     toast.error(res.detail)
+//   }
+//   return req
+// })
+// setClientConfig({
+//   BASE: process.env.BACKEND_URL,
+//   TOKEN: () => {
+//     return Promise.resolve('11111')
+//     // return Promise.resolve(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15))
+//   },
+// })
 
 export default async function ProductsPage({
   searchParams,

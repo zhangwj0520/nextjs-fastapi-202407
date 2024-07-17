@@ -35,10 +35,10 @@ async def authenticate_user(username: str, password: str) -> Literal[False] | Us
 
 
 def create_access_token(
-    subject: int | Any,
+    subject: str | Any,
 ) -> str:
     expires_delta = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     expire = datetime.now(timezone.utc) + expires_delta
-    to_encode = {"exp": expire, "sub": int(subject)}
+    to_encode = {"exp": expire, "sub": str(subject)}
     encoded_jwt = jwt.encode(to_encode, key=settings.SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt

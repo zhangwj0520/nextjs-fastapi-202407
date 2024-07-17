@@ -1,4 +1,3 @@
-// 'use client'
 import { toast } from 'sonner'
 import { OpenAPI, setClientConfig } from '@/client/core/OpenAPI'
 
@@ -17,10 +16,8 @@ setClientConfig({
   },
 })
 
-function FetchConfig() {
+export default function FetchServerConfig() {
   return (
     null
   )
 }
-
-export { FetchConfig }

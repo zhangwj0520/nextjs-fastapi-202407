@@ -21,8 +21,13 @@ export default {
   },
   callbacks: {
     async authorized({ auth, request: { nextUrl } }) {
+      // console.log('nextUrl', nextUrl)
       const isLoggedIn = !!auth?.user
       if (openapiPage.includes(nextUrl.pathname)) {
+        return true
+      }
+      const isApiPage = nextUrl.pathname.startsWith('/api')
+      if (isApiPage) {
         return true
       }
 
@@ -44,10 +49,6 @@ export default {
       if (isOnSignupPage) {
         return true
       }
-      // const isApiPage = nextUrl.pathname.startsWith('/api')
-      // if (isApiPage) {
-      //   return true
-      // }
 
       return false
     },
@@ -58,7 +59,12 @@ export default {
 
     //   return token
     // },
-    async jwt({ token, trigger, session, user }) {
+    async jwt({ token, trigger, session, user, account }) {
+      // console.log('account', account)
+      // if (account?.provider === "my-provider") {
+      //   return { ...token, accessToken: account.access_token }
+      // }
+
       if (user) {
         token = { ...token, id: user.id }
       }
@@ -67,6 +73,7 @@ export default {
       return token
     },
     async session({ session, token }) {
+      // console.log('session, token', session, token)
       if (token?.accessToken) {
         session.accessToken = token.accessToken
       }
@@ -97,17 +104,19 @@ export default {
           setClientConfig({
             BASE: process.env.BACKEND_URL,
           })
-          const user = await LoginService.postLoginApi({ requestBody: {
+          const res = await LoginService.postLoginApi({ requestBody: {
             username,
             password,
           } })
-          if (!user)
+          console.log('user111', res)
+          if (!res)
             return Promise.resolve(null)
 
           return {
-            ...user,
-            name: user.username,
-            id: `${user.id}`,
+            ...res.user,
+            name: res.username,
+            id: res.id,
+            access_token: res.access_token,
           }
         }
 
