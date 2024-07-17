@@ -4,6 +4,7 @@ export default Omni(
   {
     rules: {
       'no-console': 'warn',
+      'node/prefer-global/buffer': 'off',
     },
     globals: {
       process: true,

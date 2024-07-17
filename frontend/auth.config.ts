@@ -4,7 +4,7 @@ import Credentials from 'next-auth/providers/credentials'
 
 import { z } from 'zod'
 import { LoginService } from './client'
-import { setClientConfig } from '@/client/core/OpenAPI'
+import { OpenAPI } from '@/client/core/OpenAPI'
 
 const openapiPage = [
   '/openapi.json',
@@ -84,7 +84,10 @@ export default {
 
         if (parsedCredentials.success) {
           const { username, password } = parsedCredentials.data
-          setClientConfig({
+          // setClientConfig({
+          //   BASE: process.env.NEXT_PUBLIC_BACKEND_URL,
+          // })
+          OpenAPI.setConfig({
             BASE: process.env.NEXT_PUBLIC_BACKEND_URL,
           })
           const res = await LoginService.postLoginApi({ requestBody: {

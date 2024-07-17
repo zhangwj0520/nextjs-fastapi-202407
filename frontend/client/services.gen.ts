@@ -1,4 +1,4 @@
-// 文件由@zhangwj0520/openapi-ts生成
+// 文件由 @zhangwj0520/openapi-ts 生成
 
 import type { CancelablePromise } from './core/CancelablePromise'
 import { OpenAPI } from './core/OpenAPI'

@@ -25,7 +25,6 @@ export function base64(str: string): string {
   try {
     return btoa(str)
   } catch (err) {
-    // @ts-expect-error
     return Buffer.from(str).toString('base64')
   }
 }
@@ -64,8 +63,10 @@ function getUrl(config: OpenAPIConfig, options: ApiRequestOptions): string {
   const path = options.url
     .replace('{api-version}', config.VERSION)
     .replace(/\{(.*?)\}/g, (substring: string, group: string) => {
-      if (options.path?.hasOwnProperty(group)) {
-        return encoder(String(options.path[group]))
+      if (options.path) {
+        if (Object.prototype.hasOwnProperty.call(options.path, group)) {
+          return encoder(String(options.path[group]))
+        }
       }
       return substring
     })
@@ -112,14 +113,10 @@ export async function resolve<T>(options: ApiRequestOptions<T>, resolver?: T | R
 
 export async function getHeaders<T>(config: OpenAPIConfig, options: ApiRequestOptions<T>): Promise<Headers> {
   const [token, username, password, additionalHeaders] = await Promise.all([
-    // @ts-expect-error
-    resolve(options, config.TOKEN),
-    // @ts-expect-error
-    resolve(options, config.USERNAME),
-    // @ts-expect-error
-    resolve(options, config.PASSWORD),
-    // @ts-expect-error
-    resolve(options, config.HEADERS),
+    resolve<any>(options, config.TOKEN),
+    resolve<any>(options, config.USERNAME),
+    resolve<any>(options, config.PASSWORD),
+    resolve<any>(options, config.HEADERS),
   ])
 
   const headers = Object.entries({
@@ -170,7 +167,7 @@ export function getRequestBody(options: ApiRequestOptions): unknown {
   return undefined
 }
 
-export async function sendRequest(config: OpenAPIConfig,	options: ApiRequestOptions,	url: string,	body: any,	formData: FormData | undefined,	headers: Headers,	onCancel: OnCancel): Promise<Response> {
+export async function sendRequest(config: OpenAPIConfig, options: ApiRequestOptions, url: string, body: any, formData: FormData | undefined, headers: Headers, onCancel: OnCancel): Promise<Response> {
   const controller = new AbortController()
 
   let request: RequestInit = {

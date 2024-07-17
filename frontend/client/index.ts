@@ -1,4 +1,4 @@
-// 文件由@zhangwj0520/openapi-ts生成
+// 文件由 @zhangwj0520/openapi-ts 生成
 export { ApiError } from './core/ApiError'
 export { CancelablePromise, CancelError } from './core/CancelablePromise'
 export { OpenAPI, type OpenAPIConfig } from './core/OpenAPI'

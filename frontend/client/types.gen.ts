@@ -1,4 +1,4 @@
-// 文件由@zhangwj0520/openapi-ts生成
+// 文件由 @zhangwj0520/openapi-ts 生成
 
 export interface Body_login_login_form {
   grant_type?: string | null

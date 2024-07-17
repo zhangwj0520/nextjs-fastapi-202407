@@ -23,38 +23,44 @@ export class Interceptors<T> {
   }
 }
 
-export interface OpenAPIConfig {
-  BASE: string
-  CREDENTIALS: 'include' | 'omit' | 'same-origin'
-  ENCODE_PATH?: ((path: string) => string) | undefined
+export class OpenAPIConfig {
+  VERSION = '1.0'
+  BASE = ''
+  CREDENTIALS: 'include' | 'omit' | 'same-origin' = 'include'
+  WITH_CREDENTIALS: boolean = false
+  ENCODE_PATH: ((path: string) => string) | undefined
   HEADERS?: Headers | Resolver<Headers> | undefined
+  USERNAME?: string | Resolver<string> | undefined
   PASSWORD?: string | Resolver<string> | undefined
   TOKEN?: string | Resolver<string> | undefined
-  USERNAME?: string | Resolver<string> | undefined
-  VERSION: string
-  WITH_CREDENTIALS: boolean
   interceptors: {
     request: Interceptors<RequestInit>
     response: Interceptors<Response>
+  } = {
+      request: new Interceptors(),
+      response: new Interceptors(),
+    }
+
+  constructor(config?: Partial<OpenAPIConfig>) {
+    if (config) {
+      Object.assign(this, config)
+    }
+  }
+
+  setConfig(config: Partial<OpenAPIConfig>) {
+    Object.assign(this, config)
+    return this
+  }
+
+  addRequestInterceptor(fn: Middleware<RequestInit>) {
+    this.interceptors.request.use(fn)
+    return this
+  }
+
+  addResponseInterceptor(fn: Middleware<Response>) {
+    this.interceptors.response.use(fn)
+    return this
   }
 }
 
-export let OpenAPI: OpenAPIConfig = {
-  BASE: '',
-  CREDENTIALS: 'include',
-  ENCODE_PATH: undefined,
-  HEADERS: undefined,
-  PASSWORD: undefined,
-  TOKEN: undefined,
-  USERNAME: undefined,
-  VERSION: '1.0',
-  WITH_CREDENTIALS: false,
-  interceptors: {
-    request: new Interceptors(),
-    response: new Interceptors(),
-  },
-}
-
-export function setClientConfig(config: Partial<OpenAPIConfig>) {
-  OpenAPI = { ...OpenAPI, ...config }
-}
+export const OpenAPI = new OpenAPIConfig()
