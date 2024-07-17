@@ -9,8 +9,9 @@ OpenAPI.interceptors.response.use(async (req) => {
   }
   return req
 })
+console.log('process.env.NEXT_PUBLIC_BACKEND_URL', process.env.NEXT_PUBLIC_BACKEND_URL)
 setClientConfig({
-  BASE: process.env.BACKEND_URL,
+  BASE: process.env.NEXT_PUBLIC_BACKEND_URL,
   TOKEN: () => {
     return Promise.resolve('11111')
     // return Promise.resolve(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15))

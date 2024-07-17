@@ -26,10 +26,10 @@ export default {
       if (openapiPage.includes(nextUrl.pathname)) {
         return true
       }
-      const isApiPage = nextUrl.pathname.startsWith('/api')
-      if (isApiPage) {
-        return true
-      }
+      // const isApiPage = nextUrl.pathname.startsWith('/api')
+      // if (isApiPage) {
+      //   return true
+      // }
 
       // oauth回调页面
       const isAuthPage = nextUrl.pathname.startsWith('/auth')
@@ -102,7 +102,7 @@ export default {
         if (parsedCredentials.success) {
           const { username, password } = parsedCredentials.data
           setClientConfig({
-            BASE: process.env.BACKEND_URL,
+            BASE: process.env.NEXT_PUBLIC_BACKEND_URL,
           })
           const res = await LoginService.postLoginApi({ requestBody: {
             username,
