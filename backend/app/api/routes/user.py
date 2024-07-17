@@ -54,7 +54,7 @@ async def list_users(
     """
     list = await UserWihoutPassword.prisma().find_many(take=take, skip=skip)
     total = await UserWihoutPassword.prisma().count()
-    return UsersList(list=list, total=total)
+    return UsersList(list=list, total=total, newSikp=skip + take)
 
 
 @router.get(

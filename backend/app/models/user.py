@@ -6,4 +6,5 @@ from prisma.partials import UserWihoutPassword, PostWithoutRelations
 
 class UsersList(BaseModel):
     list: List[UserWihoutPassword]
+    newSikp: int
     total: int

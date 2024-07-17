@@ -79,7 +79,7 @@ export interface User {
   username: string
   hashed_password: string
   disabled: boolean
-  image?: string | null
+  image: string
   posts?: Array<Post> | null
   createdAt: string
   updatedAt: string
@@ -88,7 +88,7 @@ export interface User {
 export interface UserCreate {
   username: string
   password: string
-  email?: string | null
+  email: string
 }
 
 /**
@@ -101,7 +101,7 @@ export interface UserUpdateInput {
   username?: string
   hashed_password?: string
   disabled?: boolean
-  image?: string | null
+  image?: string
   posts?: PostUpdateManyWithoutRelationsInput
   createdAt?: string
   updatedAt?: string
@@ -132,6 +132,7 @@ export interface UserWithoutRelations {
 
 export interface UsersList {
   list: Array<UserWihoutPassword>
+  newSikp: number
   total: number
 }
 
@@ -177,20 +178,20 @@ export interface PostCreateUserApiData {
 export type PostCreateUserApiResponse = User
 
 export interface GetGetUserApiData {
-  userId: number
+  userId: string
 }
 
 export type GetGetUserApiResponse = UserWihoutPassword | null
 
 export interface PutUpdateUserApiData {
   requestBody: UserUpdateInput
-  userId: number
+  userId: string
 }
 
 export type PutUpdateUserApiResponse = UserWithoutRelations
 
 export interface DeleteDeleteUserApiData {
-  userId: number
+  userId: string
 }
 
 export type DeleteDeleteUserApiResponse = User

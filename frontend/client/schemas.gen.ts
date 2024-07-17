@@ -319,14 +319,7 @@ export const $User = {
       title: 'Disabled',
     },
     image: {
-      anyOf: [
-        {
-          type: 'string',
-        },
-        {
-          type: 'null',
-        },
-      ],
+      type: 'string',
       title: 'Image',
     },
     posts: {
@@ -355,7 +348,7 @@ export const $User = {
     },
   },
   type: 'object',
-  required: ['id', 'email', 'username', 'hashed_password', 'disabled', 'createdAt', 'updatedAt'],
+  required: ['id', 'email', 'username', 'hashed_password', 'disabled', 'image', 'createdAt', 'updatedAt'],
   title: 'User',
   description: 'Represents a User record',
 } as const
@@ -371,19 +364,12 @@ export const $UserCreate = {
       title: 'Password',
     },
     email: {
-      anyOf: [
-        {
-          type: 'string',
-        },
-        {
-          type: 'null',
-        },
-      ],
+      type: 'string',
       title: 'Email',
     },
   },
   type: 'object',
-  required: ['username', 'password'],
+  required: ['username', 'password', 'email'],
   title: 'UserCreate',
 } as const
 
@@ -421,14 +407,7 @@ export const $UserUpdateInput = {
       title: 'Disabled',
     },
     image: {
-      anyOf: [
-        {
-          type: 'string',
-        },
-        {
-          type: 'null',
-        },
-      ],
+      type: 'string',
       title: 'Image',
     },
     posts: {
@@ -575,13 +554,17 @@ export const $UsersList = {
       type: 'array',
       title: 'List',
     },
+    newSikp: {
+      type: 'integer',
+      title: 'Newsikp',
+    },
     total: {
       type: 'integer',
       title: 'Total',
     },
   },
   type: 'object',
-  required: ['list', 'total'],
+  required: ['list', 'newSikp', 'total'],
   title: 'UsersList',
 } as const
 

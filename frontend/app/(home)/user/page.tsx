@@ -1,22 +1,21 @@
 import { File, PlusCircle } from 'lucide-react'
-
-import { toast } from 'sonner'
-import { UserList } from './user-list'
-
+import UserTable from './user-table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
+import { UserService } from '@/client'
 
-export default async function ProductsPage({
+export default async function UserPage({
   searchParams,
 }: {
-  searchParams: { q: string, offset: string }
+  searchParams: { q: string, skip: string, take: string }
 }) {
   const search = searchParams.q ?? ''
-  const offset = searchParams.offset ?? 0
-  // const { products, newOffset, totalProducts } = await getProducts(
-  //   search,
-  //   Number(offset)
-  // );
+  const skip = searchParams.skip ?? 0
+  // const { list, total, newOffset } = await getUserList()
+  const { list, total, newSikp } = await UserService.getListUsersApi({
+    take: 10,
+    skip: Number(skip),
+  })
 
   return (
     <Tabs defaultValue="all">
@@ -45,14 +44,11 @@ export default async function ProductsPage({
         </div>
       </div>
       <TabsContent value="all">
-
-        <div>1111</div>
-        {/* <UserList /> */}
-        {/* <ProductsTable
-          products={products}
-          offset={newOffset ?? 0}
-          totalProducts={totalProducts}
-        /> */}
+        <UserTable
+          users={list}
+          skip={newSikp ?? 0}
+          total={total}
+        />
       </TabsContent>
     </Tabs>
   )
