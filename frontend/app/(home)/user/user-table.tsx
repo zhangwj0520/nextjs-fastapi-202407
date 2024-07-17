@@ -1,6 +1,4 @@
-// 'use client'
-
-import { redirect, useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { User } from './user'
 import {

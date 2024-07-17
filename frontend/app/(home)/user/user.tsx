@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import { MoreHorizontal } from 'lucide-react'
-// import { deleteUser } from './actions'
-// import { redirect, useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -18,12 +17,11 @@ import { UserService } from '@/client'
 export function User({ user }: { user: UserWihoutPassword }) {
   // const router = useRouter()
   async function handleDeleteUser() {
-    console.log('handleDeleteUser', user)
-    const res = await UserService.deleteDeleteUserApi({
+    'use server'
+    await UserService.deleteDeleteUserApi({
       userId: user.id,
     })
-    // router.refresh()
-    console.log('res', res)
+    redirect(`/user`)
   }
   return (
     <TableRow>
@@ -58,9 +56,9 @@ export function User({ user }: { user: UserWihoutPassword }) {
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem>Edit</DropdownMenuItem>
             <DropdownMenuItem>
-              {/* <form action={handleDeleteUser}>
+              <form action={handleDeleteUser}>
                 <button type="submit">Delete</button>
-              </form> */}
+              </form>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
