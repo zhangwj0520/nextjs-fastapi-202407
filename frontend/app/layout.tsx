@@ -10,10 +10,10 @@ import { cn } from '@/lib/utils'
 
 import '@/styles/globals.css'
 
-// const fontSans = FontSans({
-//   subsets: ['latin'],
-//   variable: '--font-sans',
-// })
+const fontSans = FontSans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+})
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -26,11 +26,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="cmn-Hans">
+    <html lang="cmn-Hans" suppressHydrationWarning>
+      <meta
+        name="format-detection"
+        content="telephone=no, date=no, email=no, address=no"
+      />
       <body
         className={cn(
           'min-h-screen bg-background font-sans antialiased',
-          // fontSans.variable,
+          fontSans.variable,
         )}
       >
 

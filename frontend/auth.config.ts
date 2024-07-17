@@ -49,7 +49,6 @@ export default {
       return false
     },
     async jwt({ token, user, account }) {
-      // console.log('token, user, account ', token, user, account)
       if (account?.provider === 'credentials') {
         token.accessToken = user.access_token
       }

@@ -9,7 +9,6 @@ OpenAPI.interceptors.response.use(async (req) => {
   }
   return req
 })
-console.log('process.env.NEXT_PUBLIC_BACKEND_URL', process.env.NEXT_PUBLIC_BACKEND_URL)
 setClientConfig({
   BASE: process.env.NEXT_PUBLIC_BACKEND_URL,
   TOKEN: () => {
