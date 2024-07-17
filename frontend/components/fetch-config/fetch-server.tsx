@@ -8,21 +8,14 @@ OpenAPI.setConfig({
     const session = await auth()
     return `${session?.accessToken}`
   },
-}).addResponseInterceptor(async (req) => {
-  if (req.status === 400) {
-    const res = await req.clone().json()
+}).addResponseInterceptor(async (response) => {
+  if (response.status === 400) {
+    const res = await response.clone().json()
     toast.error(res.detail)
   }
-  return req
+  return response
 })
 
-OpenAPI.interceptors.response.use(async (req) => {
-  if (req.status === 400) {
-    const res = await req.clone().json()
-    toast.error(res.detail)
-  }
-  return req
-})
 // setClientConfig({
 //   BASE: process.env.NEXT_PUBLIC_BACKEND_URL,
 //   TOKEN: async () => {

@@ -3,7 +3,7 @@ import SignupForm from '@/components/auth/signup-form'
 import { auth } from '@/auth'
 
 export default async function SignupPage() {
-  const session = (await auth()) as Session
+  const session = await auth()
 
   if (session) {
     console.log('session', session)

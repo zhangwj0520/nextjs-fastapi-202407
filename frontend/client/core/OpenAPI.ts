@@ -6,9 +6,11 @@ type Resolver<T> = (options: ApiRequestOptions<T>) => Promise<T>
 
 export class Interceptors<T> {
   _fns: Middleware<T>[]
+  type: 'request' | 'response'
 
-  constructor() {
+  constructor(type: 'request' | 'response') {
     this._fns = []
+    this.type = type
   }
 
   eject(fn: Middleware<T>): void {
@@ -24,6 +26,7 @@ export class Interceptors<T> {
 }
 
 export class OpenAPIConfig {
+  INIT = false
   VERSION = '1.0'
   BASE = ''
   CREDENTIALS: 'include' | 'omit' | 'same-origin' = 'include'
@@ -37,8 +40,8 @@ export class OpenAPIConfig {
     request: Interceptors<RequestInit>
     response: Interceptors<Response>
   } = {
-      request: new Interceptors(),
-      response: new Interceptors(),
+      request: new Interceptors('request'),
+      response: new Interceptors('response'),
     }
 
   constructor(config?: Partial<OpenAPIConfig>) {

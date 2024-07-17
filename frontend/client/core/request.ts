@@ -307,7 +307,8 @@ export function request<T>(config: OpenAPIConfig, options: ApiRequestOptions<T>)
       if (!onCancel.isCancelled) {
         let response = await sendRequest(config, options, url, body, formData, headers, onCancel)
 
-        for (const fn of config.interceptors.response._fns) {
+        console.log('config.interceptors.response._fns', config.interceptors.response._fns)
+        for await (const fn of config.interceptors.response._fns) {
           response = await fn(response)
         }
 

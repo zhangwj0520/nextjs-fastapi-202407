@@ -1,30 +1,29 @@
 'use client'
 import { toast } from 'sonner'
 import type { Session } from 'next-auth'
+import { useEffect } from 'react'
 import { OpenAPI } from '@/client/core/OpenAPI'
 import { auth } from '@/auth'
 
 export default function FetchClientConfig({ session }: { session: Session }) {
-  OpenAPI.setConfig({
-    BASE: process.env.NEXT_PUBLIC_BACKEND_URL,
-    TOKEN: async () => {
-      return `${session?.accessToken}`
-    },
-  }).addResponseInterceptor(async (req) => {
-    if (req.status === 400) {
-      const res = await req.clone().json()
-      toast.error(res.detail)
+  useEffect(() => {
+    if(!OpenAPI.INIT){
+      OpenAPI.setConfig({
+        INIT: true,
+        BASE: process.env.NEXT_PUBLIC_BACKEND_URL,
+        TOKEN: async () => {
+          return `${session?.accessToken}`
+        },
+      }).addResponseInterceptor(async (response) => {
+        if (response.status === 400) {
+          const res = await response.clone().json()
+          toast.error(res.detail)
+        }
+        return response
+      })
     }
-    return req
-  })
+  },[OpenAPI,OpenAPI.INIT])
 
-  OpenAPI.interceptors.response.use(async (req) => {
-    if (req.status === 400) {
-      const res = await req.clone().json()
-      toast.error(res.detail)
-    }
-    return req
-  })
   return (
     null
   )
