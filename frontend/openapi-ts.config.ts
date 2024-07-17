@@ -3,7 +3,7 @@ export default {
   input: 'http://127.0.0.1:9110/openapi.json',
   output: {
     path: 'client',
-    format: 'biome',
+    lint: 'eslint',
   },
   types: {
     enums: 'javascript',

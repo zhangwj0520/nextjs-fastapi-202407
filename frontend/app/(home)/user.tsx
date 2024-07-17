@@ -14,7 +14,7 @@ import {
 import { SignOut } from '@/components/auth-components'
 
 export async function User() {
-  const session = (await auth()) as Session
+  const session = await auth()
 
   if (!session) {
     redirect('/login')
@@ -48,7 +48,7 @@ export async function User() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>{session?.user?.name}</DropdownMenuLabel>
+        <DropdownMenuLabel>{session?.user?.username}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>用户信息</DropdownMenuItem>
         <DropdownMenuItem>设置</DropdownMenuItem>

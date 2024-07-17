@@ -1,10 +1,11 @@
-import GitHub from 'next-auth/providers/github'
-import type { NextAuthConfig } from 'next-auth'
+// import GitHub from 'next-auth/providers/github'
+import type { JWT, NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 
 import { z } from 'zod'
 import { LoginService } from './client'
-import { OpenAPI, setClientConfig } from '@/client/core/OpenAPI'
+import { setClientConfig } from '@/client/core/OpenAPI'
+import type { User as UserType } from '@/client'
 
 const openapiPage = [
   '/openapi.json',
@@ -26,11 +27,6 @@ export default {
       if (openapiPage.includes(nextUrl.pathname)) {
         return true
       }
-      // const isApiPage = nextUrl.pathname.startsWith('/api')
-      // if (isApiPage) {
-      //   return true
-      // }
-
       // oauth回调页面
       const isAuthPage = nextUrl.pathname.startsWith('/auth')
       if (isAuthPage) {
@@ -52,38 +48,27 @@ export default {
 
       return false
     },
-    // async jwt({ token, user }) {
-    //   if (user) {
-    //     token = { ...token, id: user.id }
-    //   }
-
-    //   return token
-    // },
-    async jwt({ token, trigger, session, user, account }) {
-      // console.log('account', account)
-      // if (account?.provider === "my-provider") {
-      //   return { ...token, accessToken: account.access_token }
-      // }
-
-      if (user) {
-        token = { ...token, id: user.id }
+    async jwt({ token, user, account }) {
+      // console.log('token, user, account ', token, user, account)
+      if (account?.provider === 'credentials') {
+        token.accessToken = user.access_token
       }
-      if (trigger === 'update')
-        token.name = session.user.name
+      if (user) {
+        token.username = user.username
+        token.accessToken = user.access_token
+      }
       return token
     },
     async session({ session, token }) {
-      // console.log('session, token', session, token)
       if (token?.accessToken) {
         session.accessToken = token.accessToken
       }
       if (token) {
-        const { id } = token as { id: string }
+        const { username, image } = token
         const { user } = session
 
-        session = { ...session, user: { ...user, id } }
+        session = { ...session, user: { ...user, username: username as string, image: image as string } }
       }
-
       return session
     },
   },
@@ -108,14 +93,12 @@ export default {
             username,
             password,
           } })
-          console.log('user111', res)
           if (!res)
             return Promise.resolve(null)
 
           return {
             ...res.user,
-            name: res.username,
-            id: res.id,
+            name: res.user.name,
             access_token: res.access_token,
           }
         }
@@ -127,13 +110,20 @@ export default {
 } satisfies NextAuthConfig
 
 declare module 'next-auth' {
+  interface User {
+    name?: string | null
+    email?: string | null
+    username?: string
+    disabled: boolean
+    image?: string | null
+    access_token?: string
+  }
   interface Session {
     accessToken?: any
   }
-}
-
-declare module 'next-auth/jwt' {
   interface JWT {
+    username?: string
     accessToken?: string
   }
+
 }

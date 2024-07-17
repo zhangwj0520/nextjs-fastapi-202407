@@ -1,625 +1,628 @@
 // 文件由@zhangwj0520/openapi-ts生成
 
 export const $Body_login_login_form = {
-    properties: {
-        grant_type: {
-            anyOf: [
-                {
-                    type: 'string',
-                    pattern: 'password'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Grant Type'
+  properties: {
+    grant_type: {
+      anyOf: [
+        {
+          type: 'string',
+          pattern: 'password',
         },
-        username: {
-            type: 'string',
-            title: 'Username'
+        {
+          type: 'null',
         },
-        password: {
-            type: 'string',
-            title: 'Password'
-        },
-        scope: {
-            type: 'string',
-            title: 'Scope',
-            default: ''
-        },
-        client_id: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Client Id'
-        },
-        client_secret: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Client Secret'
-        }
+      ],
+      title: 'Grant Type',
     },
-    type: 'object',
-    required: ['username', 'password'],
-    title: 'Body_login-login_form'
-} as const;
+    username: {
+      type: 'string',
+      title: 'Username',
+    },
+    password: {
+      type: 'string',
+      title: 'Password',
+    },
+    scope: {
+      type: 'string',
+      title: 'Scope',
+      default: '',
+    },
+    client_id: {
+      anyOf: [
+        {
+          type: 'string',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Client Id',
+    },
+    client_secret: {
+      anyOf: [
+        {
+          type: 'string',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Client Secret',
+    },
+  },
+  type: 'object',
+  required: ['username', 'password'],
+  title: 'Body_login-login_form',
+} as const
 
 export const $HTTPValidationError = {
-    properties: {
-        detail: {
-            items: {
-                '$ref': '#/components/schemas/ValidationError'
-            },
-            type: 'array',
-            title: 'Detail'
-        }
+  properties: {
+    detail: {
+      items: {
+        $ref: '#/components/schemas/ValidationError',
+      },
+      type: 'array',
+      title: 'Detail',
     },
-    type: 'object',
-    title: 'HTTPValidationError'
-} as const;
+  },
+  type: 'object',
+  title: 'HTTPValidationError',
+} as const
 
 export const $LoginModel = {
-    properties: {
-        username: {
-            type: 'string',
-            title: 'Username'
-        },
-        password: {
-            type: 'string',
-            title: 'Password'
-        }
+  properties: {
+    username: {
+      type: 'string',
+      title: 'Username',
     },
-    type: 'object',
-    required: ['username', 'password'],
-    title: 'LoginModel'
-} as const;
+    password: {
+      type: 'string',
+      title: 'Password',
+    },
+  },
+  type: 'object',
+  required: ['username', 'password'],
+  title: 'LoginModel',
+} as const
 
 export const $Message = {
-    properties: {
-        message: {
-            type: 'string',
-            title: 'Message'
-        }
+  properties: {
+    message: {
+      type: 'string',
+      title: 'Message',
     },
-    type: 'object',
-    required: ['message'],
-    title: 'Message'
-} as const;
+  },
+  type: 'object',
+  required: ['message'],
+  title: 'Message',
+} as const
 
 export const $Post = {
-    properties: {
-        id: {
-            type: 'string',
-            title: 'Id'
-        },
-        created_at: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Created At'
-        },
-        updated_at: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Updated At'
-        },
-        title: {
-            type: 'string',
-            title: 'Title'
-        },
-        published: {
-            type: 'boolean',
-            title: 'Published'
-        },
-        author: {
-            anyOf: [
-                {
-                    '$ref': '#/components/schemas/User'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        authorId: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Authorid'
-        },
-        createdAt: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Createdat'
-        },
-        updatedAt: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Updatedat'
-        }
+  properties: {
+    id: {
+      type: 'string',
+      title: 'Id',
     },
-    type: 'object',
-    required: ['id', 'created_at', 'updated_at', 'title', 'published', 'createdAt', 'updatedAt'],
-    title: 'Post',
-    description: 'Represents a Post record'
-} as const;
+    created_at: {
+      type: 'string',
+      format: 'date-time',
+      title: 'Created At',
+    },
+    updated_at: {
+      type: 'string',
+      format: 'date-time',
+      title: 'Updated At',
+    },
+    title: {
+      type: 'string',
+      title: 'Title',
+    },
+    published: {
+      type: 'boolean',
+      title: 'Published',
+    },
+    author: {
+      anyOf: [
+        {
+          $ref: '#/components/schemas/User',
+        },
+        {
+          type: 'null',
+        },
+      ],
+    },
+    authorId: {
+      anyOf: [
+        {
+          type: 'string',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Authorid',
+    },
+    createdAt: {
+      type: 'string',
+      format: 'date-time',
+      title: 'Createdat',
+    },
+    updatedAt: {
+      type: 'string',
+      format: 'date-time',
+      title: 'Updatedat',
+    },
+  },
+  type: 'object',
+  required: ['id', 'created_at', 'updated_at', 'title', 'published', 'createdAt', 'updatedAt'],
+  title: 'Post',
+  description: 'Represents a Post record',
+} as const
 
 export const $PostCreateWithoutRelationsInput = {
-    properties: {
-        id: {
-            type: 'string',
-            title: 'Id'
-        },
-        created_at: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Created At'
-        },
-        updated_at: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Updated At'
-        },
-        authorId: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Authorid'
-        },
-        createdAt: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Createdat'
-        },
-        updatedAt: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Updatedat'
-        },
-        title: {
-            type: 'string',
-            title: 'Title'
-        },
-        published: {
-            type: 'boolean',
-            title: 'Published'
-        }
+  properties: {
+    id: {
+      type: 'string',
+      title: 'Id',
     },
-    type: 'object',
-    required: ['title', 'published'],
-    title: 'PostCreateWithoutRelationsInput',
-    description: 'Required arguments to the Post create method, without relations'
-} as const;
+    created_at: {
+      type: 'string',
+      format: 'date-time',
+      title: 'Created At',
+    },
+    updated_at: {
+      type: 'string',
+      format: 'date-time',
+      title: 'Updated At',
+    },
+    authorId: {
+      anyOf: [
+        {
+          type: 'string',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Authorid',
+    },
+    createdAt: {
+      type: 'string',
+      format: 'date-time',
+      title: 'Createdat',
+    },
+    updatedAt: {
+      type: 'string',
+      format: 'date-time',
+      title: 'Updatedat',
+    },
+    title: {
+      type: 'string',
+      title: 'Title',
+    },
+    published: {
+      type: 'boolean',
+      title: 'Published',
+    },
+  },
+  type: 'object',
+  required: ['title', 'published'],
+  title: 'PostCreateWithoutRelationsInput',
+  description: 'Required arguments to the Post create method, without relations',
+} as const
 
 export const $PostUpdateManyWithoutRelationsInput = {
-    properties: {
-        create: {
-            items: {
-                '$ref': '#/components/schemas/PostCreateWithoutRelationsInput'
-            },
-            type: 'array',
-            title: 'Create'
-        },
-        connect: {
-            items: {
-                '$ref': '#/components/schemas/_PostWhereUnique_id_Input'
-            },
-            type: 'array',
-            title: 'Connect'
-        },
-        set: {
-            items: {
-                '$ref': '#/components/schemas/_PostWhereUnique_id_Input'
-            },
-            type: 'array',
-            title: 'Set'
-        },
-        disconnect: {
-            items: {
-                '$ref': '#/components/schemas/_PostWhereUnique_id_Input'
-            },
-            type: 'array',
-            title: 'Disconnect'
-        },
-        delete: {
-            items: {
-                '$ref': '#/components/schemas/_PostWhereUnique_id_Input'
-            },
-            type: 'array',
-            title: 'Delete'
-        }
+  properties: {
+    create: {
+      items: {
+        $ref: '#/components/schemas/PostCreateWithoutRelationsInput',
+      },
+      type: 'array',
+      title: 'Create',
     },
-    type: 'object',
-    title: 'PostUpdateManyWithoutRelationsInput'
-} as const;
+    connect: {
+      items: {
+        $ref: '#/components/schemas/_PostWhereUnique_id_Input',
+      },
+      type: 'array',
+      title: 'Connect',
+    },
+    set: {
+      items: {
+        $ref: '#/components/schemas/_PostWhereUnique_id_Input',
+      },
+      type: 'array',
+      title: 'Set',
+    },
+    disconnect: {
+      items: {
+        $ref: '#/components/schemas/_PostWhereUnique_id_Input',
+      },
+      type: 'array',
+      title: 'Disconnect',
+    },
+    delete: {
+      items: {
+        $ref: '#/components/schemas/_PostWhereUnique_id_Input',
+      },
+      type: 'array',
+      title: 'Delete',
+    },
+  },
+  type: 'object',
+  title: 'PostUpdateManyWithoutRelationsInput',
+} as const
 
 export const $SendEmail = {
-    properties: {
-        email_to: {
-            type: 'string',
-            title: 'Email To'
-        }
+  properties: {
+    email_to: {
+      type: 'string',
+      title: 'Email To',
     },
-    type: 'object',
-    required: ['email_to'],
-    title: 'SendEmail'
-} as const;
+  },
+  type: 'object',
+  required: ['email_to'],
+  title: 'SendEmail',
+} as const
 
 export const $Token = {
-    properties: {
-        access_token: {
-            type: 'string',
-            title: 'Access Token'
-        },
-        token_type: {
-            type: 'string',
-            title: 'Token Type',
-            default: 'bearer'
-        }
+  properties: {
+    access_token: {
+      type: 'string',
+      title: 'Access Token',
     },
-    type: 'object',
-    required: ['access_token'],
-    title: 'Token'
-} as const;
+    token_type: {
+      type: 'string',
+      title: 'Token Type',
+      default: 'bearer',
+    },
+    user: {
+      $ref: '#/components/schemas/User',
+    },
+  },
+  type: 'object',
+  required: ['access_token', 'user'],
+  title: 'Token',
+} as const
 
 export const $User = {
-    properties: {
-        id: {
-            type: 'string',
-            title: 'Id'
-        },
-        name: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Name'
-        },
-        email: {
-            type: 'string',
-            title: 'Email'
-        },
-        username: {
-            type: 'string',
-            title: 'Username'
-        },
-        hashed_password: {
-            type: 'string',
-            title: 'Hashed Password'
-        },
-        disabled: {
-            type: 'boolean',
-            title: 'Disabled'
-        },
-        image: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Image'
-        },
-        posts: {
-            anyOf: [
-                {
-                    items: {
-                        '$ref': '#/components/schemas/Post'
-                    },
-                    type: 'array'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Posts'
-        },
-        createdAt: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Createdat'
-        },
-        updatedAt: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Updatedat'
-        }
+  properties: {
+    id: {
+      type: 'string',
+      title: 'Id',
     },
-    type: 'object',
-    required: ['id', 'email', 'username', 'hashed_password', 'disabled', 'createdAt', 'updatedAt'],
-    title: 'User',
-    description: 'Represents a User record'
-} as const;
+    name: {
+      anyOf: [
+        {
+          type: 'string',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Name',
+    },
+    email: {
+      type: 'string',
+      title: 'Email',
+    },
+    username: {
+      type: 'string',
+      title: 'Username',
+    },
+    hashed_password: {
+      type: 'string',
+      title: 'Hashed Password',
+    },
+    disabled: {
+      type: 'boolean',
+      title: 'Disabled',
+    },
+    image: {
+      anyOf: [
+        {
+          type: 'string',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Image',
+    },
+    posts: {
+      anyOf: [
+        {
+          items: {
+            $ref: '#/components/schemas/Post',
+          },
+          type: 'array',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Posts',
+    },
+    createdAt: {
+      type: 'string',
+      format: 'date-time',
+      title: 'Createdat',
+    },
+    updatedAt: {
+      type: 'string',
+      format: 'date-time',
+      title: 'Updatedat',
+    },
+  },
+  type: 'object',
+  required: ['id', 'email', 'username', 'hashed_password', 'disabled', 'createdAt', 'updatedAt'],
+  title: 'User',
+  description: 'Represents a User record',
+} as const
 
 export const $UserCreate = {
-    properties: {
-        username: {
-            type: 'string',
-            title: 'Username'
-        },
-        password: {
-            type: 'string',
-            title: 'Password'
-        },
-        email: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Email'
-        }
+  properties: {
+    username: {
+      type: 'string',
+      title: 'Username',
     },
-    type: 'object',
-    required: ['username', 'password'],
-    title: 'UserCreate'
-} as const;
+    password: {
+      type: 'string',
+      title: 'Password',
+    },
+    email: {
+      anyOf: [
+        {
+          type: 'string',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Email',
+    },
+  },
+  type: 'object',
+  required: ['username', 'password'],
+  title: 'UserCreate',
+} as const
 
 export const $UserUpdateInput = {
-    properties: {
-        id: {
-            type: 'string',
-            title: 'Id'
-        },
-        name: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Name'
-        },
-        email: {
-            type: 'string',
-            title: 'Email'
-        },
-        username: {
-            type: 'string',
-            title: 'Username'
-        },
-        hashed_password: {
-            type: 'string',
-            title: 'Hashed Password'
-        },
-        disabled: {
-            type: 'boolean',
-            title: 'Disabled'
-        },
-        image: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Image'
-        },
-        posts: {
-            '$ref': '#/components/schemas/PostUpdateManyWithoutRelationsInput'
-        },
-        createdAt: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Createdat'
-        },
-        updatedAt: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Updatedat'
-        }
+  properties: {
+    id: {
+      type: 'string',
+      title: 'Id',
     },
-    type: 'object',
-    title: 'UserUpdateInput',
-    description: 'Optional arguments for updating a record'
-} as const;
+    name: {
+      anyOf: [
+        {
+          type: 'string',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Name',
+    },
+    email: {
+      type: 'string',
+      title: 'Email',
+    },
+    username: {
+      type: 'string',
+      title: 'Username',
+    },
+    hashed_password: {
+      type: 'string',
+      title: 'Hashed Password',
+    },
+    disabled: {
+      type: 'boolean',
+      title: 'Disabled',
+    },
+    image: {
+      anyOf: [
+        {
+          type: 'string',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Image',
+    },
+    posts: {
+      $ref: '#/components/schemas/PostUpdateManyWithoutRelationsInput',
+    },
+    createdAt: {
+      type: 'string',
+      format: 'date-time',
+      title: 'Createdat',
+    },
+    updatedAt: {
+      type: 'string',
+      format: 'date-time',
+      title: 'Updatedat',
+    },
+  },
+  type: 'object',
+  title: 'UserUpdateInput',
+  description: 'Optional arguments for updating a record',
+} as const
 
 export const $UserWihoutPassword = {
-    properties: {
-        id: {
-            type: 'string',
-            title: 'Id'
-        },
-        name: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Name'
-        },
-        email: {
-            type: 'string',
-            title: 'Email'
-        },
-        username: {
-            type: 'string',
-            title: 'Username'
-        },
-        disabled: {
-            type: 'boolean',
-            title: 'Disabled'
-        },
-        image: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Image'
-        },
-        createdAt: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Createdat'
-        },
-        updatedAt: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Updatedat'
-        }
+  properties: {
+    id: {
+      type: 'string',
+      title: 'Id',
     },
-    type: 'object',
-    required: ['id', 'email', 'username', 'disabled', 'createdAt', 'updatedAt'],
-    title: 'UserWihoutPassword'
-} as const;
+    name: {
+      anyOf: [
+        {
+          type: 'string',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Name',
+    },
+    email: {
+      type: 'string',
+      title: 'Email',
+    },
+    username: {
+      type: 'string',
+      title: 'Username',
+    },
+    disabled: {
+      type: 'boolean',
+      title: 'Disabled',
+    },
+    image: {
+      anyOf: [
+        {
+          type: 'string',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Image',
+    },
+    createdAt: {
+      type: 'string',
+      format: 'date-time',
+      title: 'Createdat',
+    },
+    updatedAt: {
+      type: 'string',
+      format: 'date-time',
+      title: 'Updatedat',
+    },
+  },
+  type: 'object',
+  required: ['id', 'email', 'username', 'disabled', 'createdAt', 'updatedAt'],
+  title: 'UserWihoutPassword',
+} as const
 
 export const $UserWithoutRelations = {
-    properties: {
-        id: {
-            type: 'string',
-            title: 'Id'
-        },
-        name: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Name'
-        },
-        email: {
-            type: 'string',
-            title: 'Email'
-        },
-        username: {
-            type: 'string',
-            title: 'Username'
-        },
-        hashed_password: {
-            type: 'string',
-            title: 'Hashed Password'
-        },
-        disabled: {
-            type: 'boolean',
-            title: 'Disabled'
-        },
-        image: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Image'
-        },
-        createdAt: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Createdat'
-        },
-        updatedAt: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Updatedat'
-        }
+  properties: {
+    id: {
+      type: 'string',
+      title: 'Id',
     },
-    type: 'object',
-    required: ['id', 'email', 'username', 'hashed_password', 'disabled', 'createdAt', 'updatedAt'],
-    title: 'UserWithoutRelations'
-} as const;
+    name: {
+      anyOf: [
+        {
+          type: 'string',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Name',
+    },
+    email: {
+      type: 'string',
+      title: 'Email',
+    },
+    username: {
+      type: 'string',
+      title: 'Username',
+    },
+    hashed_password: {
+      type: 'string',
+      title: 'Hashed Password',
+    },
+    disabled: {
+      type: 'boolean',
+      title: 'Disabled',
+    },
+    image: {
+      anyOf: [
+        {
+          type: 'string',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Image',
+    },
+    createdAt: {
+      type: 'string',
+      format: 'date-time',
+      title: 'Createdat',
+    },
+    updatedAt: {
+      type: 'string',
+      format: 'date-time',
+      title: 'Updatedat',
+    },
+  },
+  type: 'object',
+  required: ['id', 'email', 'username', 'hashed_password', 'disabled', 'createdAt', 'updatedAt'],
+  title: 'UserWithoutRelations',
+} as const
 
 export const $UsersList = {
-    properties: {
-        list: {
-            items: {
-                '$ref': '#/components/schemas/UserWihoutPassword'
-            },
-            type: 'array',
-            title: 'List'
-        },
-        total: {
-            type: 'integer',
-            title: 'Total'
-        }
+  properties: {
+    list: {
+      items: {
+        $ref: '#/components/schemas/UserWihoutPassword',
+      },
+      type: 'array',
+      title: 'List',
     },
-    type: 'object',
-    required: ['list', 'total'],
-    title: 'UsersList'
-} as const;
+    total: {
+      type: 'integer',
+      title: 'Total',
+    },
+  },
+  type: 'object',
+  required: ['list', 'total'],
+  title: 'UsersList',
+} as const
 
 export const $ValidationError = {
-    properties: {
-        loc: {
-            items: {
-                anyOf: [
-                    {
-                        type: 'string'
-                    },
-                    {
-                        type: 'integer'
-                    }
-                ]
-            },
-            type: 'array',
-            title: 'Location'
-        },
-        msg: {
+  properties: {
+    loc: {
+      items: {
+        anyOf: [
+          {
             type: 'string',
-            title: 'Message'
-        },
-        type: {
-            type: 'string',
-            title: 'Error Type'
-        }
+          },
+          {
+            type: 'integer',
+          },
+        ],
+      },
+      type: 'array',
+      title: 'Location',
     },
-    type: 'object',
-    required: ['loc', 'msg', 'type'],
-    title: 'ValidationError'
-} as const;
+    msg: {
+      type: 'string',
+      title: 'Message',
+    },
+    type: {
+      type: 'string',
+      title: 'Error Type',
+    },
+  },
+  type: 'object',
+  required: ['loc', 'msg', 'type'],
+  title: 'ValidationError',
+} as const
 
 export const $_PostWhereUnique_id_Input = {
-    properties: {
-        id: {
-            type: 'string',
-            title: 'Id'
-        }
+  properties: {
+    id: {
+      type: 'string',
+      title: 'Id',
     },
-    type: 'object',
-    required: ['id'],
-    title: '_PostWhereUnique_id_Input'
-} as const;
+  },
+  type: 'object',
+  required: ['id'],
+  title: '_PostWhereUnique_id_Input',
+} as const

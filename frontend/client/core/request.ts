@@ -183,7 +183,6 @@ export async function sendRequest(config: OpenAPIConfig,	options: ApiRequestOpti
   if (config.WITH_CREDENTIALS) {
     request.credentials = config.CREDENTIALS
   }
-  console.log('url1111111', url)
 
   for (const fn of config.interceptors.request._fns) {
     request = await fn(request)
@@ -331,7 +330,7 @@ export function request<T>(config: OpenAPIConfig, options: ApiRequestOptions<T>)
           body: responseHeader ?? transformedBody,
         }
 
-        // catchErrorCodes(options, result)
+        catchErrorCodes(options, result)
 
         resolve(result.body)
       }
