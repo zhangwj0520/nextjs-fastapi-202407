@@ -31,13 +31,14 @@ export async function User() {
           <Image
             src={
               session?.user?.image
-              ?? '/placeholder-user.jpg'
+              ?? '/images/avatar.png'
             }
             width={36}
             height={36}
             alt="Avatar"
             className="overflow-hidden rounded-full"
           />
+          <span className="sr-only">const [state, dispatch] = useReducer(first, second, third)</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

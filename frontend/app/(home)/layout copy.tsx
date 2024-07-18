@@ -23,7 +23,6 @@ import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 
 import { ThemeChange } from '@/components/home/theme'
-import { FullScreen } from '@/components/home/full-screen'
 import { User } from '@/components/home/user'
 
 import { DesktopNav } from '@/components/home/nav'
@@ -35,32 +34,8 @@ export default function DashboardLayout({
 }) {
   return (
 
-    <main className="h-screen w-screen flex bg-muted/40 flex-col">
-      <header className="h-[56px] bg-muted/40 z-30 flex items-center gap-4 border-b bg-background px-4 px-6">
-        {/* <MobileNav /> */}
-        {/* <DashboardBreadcrumb /> */}
-        <SearchInput />
-        <FullScreen />
-        <ThemeChange />
-        <User />
-      </header>
-      <div className="flex-1 flex">
-        <DesktopNav />
-        <div className="flex flex-1 flex-col sm:gap-4 sm:py-4">
-          {/* <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-            <MobileNav />
-            <DashboardBreadcrumb />
-            <SearchInput />
-            <ThemeChange />
-            <User />
-          </header> */}
-          <main className="grid flex-1 items-start gap-2 sm:px-6 sm:py-0 md:gap-4 bg-muted/40">
-            {children}
-          </main>
-        </div>
-      </div>
-
-      {/* <DesktopNav />
+    <main className="h-screen w-screen flex bg-muted/40">
+      <DesktopNav />
       <div className="flex flex-1 flex-col sm:gap-4 sm:py-4">
         <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
           <MobileNav />
@@ -72,7 +47,7 @@ export default function DashboardLayout({
         <main className="grid flex-1 items-start gap-2 sm:px-6 sm:py-0 md:gap-4 bg-muted/40">
           {children}
         </main>
-      </div> */}
+      </div>
     </main>
 
   )

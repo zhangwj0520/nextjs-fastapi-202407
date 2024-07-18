@@ -22,6 +22,9 @@ const config = {
       },
     },
     extend: {
+      backgroundImage: {
+        navbar: 'url("/images/navbar.png")',
+      },
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
       },
