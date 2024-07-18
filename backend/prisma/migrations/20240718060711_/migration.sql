@@ -6,7 +6,7 @@ CREATE TABLE "User" (
     "username" TEXT NOT NULL,
     "hashed_password" TEXT NOT NULL,
     "disabled" BOOLEAN NOT NULL DEFAULT false,
-    "image" TEXT,
+    "image" TEXT NOT NULL DEFAULT 'https://avatars.githubusercontent.com/u/60835477?v=4',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -26,9 +26,6 @@ CREATE TABLE "Post" (
 
     CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_username_key" ON "User"("username");

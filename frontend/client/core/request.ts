@@ -223,7 +223,7 @@ export async function getResponseBody(response: Response): Promise<unknown> {
   return undefined
 }
 
-export function catchErrorCodes(options: ApiRequestOptions, result: ApiResult): void {
+export function catchErrorCodes1(options: ApiRequestOptions, result: ApiResult): void {
   const errors: Record<number, string> = {
     400: 'Bad Request',
     401: 'Unauthorized',
@@ -288,6 +288,18 @@ export function catchErrorCodes(options: ApiRequestOptions, result: ApiResult): 
     )
   }
 }
+export function catchErrorCodes(result: ApiResult, options: ApiRequestOptions): void {
+  if (!result.ok) {
+    const error = {
+      status: result.status ?? 'unknown',
+      statusText: result.statusText ?? 'unknown',
+      body: result.body,
+    }
+    const errorMsg = JSON.stringify(error, null, 2)
+
+    throw new ApiError(options, result, errorMsg)
+  }
+}
 
 /**
  * Request method
@@ -307,7 +319,6 @@ export function request<T>(config: OpenAPIConfig, options: ApiRequestOptions<T>)
       if (!onCancel.isCancelled) {
         let response = await sendRequest(config, options, url, body, formData, headers, onCancel)
 
-        console.log('config.interceptors.response._fns', config.interceptors.response._fns)
         for await (const fn of config.interceptors.response._fns) {
           response = await fn(response)
         }
@@ -327,8 +338,7 @@ export function request<T>(config: OpenAPIConfig, options: ApiRequestOptions<T>)
           statusText: response.statusText,
           body: responseHeader ?? transformedBody,
         }
-
-        catchErrorCodes(options, result)
+        catchErrorCodes(result, options)
 
         resolve(result.body)
       }

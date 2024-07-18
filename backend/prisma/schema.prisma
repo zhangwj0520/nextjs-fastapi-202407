@@ -1,12 +1,14 @@
+// database
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator db {
+// generator
+generator client {
   provider             = "prisma-client-py"
-  interface            = "asyncio"
-  recursive_type_depth = 5
+  interface            = "asyncio" // asyncio or sync
+  recursive_type_depth = 3
 }
 
 model User {

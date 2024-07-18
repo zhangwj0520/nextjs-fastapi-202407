@@ -52,8 +52,8 @@ async def list_users(
     返回值:
     UsersList: 一个包含检索到的用户列表和总用户数的对象
     """
-    list = await UserWihoutPassword.prisma().find_many(take=take, skip=skip)
-    total = await UserWihoutPassword.prisma().count()
+    list = await User.prisma().find_many(take=take, skip=skip)
+    total = await User.prisma().count()
     return UsersList(list=list, total=total, newSikp=skip + take)
 
 

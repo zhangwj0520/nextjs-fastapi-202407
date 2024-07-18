@@ -33,3 +33,5 @@ pipx install mysqlclient
 lsof -i :9100
 kill -9 <PID>
 ```
+
+

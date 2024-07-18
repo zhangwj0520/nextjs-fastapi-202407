@@ -101,7 +101,8 @@ function LoginButton() {
       className="my-4 flex h-10 w-full"
       aria-disabled={pending}
     >
-      {pending ? <span className="icon-svg-spinners:6-dots-scale-middle" /> : '登录'}
+      {pending && <span className="icon-[svg-spinners--6-dots-scale-middle] mr-2" /> }
+      登录
     </Button>
   )
 }
