@@ -1,32 +1,64 @@
-import { redirect } from 'next/navigation'
-import SignupForm from '@/components/auth/signup-form'
-import { auth, signOut } from '@/auth'
+import { signOut } from '@/auth'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 
 export default async function Signout() {
-  // const session = await auth()
-
   return (
-    <main className="h-screen w-screen pt-[25vh]">
-      <form
-        action={async () => {
-          'use server'
-          await signOut()
-        }}
-        className="flex flex-col items-center gap-4 space-y-3"
-      >
+    <div className="flex flex-col space-y-3 h-full w-full">
+      <Skeleton className="h-[80px] w-full rounded-xl" />
+      <div className="flex">
+        <Skeleton className="h-10 flex-1 mr-2" />
+        <Skeleton className="h-10 flex-1 mr-2" />
+        <Skeleton className="h-10 flex-1" />
+      </div>
+      <Skeleton className="h-[125px] w-full rounded-xl" />
 
-        <div className="w-full flex-1 rounded-lg border bg-white px-6 pb-4 pt-8 shadow-md  md:w-96 dark:bg-zinc-950 flex items-center flex-col">
-          {/* <h1 className="mb-3 text-2xl font-bold">请登录</h1> */}
-          <p>接口鉴权失败,请重新登陆</p>
-          <Button
-            className="my-4 flex h-10 w-full mt-10"
-          >
-            登录
-          </Button>
-        </div>
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-[250px]" />
+        <Skeleton className="h-4 w-[200px]" />
+      </div>
+      <Skeleton className="h-[125px] w-full rounded-xl" />
 
-      </form>
-    </main>
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-[250px]" />
+        <Skeleton className="h-4 w-[200px]" />
+      </div>
+      <Dialog defaultOpen={true}>
+        <DialogTrigger>Open</DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>提示</DialogTitle>
+            <DialogDescription>
+              <span>鉴权失败,请重新登录!</span>
+              <form
+                action={async () => {
+                  'use server'
+                  await signOut()
+                }}
+                className=""
+              >
+
+                <Button
+                  className="my-4 flex h-10 w-full mt-4"
+                >
+                  登录
+                </Button>
+
+              </form>
+
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    </div>
   )
 }
