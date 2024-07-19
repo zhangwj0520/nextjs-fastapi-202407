@@ -9,6 +9,7 @@ import { FetchConfig } from '@/components/fetch-config'
 import { cn } from '@/lib/utils'
 
 import '@/styles/globals.css'
+import '@/styles/loading.css'
 
 const fontSans = FontSans({
   subsets: ['latin'],

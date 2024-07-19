@@ -37,7 +37,7 @@ export default function DashboardLayout({
     <main className="h-screen w-screen flex bg-muted/40">
       <DesktopNav />
       <div className="flex-1">
-        <header className="h-[56px] bg-muted/40 z-30 flex items-center gap-4 border-b bg-background px-4 px-6">
+        <header className="h-[56px] bg-card z-30 flex items-center gap-4 border-b bg-background px-4 px-6">
           {/* <MobileNav /> */}
           {/* <DashboardBreadcrumb /> */}
           <SearchInput />
@@ -45,21 +45,13 @@ export default function DashboardLayout({
           <ThemeChange />
           <User />
         </header>
-        <div className="flex-1 flex">
-          {/* <DesktopNav /> */}
-          <div className="flex flex-1 flex-col sm:gap-4 sm:py-4">
-            {/* <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-            <MobileNav />
-            <DashboardBreadcrumb />
-            <SearchInput />
-            <ThemeChange />
-            <User />
-          </header> */}
-            <main className="grid flex-1 items-start gap-2 sm:px-6 sm:py-0 md:gap-4 bg-muted/40">
-              {children}
-            </main>
-          </div>
-        </div>
+
+        <main className="h-[calc(100vh-56px)] p-6 flex-1 overflow-auto has-[.div]:bg-card">
+          {children}
+        </main>
+        {/* <main className="grid flex-1 items-start gap-2 p-6 bg-muted/40 overflow-y-auto">
+          {children}
+        </main> */}
 
       </div>
 
