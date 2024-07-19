@@ -21,6 +21,13 @@ import { VercelLogo } from '@/components/icons'
 
 export function DesktopNav() {
   return (
+    <aside className="inset-y-0 left-0 z-10 hidden flex-col border-r bg-background sm:flex">
+
+    </aside>
+  )
+}
+export function DesktopNavOld() {
+  return (
     <aside className="inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
       <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
         <Link
