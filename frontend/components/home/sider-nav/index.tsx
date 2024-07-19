@@ -1,19 +1,19 @@
 import { NavItem } from './nav-item'
 import { NavGroup } from './nav-group'
-import type { ItemType, MenuItemGroupType, MenuItemType } from './data'
+import type { MenuItemType } from './data'
 import { data } from './data'
 
-function generateNavItem(list: ItemType[], level = 0) {
+function generateNavItem(list: MenuItemType[], level = 0) {
   return list.map((item) => {
-    if ((item as MenuItemGroupType).children) {
+    if (item.children) {
       return (
-        <NavGroup key={item.label} label={item.label} icon={item.icon}>
-          {generateNavItem((item as MenuItemGroupType).children, level + 1)}
+        <NavGroup key={item.label} label={item.label} icon={item.icon} childList={item.children}>
+          {generateNavItem(item.children, level + 1)}
         </NavGroup>
       )
     }
     return (
-      <NavItem key={item.label} href={(item as MenuItemType).link} label={item.label} icon={item.icon} level={level} />
+      <NavItem key={item.label} href={item.link} label={item.label} icon={item.icon} level={level} />
     )
   })
 }

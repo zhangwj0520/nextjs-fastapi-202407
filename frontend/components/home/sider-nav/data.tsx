@@ -1,18 +1,12 @@
 export interface MenuItemType {
   label: string
-  link: string
+  link?: string
   icon?: string
+  children?: MenuItemType[]
 
 }
-export interface MenuItemGroupType {
-  label: string
-  icon?: string
-  children: ItemType[]
-}
 
-export type ItemType = MenuItemType | MenuItemGroupType
-
-export const data: ItemType[] = [
+export const data: MenuItemType[] = [
   {
     label: 'Documents',
     link: '/',
@@ -40,12 +34,12 @@ export const data: ItemType[] = [
     children: [
       {
         label: '用户列表',
-        link: '/user',
+        link: '/user2',
         icon: 'lucide:layout-dashboard',
       },
       {
         label: '用户权限',
-        link: '/promission',
+        link: '/user3',
         icon: 'lucide:layout-dashboard',
       },
     ],

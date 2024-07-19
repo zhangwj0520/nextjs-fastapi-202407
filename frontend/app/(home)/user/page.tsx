@@ -13,10 +13,10 @@ export default async function UserPage({
   const skip = searchParams.skip ?? 0
   const take = searchParams.take ?? 3
   // const { list, total, newOffset } = await getUserList()
-  const { list, total, newSikp } = await UserService.getListUsersApi({
-    take: 3,
-    skip: Number(skip),
-  })
+  // const { list, total, newSikp } = await UserService.getListUsersApi({
+  //   take: 3,
+  //   skip: Number(skip),
+  // })
 
   return (
     <Tabs defaultValue="all">
@@ -45,12 +45,12 @@ export default async function UserPage({
         </div>
       </div>
       <TabsContent value="all">
-        <UserTable
+        {/* <UserTable
           users={list}
           skip={newSikp ?? 0}
           take={Number(take) ?? 0}
           total={total}
-        />
+        /> */}
       </TabsContent>
     </Tabs>
   )
