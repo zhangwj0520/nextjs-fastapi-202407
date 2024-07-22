@@ -1,7 +1,12 @@
+'use client'
+import { useEffect } from 'react'
 import { NavItem } from './nav-item'
 import { NavGroup } from './nav-group'
-import type { MenuItemType } from './data'
 import { data } from './data'
+import type { MenuItemType } from './data'
+import { Icon } from '@/components/icon'
+import { useSidebar } from '@/lib/hooks/use-sidebar'
+import { cn } from '@/lib/utils'
 
 function generateNavItem(list: MenuItemType[], level = 0) {
   return list.map((item) => {
@@ -19,10 +24,17 @@ function generateNavItem(list: MenuItemType[], level = 0) {
 }
 
 export function DesktopNav() {
+  const { toggleSidebar, isSidebarOpen } = useSidebar()
+  useEffect(() => {
+    console.log('isSidebarOpen', isSidebarOpen)
+  }, [isSidebarOpen])
   return (
-    <aside className="inset-y-0 left-0 z-10 hidden flex-col border-r bg-background sm:flex w-[200px]">
+    <aside className={cn('inset-y-0 left-0 z-10 hidden flex flex-col border-r bg-background sm:flex', isSidebarOpen ? ' w-[200px]' : ' w-[68px]')}>
       <div className="h-8 m-4 rounded-lg bg-primary/30"></div>
-      {generateNavItem(data)}
+      <div className="flex-1 overflow-auto">{generateNavItem(data)}</div>
+      <div className="h-8 m-4 rounded-lg bg-primary/30 flex justify-center items-center hover:cursor-pointer" onClick={toggleSidebar}>
+        <Icon name="lucide:chevron-left" className="text-primary"></Icon>
+      </div>
     </aside>
   )
 }

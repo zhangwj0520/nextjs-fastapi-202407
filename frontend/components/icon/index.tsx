@@ -15,7 +15,7 @@ import { Icon as IconifyIcon, enableCache } from '@iconify/react'
 //   onLoad?: IconifyIconOnLoad;
 // }
 export interface IProps {
-  name: string
+  name?: string
   className?: string
   style?: Record<string, string | number>
   inline?: boolean
