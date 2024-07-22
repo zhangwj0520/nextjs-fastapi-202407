@@ -15,8 +15,8 @@ export default function Error({
   }, [error])
 
   return (
-    <div className="h-full bg-white">
-      <h2>Something went wrong!</h2>
+    <div className="">
+      <h2>接口异常!</h2>
       <Button
         onClick={
           // Attempt to recover by trying to re-render the segment
