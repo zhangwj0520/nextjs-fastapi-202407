@@ -21,14 +21,14 @@ export function NavItem({
 
   return (
     <Link href={href}>
-      <span className={cn('flex items-center rounded-lg', pathname === href ? 'active bg-[#e6f4ff] text-primary' : 'hover:bg-[#e6f4ff]', isSidebarOpen || level === 0 ? 'mx-3 my-1 p-3' : 'm-1 p-2', {
+      <span className={cn('flex items-center rounded-lg flex-nowrap overflow-hidden mx-3 my-1 p-3 h-10', pathname === href ? 'active bg-[#e6f4ff] text-primary' : 'hover:bg-[#e6f4ff]', {
         'pl-5': isSidebarOpen && level === 1,
       })}
       >
         {icon && <Icon name={icon} />}
         {(isSidebarOpen || level !== 0) && (
           <span
-            className="font-normal mx-4 text-sm"
+            className="font-normal ml-4 text-sm text-nowrap"
           >
             {label}
           </span>

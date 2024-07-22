@@ -58,23 +58,17 @@ export function NavGroup({
   }
   if (isSidebarOpen) {
     return (
-      <div className={cn(
-        'group',
-        {
-          open: isOpen,
-        },
-      )}
-      >
+      <div>
         <div
           role="button"
           onClick={toggle}
-          className={cn('flex items-center mx-3 rounded-lg my-1 p-3 hover:bg-[#e6f4ff] peer-invalid:bg-[#e6f4ff]', {
+          className={cn('flex flex-nowrap overflow-hidden items-center mx-3 my-1 rounded-lg p-3 h-10 hover:bg-[#e6f4ff] peer-invalid:bg-[#e6f4ff]', {
             'text-primary': isActive,
           })}
         >
           {icon && <Icon name={icon} />}
           <span
-            className="font-normal mx-4 text-sm"
+            className="font-normal ml-4 text-sm text-nowrap"
           >
             {label}
           </span>
