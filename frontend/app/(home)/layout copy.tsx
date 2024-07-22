@@ -10,7 +10,7 @@ import {
   Users2,
 } from 'lucide-react'
 
-import { SearchInput } from './search'
+import { SearchInput } from '../../components/home/search'
 import {
   Breadcrumb,
   BreadcrumbItem,

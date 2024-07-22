@@ -10,7 +10,7 @@ import {
   Users2,
 } from 'lucide-react'
 
-import { SearchInput } from './search'
+import { SearchInput } from '@/components/home/search'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -34,9 +34,9 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   return (
-    <main className="h-screen w-screen flex bg-muted/40">
+    <main className="h-screen w-screen flex bg-muted">
       <DesktopNav />
-      <div className="flex-1">
+      <div className="flex-1 relative pb-4">
         <header className="h-[56px] bg-card z-30 flex items-center gap-4 border-b bg-background px-4 px-6">
           {/* <MobileNav /> */}
           {/* <DashboardBreadcrumb /> */}
@@ -46,8 +46,10 @@ export default function DashboardLayout({
           <User />
         </header>
 
-        <main className="h-[calc(100vh-56px)] p-6 flex-1 overflow-auto has-[.div]:bg-card">
-          {children}
+        <main className="h-[calc(100vh-56px)] flex flex-col flex-1 overflow-auto p-4">
+          <div className="*:m-4 bg-card">
+            {children}
+          </div>
         </main>
         {/* <main className="grid flex-1 items-start gap-2 p-6 bg-muted/40 overflow-y-auto">
           {children}

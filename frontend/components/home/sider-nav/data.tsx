@@ -8,8 +8,13 @@ export interface MenuItemType {
 
 export const data: MenuItemType[] = [
   {
-    label: 'Documents',
+    label: 'Dashboard',
     link: '/',
+    icon: 'lucide:layout-dashboard',
+  },
+  {
+    label: 'Documents',
+    link: '/doc',
     icon: 'lucide:layout-dashboard',
   },
   {

@@ -19,7 +19,7 @@ export default async function ProductsPage({
   // );
 
   return (
-    <div className="bg-card">
+    <div className="">
       <Tabs defaultValue="all">
         <div className="flex items-center">
           <TabsList>
@@ -47,16 +47,10 @@ export default async function ProductsPage({
         </div>
         <TabsContent value="all">
 
-          {/* <div className="h-[500px] bg-red-300">1111</div>
-          <div className="h-[500px] bg-green-400">1111</div> */}
-          {/* <UserList /> */}
-          {/* <ProductsTable
-          products={products}
-          offset={newOffset ?? 0}
-          totalProducts={totalProducts}
-        /> */}
         </TabsContent>
       </Tabs>
+      <div className="h-[500px] bg-red-300">1111</div>
+      <div className="h-[500px] bg-green-400">1111</div>
     </div>
   )
 }
