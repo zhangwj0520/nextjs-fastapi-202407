@@ -25,15 +25,13 @@ function generateNavItem(list: MenuItemType[], level = 0) {
 
 export function DesktopNav() {
   const { toggleSidebar, isSidebarOpen } = useSidebar()
-  useEffect(() => {
-    console.log('isSidebarOpen', isSidebarOpen)
-  }, [isSidebarOpen])
+
   return (
-    <aside className={cn('inset-y-0 left-0 z-10 hidden flex flex-col border-r bg-background sm:flex duration-3000 transition-all', isSidebarOpen ? ' w-[200px]' : ' w-[68px]')}>
+    <aside className={cn('inset-y-0 left-0 z-10 hidden flex flex-col border-r bg-background sm:flex transition-all duration-300', isSidebarOpen ? ' w-[200px]' : ' w-[68px]')}>
       <div className="h-8 m-4 rounded-lg bg-primary/30"></div>
       <div className="flex-1 overflow-auto">{generateNavItem(data)}</div>
       <div className="h-8 m-4 rounded-lg bg-primary/30 flex justify-center items-center hover:cursor-pointer" onClick={toggleSidebar}>
-        <Icon name="lucide:chevrons-left" className={cn('text-primary duration-300 ease-in transition-all', isSidebarOpen ? '' : 'rotate-180')}></Icon>
+        <Icon name="lucide:chevrons-left" className={cn('text-primary ease-in transition-all duration-300', isSidebarOpen ? '' : 'rotate-180')}></Icon>
       </div>
     </aside>
   )
