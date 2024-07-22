@@ -1185,6 +1185,23 @@ files = [
 ]
 
 [[package]]
+name = "qiniu"
+version = "7.13.2"
+description = "Qiniu Resource Storage SDK"
+optional = false
+python-versions = "*"
+files = [
+    {file = "qiniu-7.13.2-py3-none-any.whl", hash = "sha256:342fda592a17c704bbd5302ec96b0cd212fb9e85cb10dc11d52417cf1d7e4815"},
+    {file = "qiniu-7.13.2.tar.gz", hash = "sha256:d0380f4880ff8fa48fb1b62deb83d56d1da6b163981933dfaa0ec8985a368853"},
+]
+
+[package.dependencies]
+requests = {version = "*", markers = "python_version >= \"3.7\""}
+
+[package.extras]
+dev = ["codecov", "coverage (<7.2)", "flake8", "freezegun", "pytest", "pytest-cov", "scrutinizer-ocular"]
+
+[[package]]
 name = "requests"
 version = "2.32.3"
 description = "Python HTTP for Humans."
@@ -1706,4 +1723,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "6766b5f165513f7a1b4970d2ead42f7e3ff3c4389fa6e504e60a644817cbf68c"
+content-hash = "18aa0b2593cc189211786aa1fe745878e5f3afb9479a50d40e868d6dc16ca6d5"
