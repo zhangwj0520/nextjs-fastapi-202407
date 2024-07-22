@@ -14,7 +14,7 @@ export default async function ProductsPage({
     <div className="relative h-screen overflow-hidden">
       <div className="flex w-full flex-col items-center space-y-4 md:flex-row md:space-x-4 md:space-y-0">
         <div className="w-full md:w-6/12">
-          <div className="relative w-full overflow-hidden bg-white shadow-lg">
+          <div className="relative w-full overflow-hidden bg-card shadow-lg">
             <a href="#" className="block h-full w-full">
               <div className="flex items-center justify-between space-x-4 px-4 py-6">
                 <div className="flex items-center">
@@ -30,11 +30,11 @@ export default async function ProductsPage({
                       <path d="M1362 1185q0 153-99.5 263.5t-258.5 136.5v175q0 14-9 23t-23 9h-135q-13 0-22.5-9.5t-9.5-22.5v-175q-66-9-127.5-31t-101.5-44.5-74-48-46.5-37.5-17.5-18q-17-21-2-41l103-135q7-10 23-12 15-2 24 9l2 2q113 99 243 125 37 8 74 8 81 0 142.5-43t61.5-122q0-28-15-53t-33.5-42-58.5-37.5-66-32-80-32.5q-39-16-61.5-25t-61.5-26.5-62.5-31-56.5-35.5-53.5-42.5-43.5-49-35.5-58-21-66.5-8.5-78q0-138 98-242t255-134v-180q0-13 9.5-22.5t22.5-9.5h135q14 0 23 9t9 23v176q57 6 110.5 23t87 33.5 63.5 37.5 39 29 15 14q17 18 5 38l-81 146q-8 15-23 16-14 3-27-7-3-3-14.5-12t-39-26.5-58.5-32-74.5-26-85.5-11.5q-95 0-155 43t-60 111q0 26 8.5 48t29.5 41.5 39.5 33 56 31 60.5 27 70 27.5q53 20 81 31.5t76 35 75.5 42.5 62 50 53 63.5 31.5 76.5 13 94z" />
                     </svg>
                   </span>
-                  <p className="ml-2 border-b border-gray-200 text-sm font-semibold text-gray-700">
+                  <p className="ml-2 border-b border-gray-200 text-sm font-semibold ">
                     Google
                   </p>
                 </div>
-                <div className="mt-6 border-b border-gray-200 text-xl font-bold text-black md:mt-0">
+                <div className="mt-6 border-b border-gray-200 text-xl font-bold md:mt-0">
                   $44,453.39
                   <span className="text-xs text-gray-400">/$100K</span>
                 </div>
@@ -47,14 +47,14 @@ export default async function ProductsPage({
         </div>
         <div className="flex w-full items-center space-x-4 md:w-1/2">
           <div className="w-1/2">
-            <div className="relative w-full bg-white px-4 py-6 shadow-lg">
-              <p className="text-2xl font-bold text-black">12</p>
+            <div className="relative w-full bg-card px-4 py-6 shadow-lg">
+              <p className="text-2xl font-bold">12</p>
               <p className="text-sm text-gray-400">Active projects</p>
             </div>
           </div>
           <div className="w-1/2">
-            <div className="relative w-full bg-white px-4 py-6 shadow-lg">
-              <p className="text-2xl font-bold text-black">$93.76</p>
+            <div className="relative w-full bg-card px-4 py-6 shadow-lg">
+              <p className="text-2xl font-bold">$93.76</p>
               <p className="text-sm text-gray-400">Commission in approval</p>
               <span className="absolute right-4 top-2 rounded-full bg-purple-500 p-4">
                 <svg
@@ -72,10 +72,10 @@ export default async function ProductsPage({
           </div>
         </div>
       </div>
-      <div className="flex flex-col flex-wrap sm:flex-row">
+      <div className="flex flex-col flex-wrap sm:flex-row mt-5">
         <div className="w-full sm:w-1/2 xl:w-1/3">
           <div className="mb-4">
-            <div className="w-full rounded-2xl bg-white p-4 shadow-lg">
+            <div className="w-full rounded-2xl bg-card p-4 shadow-lg">
               <div className="mb-6 flex items-center justify-between">
                 <div className="flex items-center">
                   <span className="relative rounded-xl bg-blue-100 p-2">
@@ -105,7 +105,7 @@ export default async function ProductsPage({
                     </svg>
                   </span>
                   <div className="flex flex-col">
-                    <span className="ml-2 font-bold text-black">
+                    <span className="ml-2 font-bold ">
                       {' Google'}
                     </span>
                     <span className="ml-2 text-sm text-gray-500">
@@ -143,7 +143,7 @@ export default async function ProductsPage({
                 <span className="flex items-center rounded-md bg-gray-200 px-2 py-1 text-xs font-semibold text-gray-500">
                   PROGRESS
                 </span>
-                <span className="flex items-center rounded-md border border-red-400 bg-white px-2 py-1 text-xs font-semibold  text-red-400">
+                <span className="flex items-center rounded-md border border-red-400 bg-card px-2 py-1 text-xs font-semibold  text-red-400">
                   HIGH PRIORITY
                 </span>
               </div>
@@ -203,7 +203,7 @@ export default async function ProductsPage({
             </div>
           </div>
           <div className="mb-4">
-            <div className="w-full rounded-2xl bg-white p-4 shadow-lg">
+            <div className="w-full rounded-2xl bg-card p-4 shadow-lg">
               <div className="mb-6 flex items-center justify-between">
                 <div className="flex items-center">
                   <span className="relative rounded-xl bg-blue-100 p-2">
@@ -234,7 +234,7 @@ export default async function ProductsPage({
                     </svg>
                   </span>
                   <div className="flex flex-col">
-                    <span className="ml-2 font-bold text-black">Slack</span>
+                    <span className="ml-2 font-bold ">Slack</span>
                     <span className="ml-2 text-sm text-gray-500">
                       Slack corporation
                     </span>
@@ -270,7 +270,7 @@ export default async function ProductsPage({
                 <span className="flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-semibold text-green-700">
                   COMPLETED
                 </span>
-                <span className="flex items-center rounded-md border border-green-600 bg-white px-2 py-1 text-xs font-semibold text-green-600">
+                <span className="flex items-center rounded-md border border-green-600 bg-card px-2 py-1 text-xs font-semibold text-green-600">
                   MEDIUM PRIORITY
                 </span>
               </div>
@@ -332,8 +332,8 @@ export default async function ProductsPage({
         </div>
         <div className="w-full sm:w-1/2 xl:w-1/3">
           <div className="mx-0 mb-4 sm:ml-4 xl:mr-4">
-            <div className="w-full rounded-2xl bg-white shadow-lg">
-              <p className="p-4 font-bold text-black">
+            <div className="w-full rounded-2xl bg-card shadow-lg">
+              <p className="p-4 font-bold ">
                 My Tasks
                 <span className="ml-2 text-sm text-gray-500">(05)</span>
               </p>
@@ -563,9 +563,9 @@ export default async function ProductsPage({
             </div>
           </div>
           <div className="mb-4 sm:ml-4 xl:mr-4">
-            <div className="w-full rounded-2xl bg-white shadow-lg">
+            <div className="w-full rounded-2xl bg-card shadow-lg">
               <div className="flex items-center justify-between p-4">
-                <p className="font-bold text-black">Google</p>
+                <p className="font-bold ">Google</p>
                 <button className="mr-4 rounded border border-gray-400 p-1 text-sm text-gray-400">
                   <svg
                     width="15"
@@ -623,7 +623,7 @@ export default async function ProductsPage({
                 </div>
               </div>
               <div className="flex items-center justify-between border-b-2 border-gray-100 p-4">
-                <p className="font-bold text-black">Slack</p>
+                <p className="font-bold ">Slack</p>
                 <button className="mr-4 rounded border border-gray-400 p-1 text-sm text-gray-400">
                   <svg
                     width="15"
@@ -762,8 +762,8 @@ export default async function ProductsPage({
         </div>
         <div className="w-full sm:w-1/2 xl:w-1/3">
           <div className="mb-4">
-            <div className="w-full rounded-2xl bg-white p-4 shadow-lg">
-              <p className="font-bold text-black">Messages</p>
+            <div className="w-full rounded-2xl bg-card p-4 shadow-lg">
+              <p className="font-bold ">Messages</p>
               <ul>
                 <li className="my-6 flex items-center space-x-2">
                   <a href="#" className="relative block">

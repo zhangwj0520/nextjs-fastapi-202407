@@ -78,6 +78,9 @@ const config = {
           DEFAULT: 'hsl(var(--info))',
           foreground: 'hsl(var(--info-foreground))',
         },
+        text: {
+          DEFAULT: 'hsl(var(--text))',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',

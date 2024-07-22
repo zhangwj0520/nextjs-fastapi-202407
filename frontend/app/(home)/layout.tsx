@@ -47,7 +47,7 @@ export default function DashboardLayout({
         </header>
 
         <main className="h-[calc(100vh-56px)] flex flex-col flex-1 overflow-auto p-4">
-          <div className="*:m-4 bg-gray-100 rounded-lg">
+          <div className="*:m-4 rounded-lg">
             {children}
           </div>
         </main>
