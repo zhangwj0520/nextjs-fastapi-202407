@@ -79,7 +79,7 @@ async def list_files(
     summary="列出存储空间下的文件",
     description="七牛云存储空间下的文件",
 )
-async def list_files(
+async def list_all_files_with_marker(
     token: CurrentUser,
     bucket: QiniuBucket,
     limit=10,

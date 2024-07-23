@@ -55,12 +55,12 @@ export const data: MenuItemType[] = [
     children: [
       {
         label: '文件管理',
-        link: '/user2',
+        link: '/netdisk-list',
         icon: 'lucide:layout-dashboard',
       },
       {
         label: '网盘概览',
-        link: '/user3',
+        link: '/netdisk-overview',
         icon: 'lucide:layout-dashboard',
       },
     ],
