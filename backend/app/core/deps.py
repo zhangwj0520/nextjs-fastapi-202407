@@ -12,6 +12,9 @@ import jwt
 
 from app.core.security import ALGORITHM
 
+from qiniu import Auth, BucketManager
+
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/login")
 
 
@@ -68,3 +71,19 @@ async def get_db():
 
 
 DB = Annotated[Prisma, Depends(get_db)]
+
+
+async def get_qiniu_auth() -> Auth:
+    return Auth(settings.QINIU_ACCESS_KEY, settings.QINIU_SECRET_KEY)
+
+
+QiniuAuth = Depends(get_qiniu_auth)
+
+
+async def get_bucket_manager() -> BucketManager:
+    q = Auth(settings.QINIU_ACCESS_KEY, settings.QINIU_SECRET_KEY)
+    return BucketManager(q)
+
+
+# 初始化BucketManager
+QiniuBucket = Annotated[BucketManager, Depends(get_bucket_manager)]

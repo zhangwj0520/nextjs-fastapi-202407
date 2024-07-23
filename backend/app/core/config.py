@@ -58,6 +58,14 @@ class Settings(BaseSettings):
     # TODO: update type to EmailStr when sqlmodel supports it
     EMAILS_FROM_NAME: str | None = None
 
+    # QINIU
+    QINIU_ACCESS_KEY: str = ""
+    QINIU_SECRET_KEY: str = ""
+    QINIU_DOMAIN: str = ""
+    QINIU_BUCKET: str = ""
+    QINIU_ZONE: str = "Zone_z1"
+    QINIU_ACCESS_TYPE: str = "public"
+
     @model_validator(mode="after")
     def _set_default_emails_from(self) -> Self:
         if not self.EMAILS_FROM_NAME:
