@@ -1,4 +1,4 @@
-import { Icon as IconifyIcon, enableCache } from '@iconify/react'
+import { Icon as IconifyIcon } from '@iconify/react'
 
 // import dataSet from '@/assets/icons/custom.json'
 

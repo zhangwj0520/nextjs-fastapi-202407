@@ -1,6 +1,5 @@
 'use client'
 import { useFormStatus } from 'react-dom'
-import { useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 
 export function LoginButton() {

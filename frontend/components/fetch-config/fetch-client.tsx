@@ -7,7 +7,7 @@ import { auth } from '@/auth'
 
 export default function FetchClientConfig({ session }: { session: Session }) {
   useEffect(() => {
-    if(!OpenAPI.INIT){
+    if (!OpenAPI.INIT) {
       OpenAPI.setConfig({
         INIT: true,
         BASE: process.env.NEXT_PUBLIC_BACKEND_URL,
@@ -22,7 +22,7 @@ export default function FetchClientConfig({ session }: { session: Session }) {
         return response
       })
     }
-  },[OpenAPI,OpenAPI.INIT])
+  }, [OpenAPI, OpenAPI.INIT])
 
   return (
     null

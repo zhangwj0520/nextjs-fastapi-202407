@@ -1,7 +1,7 @@
 import { toast } from 'sonner'
 import { redirect } from 'next/navigation'
 import { OpenAPI } from '@/client/core/OpenAPI'
-import { auth, signIn, signOut } from '@/auth'
+import { auth } from '@/auth'
 
 OpenAPI.setConfig({
   BASE: process.env.NEXT_PUBLIC_BACKEND_URL,
