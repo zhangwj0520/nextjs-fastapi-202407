@@ -18,6 +18,22 @@ export const data: MenuItemType[] = [
     icon: 'lucide:layout-dashboard',
   },
   {
+    label: '组件',
+    icon: 'lucide:component',
+    children: [
+      {
+        label: 'Button',
+        link: '/ui/button',
+        icon: 'ic:baseline-pause-presentation',
+      },
+      {
+        label: 'Table',
+        link: '/ui/table',
+        icon: 'lucide:table',
+      },
+    ],
+  },
+  {
     label: '用户管理',
     icon: 'lucide:users',
     children: [
