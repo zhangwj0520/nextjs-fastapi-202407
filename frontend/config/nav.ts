@@ -31,6 +31,11 @@ export const data: MenuItemType[] = [
         link: '/ui/table',
         icon: 'lucide:table',
       },
+      {
+        label: 'Data Table',
+        link: '/ui/data-table',
+        icon: 'radix-icons:table',
+      },
     ],
   },
   {
