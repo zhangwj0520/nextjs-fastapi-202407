@@ -286,7 +286,7 @@ export class FakerService {
    * @param data The data for the request.
    * @param data.pageSize
    * @param data.pageIndex
-   * @returns ListResponse Successful Response
+   * @returns ListResponse_FakerUser_ Successful Response
    * @throws ApiError
    */
   public static getFakerUserListApi(data: GetFakerUserListApiData = {}): CancelablePromise<GetFakerUserListApiResponse> {

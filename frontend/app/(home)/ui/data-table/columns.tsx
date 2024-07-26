@@ -3,7 +3,6 @@
 import Image from 'next/image'
 import type { ColumnDef } from '@tanstack/react-table'
 import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
-import type { Person } from './make-data'
 import { Button } from '@/components/ui/button'
 
 import {
@@ -15,8 +14,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
+import type { FakerUser } from '@/client'
+
 // https://tanstack.com/table/v8/docs/api/core/column-def
-export const columns: ColumnDef<Person>[] = [
+export const columns: ColumnDef<FakerUser>[] = [
   // {
   //   id: 'index',
   //   cell: ({ row }) => {

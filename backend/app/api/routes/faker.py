@@ -54,7 +54,7 @@ faker_data = fake_data(1000)
 async def faker_user_list(
     pageSize: int = 10,
     pageIndex: int = 0,
-) -> ListResponse:
+) -> ListResponse[FakerUser]:
     """
     这个函数的用途是从数据库中检索用户列表
 
@@ -66,4 +66,4 @@ async def faker_user_list(
     UsersList: 一个包含检索到的用户列表和总用户数的对象
     """
     rows = faker_data[pageSize * pageIndex : pageSize * pageIndex + pageSize]
-    return ListResponse(list=rows, total=1000)
+    return ListResponse[FakerUser](list=rows, total=1000)

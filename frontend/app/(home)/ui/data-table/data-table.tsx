@@ -44,7 +44,7 @@ export function DataTable() {
   })
   const data = useQuery({
     queryKey: ['data-table'],
-    queryFn: () => fetchData(pagination),
+    queryFn: () => FakerService.getFakerUserListApi(pagination),
   })
   const dataQuery = useQuery({
     queryKey: ['data', pagination.pageIndex, pagination.pageSize],
@@ -58,7 +58,7 @@ export function DataTable() {
   )
 
   const table = useReactTable({
-    data: dataQuery.data ? dataQuery.data?.list : data.data ? data.data?.list : [],
+    data: dataQuery.data ? dataQuery.data?.list : data.data ? data?.data?.list : [],
     // data: dataQuery.data?.rows || [],
     columns,
     rowCount: dataQuery.data?.total,

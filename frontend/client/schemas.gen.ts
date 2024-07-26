@@ -55,6 +55,61 @@ export const $Body_login_login_form = {
   title: 'Body_login-login_form',
 } as const
 
+export const $FakerUser = {
+  properties: {
+    id: {
+      type: 'string',
+      title: 'Id',
+    },
+    indexId: {
+      type: 'integer',
+      title: 'Indexid',
+    },
+    firstName: {
+      type: 'string',
+      title: 'Firstname',
+    },
+    lastName: {
+      type: 'string',
+      title: 'Lastname',
+    },
+    age: {
+      type: 'integer',
+      title: 'Age',
+    },
+    visits: {
+      type: 'integer',
+      title: 'Visits',
+    },
+    progress: {
+      type: 'integer',
+      title: 'Progress',
+    },
+    status: {
+      type: 'string',
+      enum: ['relationship', 'complicated', 'single'],
+      title: 'Status',
+    },
+    subRows: {
+      anyOf: [
+        {
+          items: {
+            $ref: '#/components/schemas/FakerUser',
+          },
+          type: 'array',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Subrows',
+    },
+  },
+  type: 'object',
+  required: ['id', 'indexId', 'firstName', 'lastName', 'age', 'visits', 'progress', 'status'],
+  title: 'FakerUser',
+} as const
+
 export const $HTTPValidationError = {
   properties: {
     detail: {
@@ -69,10 +124,12 @@ export const $HTTPValidationError = {
   title: 'HTTPValidationError',
 } as const
 
-export const $ListResponse = {
+export const $ListResponse_FakerUser_ = {
   properties: {
     list: {
-      items: {},
+      items: {
+        $ref: '#/components/schemas/FakerUser',
+      },
       type: 'array',
       title: 'List',
     },
@@ -83,7 +140,7 @@ export const $ListResponse = {
   },
   type: 'object',
   required: ['list', 'total'],
-  title: 'ListResponse',
+  title: 'ListResponse[FakerUser]',
 } as const
 
 export const $LoginModel = {

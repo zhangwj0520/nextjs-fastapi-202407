@@ -9,12 +9,32 @@ export interface Body_login_login_form {
   client_secret?: string | null
 }
 
+export interface FakerUser {
+  id: string
+  indexId: number
+  firstName: string
+  lastName: string
+  age: number
+  visits: number
+  progress: number
+  status: 'relationship' | 'complicated' | 'single'
+  subRows?: Array<FakerUser> | null
+}
+
+export type status = 'relationship' | 'complicated' | 'single'
+
+export const status = {
+  RELATIONSHIP: 'relationship',
+  COMPLICATED: 'complicated',
+  SINGLE: 'single',
+} as const
+
 export interface HTTPValidationError {
   detail?: Array<ValidationError>
 }
 
-export interface ListResponse {
-  list: Array<unknown>
+export interface ListResponse_FakerUser_ {
+  list: Array<FakerUser>
   total: number
 }
 
@@ -244,7 +264,7 @@ export interface GetFakerUserListApiData {
   pageSize?: number
 }
 
-export type GetFakerUserListApiResponse = ListResponse
+export type GetFakerUserListApiResponse = ListResponse_FakerUser_
 
 export interface $OpenApiTs {
   '/api/login-form': {
@@ -430,7 +450,7 @@ export interface $OpenApiTs {
         /**
          * Successful Response
          */
-        200: ListResponse
+        200: ListResponse_FakerUser_
         /**
          * Validation Error
          */
