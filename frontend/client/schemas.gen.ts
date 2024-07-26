@@ -69,6 +69,23 @@ export const $HTTPValidationError = {
   title: 'HTTPValidationError',
 } as const
 
+export const $ListResponse = {
+  properties: {
+    list: {
+      items: {},
+      type: 'array',
+      title: 'List',
+    },
+    total: {
+      type: 'integer',
+      title: 'Total',
+    },
+  },
+  type: 'object',
+  required: ['list', 'total'],
+  title: 'ListResponse',
+} as const
+
 export const $LoginModel = {
   properties: {
     username: {
@@ -251,6 +268,46 @@ export const $PostUpdateManyWithoutRelationsInput = {
   },
   type: 'object',
   title: 'PostUpdateManyWithoutRelationsInput',
+} as const
+
+export const $QiniuFileInfo = {
+  properties: {
+    id: {
+      type: 'string',
+      title: 'Id',
+    },
+    type: {
+      type: 'string',
+      enum: ['file', 'dir'],
+      title: 'Type',
+    },
+    name: {
+      type: 'string',
+      title: 'Name',
+    },
+    putTime: {
+      type: 'number',
+      title: 'Puttime',
+    },
+    fsize: {
+      type: 'number',
+      title: 'Fsize',
+    },
+    mimeType: {
+      anyOf: [
+        {
+          type: 'string',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Mimetype',
+    },
+  },
+  type: 'object',
+  required: ['id', 'type', 'name', 'putTime', 'fsize'],
+  title: 'QiniuFileInfo',
 } as const
 
 export const $SendEmail = {
@@ -459,14 +516,7 @@ export const $UserWihoutPassword = {
       title: 'Disabled',
     },
     image: {
-      anyOf: [
-        {
-          type: 'string',
-        },
-        {
-          type: 'null',
-        },
-      ],
+      type: 'string',
       title: 'Image',
     },
     createdAt: {
@@ -481,7 +531,7 @@ export const $UserWihoutPassword = {
     },
   },
   type: 'object',
-  required: ['id', 'email', 'username', 'disabled', 'createdAt', 'updatedAt'],
+  required: ['id', 'email', 'username', 'disabled', 'image', 'createdAt', 'updatedAt'],
   title: 'UserWihoutPassword',
 } as const
 
@@ -519,14 +569,7 @@ export const $UserWithoutRelations = {
       title: 'Disabled',
     },
     image: {
-      anyOf: [
-        {
-          type: 'string',
-        },
-        {
-          type: 'null',
-        },
-      ],
+      type: 'string',
       title: 'Image',
     },
     createdAt: {
@@ -541,7 +584,7 @@ export const $UserWithoutRelations = {
     },
   },
   type: 'object',
-  required: ['id', 'email', 'username', 'hashed_password', 'disabled', 'createdAt', 'updatedAt'],
+  required: ['id', 'email', 'username', 'hashed_password', 'disabled', 'image', 'createdAt', 'updatedAt'],
   title: 'UserWithoutRelations',
 } as const
 
@@ -549,7 +592,7 @@ export const $UsersList = {
   properties: {
     list: {
       items: {
-        $ref: '#/components/schemas/UserWihoutPassword',
+        $ref: '#/components/schemas/User',
       },
       type: 'array',
       title: 'List',

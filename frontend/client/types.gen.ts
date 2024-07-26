@@ -13,6 +13,11 @@ export interface HTTPValidationError {
   detail?: Array<ValidationError>
 }
 
+export interface ListResponse {
+  list: Array<unknown>
+  total: number
+}
+
 export interface LoginModel {
   username: string
   password: string
@@ -58,6 +63,22 @@ export interface PostUpdateManyWithoutRelationsInput {
   disconnect?: Array<_PostWhereUnique_id_Input>
   delete?: Array<_PostWhereUnique_id_Input>
 }
+
+export interface QiniuFileInfo {
+  id: string
+  type: 'file' | 'dir'
+  name: string
+  putTime: number
+  fsize: number
+  mimeType?: string | null
+}
+
+export type type = 'file' | 'dir'
+
+export const type = {
+  FILE: 'file',
+  DIR: 'dir',
+} as const
 
 export interface SendEmail {
   email_to: string
@@ -113,7 +134,7 @@ export interface UserWihoutPassword {
   email: string
   username: string
   disabled: boolean
-  image?: string | null
+  image: string
   createdAt: string
   updatedAt: string
 }
@@ -125,13 +146,13 @@ export interface UserWithoutRelations {
   username: string
   hashed_password: string
   disabled: boolean
-  image?: string | null
+  image: string
   createdAt: string
   updatedAt: string
 }
 
 export interface UsersList {
-  list: Array<UserWihoutPassword>
+  list: Array<User>
   newSikp: number
   total: number
 }
@@ -203,6 +224,27 @@ export interface PostTestEmailApiData {
 }
 
 export type PostTestEmailApiResponse = Message
+
+export interface Get列出存储空间下的文件apiData {
+  marker?: unknown
+  prefix?: unknown
+}
+
+export type Get列出存储空间下的文件apiResponse = Array<QiniuFileInfo>
+
+export interface Get列出存储空间下的文件api1Data {
+  limit?: unknown
+  prefix?: unknown
+}
+
+export type Get列出存储空间下的文件api1Response = Array<QiniuFileInfo>
+
+export interface GetFakerUserListApiData {
+  pageIndex?: number
+  pageSize?: number
+}
+
+export type GetFakerUserListApiResponse = ListResponse
 
 export interface $OpenApiTs {
   '/api/login-form': {
@@ -344,6 +386,51 @@ export interface $OpenApiTs {
          * Successful Response
          */
         201: Message
+        /**
+         * Validation Error
+         */
+        422: HTTPValidationError
+      }
+    }
+  }
+  '/api/netdisk/list': {
+    get: {
+      req: Get列出存储空间下的文件apiData
+      res: {
+        /**
+         * Successful Response
+         */
+        200: Array<QiniuFileInfo>
+        /**
+         * Validation Error
+         */
+        422: HTTPValidationError
+      }
+    }
+  }
+  '/api/netdisk/listwithlimit': {
+    get: {
+      req: Get列出存储空间下的文件api1Data
+      res: {
+        /**
+         * Successful Response
+         */
+        200: Array<QiniuFileInfo>
+        /**
+         * Validation Error
+         */
+        422: HTTPValidationError
+      }
+    }
+  }
+  '/api/faker/person': {
+    get: {
+      req: GetFakerUserListApiData
+      res: {
+        /**
+         * Successful Response
+         */
+        200: ListResponse
         /**
          * Validation Error
          */

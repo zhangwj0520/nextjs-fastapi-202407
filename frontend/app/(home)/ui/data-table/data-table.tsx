@@ -35,6 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { FakerService } from '@/client'
 
 export function DataTable() {
   const [pagination, setPagination] = React.useState<PaginationState>({
@@ -47,7 +48,7 @@ export function DataTable() {
   })
   const dataQuery = useQuery({
     queryKey: ['data', pagination.pageIndex, pagination.pageSize],
-    queryFn: () => fetchData(pagination),
+    queryFn: () => FakerService.getFakerUserListApi(pagination),
     placeholderData: keepPreviousData, // don't have 0 rows flash while changing pages/loading next page
   })
 
@@ -57,10 +58,10 @@ export function DataTable() {
   )
 
   const table = useReactTable({
-    data: dataQuery.data ? dataQuery.data?.rows : data.data ? data.data?.rows : [],
+    data: dataQuery.data ? dataQuery.data?.list : data.data ? data.data?.list : [],
     // data: dataQuery.data?.rows || [],
     columns,
-    rowCount: dataQuery.data?.rowCount,
+    rowCount: dataQuery.data?.total,
     getCoreRowModel: getCoreRowModel(),
     // 排序
     onSortingChange: setSorting,

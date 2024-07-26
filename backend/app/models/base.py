@@ -19,5 +19,5 @@ class Message(BaseModel):
 
 
 class ListResponse(BaseModel):
-    data: list
+    list: list
     total: int

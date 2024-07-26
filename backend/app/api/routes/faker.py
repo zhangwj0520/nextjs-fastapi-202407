@@ -51,7 +51,7 @@ faker_data = fake_data(1000)
 
 
 @router.get("/person")
-async def list_users(
+async def faker_user_list(
     pageSize: int = 10,
     pageIndex: int = 0,
 ) -> ListResponse:
@@ -66,4 +66,4 @@ async def list_users(
     UsersList: 一个包含检索到的用户列表和总用户数的对象
     """
     rows = faker_data[pageSize * pageIndex : pageSize * pageIndex + pageSize]
-    return ListResponse(data=rows, total=1000)
+    return ListResponse(list=rows, total=1000)

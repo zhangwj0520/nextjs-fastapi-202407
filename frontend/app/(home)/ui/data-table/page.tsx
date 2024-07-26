@@ -20,9 +20,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { FakerService } from '@/client'
 
-async function getData({ pageIndex, pageSize, a }: PaginationState) {
-  return await fetchData({ pageIndex, pageSize })
+async function getData({ pageIndex, pageSize }: PaginationState) {
+  return await FakerService.getFakerUserListApi({ pageIndex, pageSize })
 }
 // export async function getStaticProps(context) {
 //   const { pageIndex, pageSize } = context.params
@@ -53,7 +54,7 @@ export default async function DataTableDemo({
 
   await queryClient.prefetchQuery({
     queryKey: ['data-table'],
-    queryFn: () => fetchData({ pageIndex, pageSize }),
+    queryFn: () => FakerService.getFakerUserListApi({ pageIndex, pageSize }),
   })
 
   return (
