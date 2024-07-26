@@ -1,6 +1,8 @@
 'use client'
 
 import * as React from 'react'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
+
 import { useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 
@@ -18,6 +20,9 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import type { Person } from './make-data'
+import { fetchData } from './make-data'
+import { columns } from './columns'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
@@ -31,39 +36,42 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
-  rowCount: number
-}
-
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-  rowCount,
-}: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
-  )
+export function DataTable() {
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   })
+  const data = useQuery({
+    queryKey: ['data-table'],
+    queryFn: () => fetchData(pagination),
+  })
+  const dataQuery = useQuery({
+    queryKey: ['data', pagination.pageIndex, pagination.pageSize],
+    queryFn: () => fetchData(pagination),
+    placeholderData: keepPreviousData, // don't have 0 rows flash while changing pages/loading next page
+  })
+
+  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    [],
+  )
 
   const table = useReactTable({
-    data,
+    data: dataQuery.data ? dataQuery.data?.rows : data.data ? data.data?.rows : [],
+    // data: dataQuery.data?.rows || [],
     columns,
-    rowCount,
+    rowCount: dataQuery.data?.rowCount,
     getCoreRowModel: getCoreRowModel(),
-    // 分页
-    getPaginationRowModel: getPaginationRowModel(),
-    onPaginationChange: setPagination,
     // 排序
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    // 分页
+    manualPagination: true, // 我们正在进行手动“服务器端”分页
+    // getPaginationRowModel: getPaginationRowModel(), // If only doing manual pagination, you don't need this
+    onPaginationChange: setPagination,
+    debugTable: true,
     state: {
       sorting,
       columnFilters,
@@ -126,76 +134,7 @@ export function DataTable<TData, TValue>({
                 </TableRow>
               )}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <div className="flex items-center gap-2">
-              <button
-                className="border rounded p-1"
-                onClick={() => table.firstPage()}
-                disabled={!table.getCanPreviousPage()}
-              >
-                {'<<'}
-              </button>
-              <button
-                className="border rounded p-1"
-                onClick={() => table.previousPage()}
-                disabled={!table.getCanPreviousPage()}
-              >
-                {'<'}
-              </button>
-              <button
-                className="border rounded p-1"
-                onClick={() => table.nextPage()}
-                disabled={!table.getCanNextPage()}
-              >
-                {'>'}
-              </button>
-              <button
-                className="border rounded p-1"
-                onClick={() => table.lastPage()}
-                disabled={!table.getCanNextPage()}
-              >
-                {'>>'}
-              </button>
-              <span className="flex items-center gap-1">
-                <div>Page</div>
-                <strong>
-                  {table.getState().pagination.pageIndex + 1}
-                  {' '}
-                  of
-                  {' '}
-                  {table.getPageCount().toLocaleString()}
-                </strong>
-              </span>
-              <span className="flex items-center gap-1">
-                | Go to page:
-                <input
-                  type="number"
-                  defaultValue={table.getState().pagination.pageIndex + 1}
-                  onChange={(e) => {
-                    const page = e.target.value ? Number(e.target.value) - 1 : 0
-                    table.setPageIndex(page)
-                  }}
-                  className="border p-1 rounded w-16"
-                />
-              </span>
-              <select
-                value={table.getState().pagination.pageSize}
-                onChange={(e) => {
-                  table.setPageSize(Number(e.target.value))
-                }}
-              >
-                {[10, 20, 30, 40, 50].map(pageSize => (
-                  <option key={pageSize} value={pageSize}>
-                    Show
-                    {' '}
-                    {pageSize}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </TableRow>
-        </TableFooter>
+
       </Table>
       <div className="flex items-center justify-end space-x-2 py-4">
         <Button
@@ -214,6 +153,73 @@ export function DataTable<TData, TValue>({
         >
           Next
         </Button>
+      </div>
+      <div className="flex items-center gap-2">
+        <button
+          className="border rounded p-1"
+          onClick={() => table.firstPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          {'<<'}
+        </button>
+        <button
+          className="border rounded p-1"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          {'<'}
+        </button>
+        <button
+          className="border rounded p-1"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          {'>'}
+        </button>
+        <button
+          className="border rounded p-1"
+          onClick={() => table.lastPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          {'>>'}
+        </button>
+        <span className="flex items-center gap-1">
+          <div>Page</div>
+          <strong>
+            {table.getState().pagination.pageIndex + 1}
+            {' '}
+            of
+            {' '}
+            {table.getPageCount().toLocaleString()}
+          </strong>
+        </span>
+        <span className="flex items-center gap-1">
+          | Go to page:
+          <input
+            type="number"
+            defaultValue={table.getState().pagination.pageIndex + 1}
+            onChange={(e) => {
+              const page = e.target.value ? Number(e.target.value) - 1 : 0
+              table.setPageIndex(page)
+            }}
+            className="border p-1 rounded w-16"
+          />
+        </span>
+        <select
+          value={table.getState().pagination.pageSize}
+          onChange={(e) => {
+            table.setPageSize(Number(e.target.value))
+          }}
+        >
+          {[10, 20, 30, 40, 50].map(pageSize => (
+            <option key={pageSize} value={pageSize}>
+              Show
+              {' '}
+              {pageSize}
+            </option>
+          ))}
+        </select>
+        {dataQuery.isFetching ? 'Loading...' : null}
       </div>
     </div>
   )

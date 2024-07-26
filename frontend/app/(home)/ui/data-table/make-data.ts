@@ -2,6 +2,7 @@ import { faker } from '@faker-js/faker'
 
 export interface Person {
   id: string
+  indexId: number
   firstName: string
   lastName: string
   age: number
@@ -22,6 +23,7 @@ function range(len: number) {
 function newPerson(): Person {
   return {
     id: faker.string.uuid(),
+    indexId: 1,
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
     age: faker.number.int(40),
@@ -38,9 +40,10 @@ function newPerson(): Person {
 export function makeData(...lens: number[]) {
   const makeDataLevel = (depth = 0): Person[] => {
     const len = lens[depth]!
-    return range(len).map((_d): Person => {
+    return range(len).map((_d, index): Person => {
       return {
         ...newPerson(),
+        indexId: index + 1,
         subRows: lens[depth + 1] ? makeDataLevel(depth + 1) : undefined,
       }
     })
@@ -56,7 +59,7 @@ export async function fetchData(options: {
   pageSize: number
 }) {
   // Simulate some network latency
-  await new Promise(r => setTimeout(r, 200))
+  await new Promise(r => setTimeout(r, 500))
 
   return {
     rows: data.slice(

@@ -1,8 +1,7 @@
 import {
+  HydrationBoundary,
   QueryClient,
-  QueryClientProvider,
-  keepPreviousData,
-  useQuery,
+  dehydrate,
 } from '@tanstack/react-query'
 import type {
   ColumnDef,
@@ -22,7 +21,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 
-async function getData({ pageIndex, pageSize }: PaginationState) {
+async function getData({ pageIndex, pageSize, a }: PaginationState) {
   return await fetchData({ pageIndex, pageSize })
 }
 // export async function getStaticProps(context) {
@@ -45,37 +44,29 @@ export default async function DataTableDemo({
 }) {
   // props: {"params":{},"searchParams":{}}
 
+  const queryClient = new QueryClient()
+
   const search = searchParams.q ?? ''
   const pageIndex = Number(searchParams.pageIndex ?? 0)
   const pageSize = Number(searchParams.pageSize ?? 10)
-  const dataQuery = await getData({ pageIndex, pageSize })
+  // const dataQuery = await getData({ pageIndex, pageSize })
 
-  // const dataQuery = useQuery({
-  //   queryKey: ['data', pageIndex, pageSize],
-  //   queryFn: () => fetchData({
-  //     pageIndex,
-  //     pageSize,
-  //   }),
-  //   placeholderData: keepPreviousData, // don't have 0 rows flash while changing pages/loading next page
-  // })
+  await queryClient.prefetchQuery({
+    queryKey: ['data-table'],
+    queryFn: () => fetchData({ pageIndex, pageSize }),
+  })
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Data Table</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <DataTable
-          columns={columns}
-          data={dataQuery?.rows || []}
-          rowCount={dataQuery?.rowCount}
-          // pagination={{
-          //   pageIndex,
-          //   pageSize,
-          // }}
-        />
-      </CardContent>
-    </Card>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Card>
+        <CardHeader>
+          <CardTitle>Data Table</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <DataTable />
+        </CardContent>
+      </Card>
+    </HydrationBoundary>
 
   )
 }

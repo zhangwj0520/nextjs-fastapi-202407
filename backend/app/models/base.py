@@ -16,3 +16,8 @@ class TokenPayload(BaseModel):
 
 class Message(BaseModel):
     message: str
+
+
+class ListResponse(BaseModel):
+    data: list
+    total: int

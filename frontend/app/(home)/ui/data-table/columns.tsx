@@ -17,13 +17,18 @@ import {
 
 // https://tanstack.com/table/v8/docs/api/core/column-def
 export const columns: ColumnDef<Person>[] = [
+  // {
+  //   id: 'index',
+  //   cell: ({ row }) => {
+  //     return (
+  //       <span>{row.index + 1}</span>
+  //     )
+  //   },
+  // },
   {
-    id: 'index',
-    cell: ({ row }) => {
-      return (
-        <div>{row.index + 1}</div>
-      )
-    },
+    accessorKey: 'indexId',
+    cell: info => info.getValue(),
+    footer: props => props.column.id,
   },
   {
     accessorKey: 'firstName',
@@ -63,7 +68,7 @@ export const columns: ColumnDef<Person>[] = [
       const person = row.original
       return (
         <DropdownMenu>
-          <div className="flex gap-2">
+          <span className="flex gap-2">
             <Button>编辑</Button>
             <Button>删除</Button>
             <DropdownMenuTrigger asChild>
@@ -75,7 +80,7 @@ export const columns: ColumnDef<Person>[] = [
 
             </DropdownMenuTrigger>
 
-          </div>
+          </span>
 
           <DropdownMenuContent align="start">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
