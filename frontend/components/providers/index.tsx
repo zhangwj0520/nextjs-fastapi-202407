@@ -14,7 +14,9 @@ export function Providers({ children, ...props }: ThemeProviderProps) {
       <SidebarProvider>
         <TooltipProvider>
           <ReactQueryProviders>
+            {/* <ReactSessionProvider> */}
             {children}
+            {/* </ReactSessionProvider> */}
           </ReactQueryProviders>
         </TooltipProvider>
       </SidebarProvider>

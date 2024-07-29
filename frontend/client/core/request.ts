@@ -300,6 +300,7 @@ export function request<T>(config: OpenAPIConfig, options: ApiRequestOptions<T>)
   return new CancelablePromise(async (resolve, reject, onCancel) => {
     try {
       const url = getUrl(config, options)
+      console.log('url----url', url)
       const formData = getFormData(options)
       const body = getRequestBody(options)
       const headers = await getHeaders(config, options)

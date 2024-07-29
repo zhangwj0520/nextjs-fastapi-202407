@@ -2,15 +2,20 @@
 import { toast } from 'sonner'
 import type { Session } from 'next-auth'
 import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { OpenAPI } from '@/client/core/OpenAPI'
-import { auth } from '@/auth'
 
 export default function FetchClientConfig({ session }: { session: Session }) {
+  const router = useRouter()
+  console.log('session1111', session)
+
   useEffect(() => {
+    console.log('OpenAPI111', OpenAPI)
     if (!OpenAPI.INIT) {
       OpenAPI.setConfig({
         INIT: true,
-        BASE: process.env.NEXT_PUBLIC_BACKEND_URL,
+        BASE: '',
+        TYPE: 'client',
         TOKEN: async () => {
           return `${session?.accessToken}`
         },
@@ -19,21 +24,18 @@ export default function FetchClientConfig({ session }: { session: Session }) {
           const res = await response.clone().json()
           toast.error(res.detail)
         }
+        if (response.status === 401) {
+          router.push('/signout')
+        }
+        if (response.status === 403) {
+          router.push('/signout')
+        }
         return response
       })
     }
-  }, [OpenAPI, OpenAPI.INIT])
+  }, [router, session, OpenAPI.INIT])
 
   return (
     null
   )
-}
-export async function getServerSideProps() {
-  const session = await auth()
-
-  return {
-    props: {
-      session,
-    },
-  }
 }

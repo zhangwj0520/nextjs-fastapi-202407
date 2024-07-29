@@ -26,6 +26,7 @@ import { FullScreen } from '@/components/home/full-screen'
 import { User } from '@/components/home/user'
 
 import { DesktopNav } from '@/components/home/sider-nav'
+import FetchServerConfig from '@/components/fetch-config/server'
 
 export default function DashboardLayout({
   children,
@@ -34,6 +35,7 @@ export default function DashboardLayout({
 }) {
   return (
     <main className="h-screen w-screen flex bg-muted">
+      <FetchServerConfig />
       <DesktopNav />
       <div className="flex-1 relative pb-4">
         <header className="h-[56px] bg-card z-30 flex items-center gap-4 border-b bg-background px-4 px-6">
