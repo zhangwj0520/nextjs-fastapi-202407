@@ -7,6 +7,8 @@ from faker import Faker
 
 from app.models.base import ListResponse
 
+from app.core.deps import CurrentUser
+
 fake = Faker("zh_CN")
 
 router = APIRouter()
@@ -52,6 +54,7 @@ faker_data = fake_data(1000)
 
 @router.get("/person")
 async def faker_user_list(
+    token: CurrentUser,
     pageSize: int = 10,
     pageIndex: int = 0,
 ) -> ListResponse[FakerUser]:

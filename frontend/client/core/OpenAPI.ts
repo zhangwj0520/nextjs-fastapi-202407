@@ -52,7 +52,7 @@ export class OpenAPIConfig {
 
   setConfig(config: Partial<OpenAPIConfig>) {
     console.log('initOpen', config)
-    Object.assign(this, config, { INIT: true })
+    Object.assign(this, config)
     return this
   }
 

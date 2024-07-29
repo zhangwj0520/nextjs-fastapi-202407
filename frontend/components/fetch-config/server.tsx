@@ -10,20 +10,21 @@ OpenAPI.setConfig({
     console.log('session', session)
     return `${session?.accessToken}`
   },
-}).addResponseInterceptor(async (response) => {
-  console.log('response', response)
-  if (response.status === 400) {
-    const res = await response.clone().json()
-    toast.error(res.detail)
-  }
-  if (response.status === 401) {
-    return redirect('/signout')
-  }
-  if (response.status === 403) {
-    return redirect('/signout')
-  }
-  return response
 })
+// addResponseInterceptor(async (response) => {
+//   console.log('response', response)
+//   if (response.status === 400) {
+//     const res = await response.clone().json()
+//     toast.error(res.detail)
+//   }
+//   if (response.status === 401) {
+//     return redirect('/signout')
+//   }
+//   if (response.status === 403) {
+//     return redirect('/signout')
+//   }
+//   return response
+// })
 
 export default function OpenApiServerConfig() {
   return (
