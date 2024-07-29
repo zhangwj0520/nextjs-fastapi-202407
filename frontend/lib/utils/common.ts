@@ -7,3 +7,11 @@ export function getStringFromBuffer(buffer: ArrayBuffer) {
     .map(b => b.toString(16).padStart(2, '0'))
     .join('')
 }
+
+export function isClientSide() {
+  return typeof window !== 'undefined'
+}
+
+export function isServerSide() {
+  return typeof window === 'undefined'
+}
