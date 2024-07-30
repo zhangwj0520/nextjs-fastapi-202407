@@ -28,7 +28,8 @@ export class OpenAPIConfig {
   VERSION = '1.0'
   INIT = false
   TYPE: 'client' | 'server' = 'client'
-  BASE = process.env.NEXT_PUBLIC_BACKEND_URL
+  BASE = ''
+  // BASE = process.env.NEXT_PUBLIC_BACKEND_URL
   CREDENTIALS: 'include' | 'omit' | 'same-origin' = 'include'
   WITH_CREDENTIALS: boolean = false
   ENCODE_PATH: ((path: string) => string) | undefined

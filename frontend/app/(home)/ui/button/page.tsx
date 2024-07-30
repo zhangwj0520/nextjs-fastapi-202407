@@ -1,3 +1,5 @@
+'use client'
+import { useState } from 'react'
 import {
   Card,
   CardContent,
@@ -6,8 +8,19 @@ import {
 } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/icon'
+import { FakerService } from '@/client'
 
 export default function ButtonDemo() {
+  const [apiResponse, setApiResponse] = useState('')
+  const makeRequestWithToken = async () => {
+    try {
+      // const response = await fetch('/api/faker/person')
+      const response = await FakerService.getFakerUserListApi()
+      console.log('response', response)
+      setApiResponse(JSON.stringify(response, null, 2))
+    } catch (error) {
+    }
+  }
   return (
     <Card>
       <CardHeader>
@@ -26,6 +39,10 @@ export default function ButtonDemo() {
           </Button>
 
           <Button disabled>Button</Button>
+        </div>
+        <div className="mt-4">
+          <Button onClick={makeRequestWithToken}>获取数据</Button>
+          <pre>{apiResponse}</pre>
         </div>
 
       </CardContent>

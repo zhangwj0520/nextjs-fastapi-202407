@@ -35,7 +35,7 @@ export default function DashboardLayout({
 }) {
   return (
     <main className="h-screen w-screen flex bg-muted">
-      <FetchServerConfig />
+      {/* <FetchServerConfig /> */}
       <DesktopNav />
       <div className="flex-1 relative pb-4">
         <header className="h-[56px] bg-card z-30 flex items-center gap-4 border-b bg-background px-4 px-6">

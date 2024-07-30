@@ -7,7 +7,6 @@ OpenAPI.setConfig({
   TYPE: 'server',
   TOKEN: async () => {
     const session = await auth()
-    console.log('session', session)
     return `${session?.accessToken}`
   },
 })
