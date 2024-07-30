@@ -25,7 +25,7 @@ OpenAPI.setConfig({
   return response
 })
 
-export default function OpenApiServerConfig() {
+export function OpenApiServerConfig() {
   return (
     null
   )

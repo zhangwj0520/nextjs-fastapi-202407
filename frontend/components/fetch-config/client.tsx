@@ -1,15 +1,18 @@
 'use client'
 import { toast } from 'sonner'
+import { useSession } from 'next-auth/react'
 import type { Session } from 'next-auth'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { OpenAPI } from '@/client/core/OpenAPI'
 
-export default function FetchClientConfig({ session }: { session: Session }) {
+export function OpenApiClientConfig() {
   const router = useRouter()
-
+  // 客户端组件获取session
+  const { data, status } = useSession()
   useEffect(() => {
-    console.log('OpenAPI111', OpenAPI)
+    // console.log('OpenAPI111', OpenAPI)
+    // console.log('session, status ', session, status)
     if (!OpenAPI.INIT) {
       // OpenAPI.setConfig({
       //   INIT: true,
@@ -45,7 +48,7 @@ export default function FetchClientConfig({ session }: { session: Session }) {
         return response
       })
     }
-  }, [router, session, OpenAPI.INIT])
+  }, [router])
 
   return (
     null

@@ -12,8 +12,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { SignOut } from '@/components/auth-components'
-import FetchClientConfig from '@/components/fetch-config/client'
-import { UserService } from '@/client'
 
 export async function User() {
   const session = await auth()
@@ -21,45 +19,39 @@ export async function User() {
   if (!session) {
     redirect('/login')
   }
-  const res = await UserService.getReadUsersMeApi()
-  // console.log('res', res)
-
   return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="outline"
-            size="icon"
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="outline"
+          size="icon"
+          className="overflow-hidden rounded-full"
+        >
+          <Image
+            src={
+              session?.user?.image
+              ?? '/images/avatar.png'
+            }
+            width={36}
+            height={36}
+            alt="Avatar"
             className="overflow-hidden rounded-full"
-          >
-            <Image
-              src={
-                session?.user?.image
-                ?? '/images/avatar.png'
-              }
-              width={36}
-              height={36}
-              alt="Avatar"
-              className="overflow-hidden rounded-full"
-            />
-            <span className="sr-only">const [state, dispatch] = useReducer(first, second, third)</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>{session?.user?.username}</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>用户信息</DropdownMenuItem>
-          <DropdownMenuItem>设置</DropdownMenuItem>
+          />
+          <span className="sr-only">const [state, dispatch] = useReducer(first, second, third)</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>{session?.user?.username}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>用户信息</DropdownMenuItem>
+        <DropdownMenuItem>设置</DropdownMenuItem>
 
-          <DropdownMenuSeparator />
+        <DropdownMenuSeparator />
 
-          <DropdownMenuItem>
-            <SignOut />
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <FetchClientConfig session={session} />
-    </>
+        <DropdownMenuItem>
+          <SignOut />
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

@@ -1,8 +1,6 @@
 import type { NextRequest } from 'next/server'
-import { redirect } from 'next/navigation'
-import { auth, signOut } from '@/auth'
+import { auth } from '@/auth'
 
-// Review if we need this, and why
 function stripContentEncoding(result: Response) {
   const responseHeaders = new Headers(result.headers)
   responseHeaders.delete('content-encoding')
@@ -31,4 +29,4 @@ async function handler(request: NextRequest) {
 
 export const dynamic = 'force-dynamic'
 
-export { handler as GET, handler as POST }
+export { handler as GET, handler as POST, handler as PUT, handler as PATCH, handler as DELETE }
