@@ -1,5 +1,4 @@
 import type { ApiRequestOptions } from './ApiRequestOptions'
-import { auth } from '@/auth'
 
 type Headers = Record<string, string>
 type Middleware<T> = (value: T) => T | Promise<T>
@@ -26,10 +25,7 @@ export class Interceptors<T> {
 
 export class OpenAPIConfig {
   VERSION = '1.0'
-  INIT = false
-  TYPE: 'client' | 'server' = 'client'
   BASE = ''
-  // BASE = process.env.NEXT_PUBLIC_BACKEND_URL
   CREDENTIALS: 'include' | 'omit' | 'same-origin' = 'include'
   WITH_CREDENTIALS: boolean = false
   ENCODE_PATH: ((path: string) => string) | undefined
@@ -67,5 +63,4 @@ export class OpenAPIConfig {
   }
 }
 
-export const OpenAPI = new OpenAPIConfig({
-})
+export const OpenAPI = new OpenAPIConfig()
