@@ -24,3 +24,4 @@ T = TypeVar("T")  # 定义类型变量 T
 class ListResponse(BaseModel, Generic[T]):
     list: list[T]
     total: int
+    newSikp: int
