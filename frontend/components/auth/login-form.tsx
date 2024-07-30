@@ -1,17 +1,32 @@
 'use client'
 
-import { useActionState, useEffect } from 'react'
+import { useActionState, useCallback, useEffect } from 'react'
 import { useFormStatus } from 'react-dom'
 import Link from 'next/link'
 import { toast } from 'sonner'
-import { redirect, useRouter } from 'next/navigation'
+import { redirect, usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { getMessageFromCode } from '@/lib/utils'
 import { authenticate } from '@/app/signIn/actions'
 import { Button } from '@/components/ui/button'
 
 export default function LoginForm() {
   const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   const [result, dispatch] = useActionState(authenticate, undefined)
+
+  useEffect(() => {
+    console.log('pathname', pathname)
+  }, [pathname])
+  // const createQueryString = useCallback(
+  //   (name: string, value: string) => {
+  //     const params = new URLSearchParams(searchParams.toString())
+  //     params.set(name, value)
+
+  //     return params.toString()
+  //   },
+  //   [searchParams],
+  // )
 
   useEffect(() => {
     if (result) {
@@ -20,10 +35,10 @@ export default function LoginForm() {
       } else {
         toast.success(getMessageFromCode(result.resultCode))
         // router.refresh()
-        redirect('/')
+        redirect(searchParams?.get('callbackUrl') || '/')
       }
     }
-  }, [result, router])
+  }, [result, router, searchParams])
 
   return (
     <form
