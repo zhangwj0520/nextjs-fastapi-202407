@@ -1,21 +1,7 @@
 import type { NextRequest } from 'next/server'
 import { redirect } from 'next/navigation'
 import { auth, signOut } from '@/auth'
-import { OpenAPI } from '@/client/core/OpenAPI'
 
-OpenAPI.addResponseInterceptor(async (response) => {
-  console.log(12222)
-  if (response.status === 400) {
-    const res = await response.clone().json()
-  }
-  if (response.status === 401) {
-    redirect('/signout')
-  }
-  if (response.status === 403) {
-    redirect('/signout')
-  }
-  return response
-})
 // Review if we need this, and why
 function stripContentEncoding(result: Response) {
   const responseHeaders = new Headers(result.headers)
