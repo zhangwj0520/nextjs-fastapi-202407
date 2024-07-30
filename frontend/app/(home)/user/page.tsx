@@ -1,23 +1,13 @@
 import { File, PlusCircle } from 'lucide-react'
-import { UserTable } from './user-table'
+import { Table } from './table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
-import { UserService } from '@/client'
 
 export default async function UserPage({
-  searchParams,
+  searchParams: { q, skip, take },
 }: {
   searchParams: { q: string, skip: string, take: string }
 }) {
-  const search = searchParams.q ?? ''
-  const skip = searchParams.skip ?? 0
-  const take = searchParams.take ?? 3
-  // const { list, total, newOffset } = await getUserList()
-  const { list, total, newSikp } = await UserService.getListUsersApi({
-    take: 3,
-    skip: Number(skip),
-  })
-
   return (
     <Tabs defaultValue="all">
       <div className="flex items-center">
@@ -45,12 +35,7 @@ export default async function UserPage({
         </div>
       </div>
       <TabsContent value="all">
-        <UserTable
-          users={list}
-          skip={newSikp ?? 0}
-          take={Number(take) ?? 0}
-          total={total}
-        />
+        <Table q={q} skip={Number(skip || 0)} take={Number(take || 3)} />
       </TabsContent>
     </Tabs>
   )

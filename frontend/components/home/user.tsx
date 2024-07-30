@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { SignOut } from '@/components/auth-components'
 import FetchClientConfig from '@/components/fetch-config/client'
+import { UserService } from '@/client'
 
 export async function User() {
   const session = await auth()
@@ -20,6 +21,8 @@ export async function User() {
   if (!session) {
     redirect('/login')
   }
+  const res = await UserService.getReadUsersMeApi()
+  // console.log('res', res)
 
   return (
     <>
