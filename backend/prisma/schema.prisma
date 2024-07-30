@@ -37,3 +37,20 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Faker {
+  id        String      @id @default(cuid())
+  indexId   Int
+  firstName  String
+  lastName  String
+  age       Int
+  visits    Int
+  progress  Int
+  status    FakerStatus @default(single)
+}
+
+enum FakerStatus {
+  relationship
+  complicated
+  single
+}
