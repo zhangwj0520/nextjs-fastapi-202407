@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { Toaster } from '@/components/ui/sonner'
 import { Providers } from '@/components/providers'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
+import { OpenApiConfig } from '@/components/fetch-config'
 
 import { cn } from '@/lib/utils'
 
@@ -48,6 +49,7 @@ export default function RootLayout({
         </Providers>
         <Analytics />
         <Toaster position="top-center" richColors />
+        <OpenApiConfig />
 
       </body>
     </html>

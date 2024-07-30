@@ -11,9 +11,8 @@ export function OpenApiClientConfig() {
   // 客户端组件获取session
   const { data, status } = useSession()
   useEffect(() => {
-    // console.log('OpenAPI111', OpenAPI)
-    // console.log('session, status ', session, status)
     if (!OpenAPI.INIT) {
+      // 注释原因为, client请求时,走的是代理,
       // OpenAPI.setConfig({
       //   INIT: true,
       //   BASE: '',
