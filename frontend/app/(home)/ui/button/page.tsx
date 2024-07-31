@@ -40,11 +40,13 @@ export default function ButtonDemo() {
 
           <Button disabled>Button</Button>
         </div>
-        <div className="mt-4">
-          <Button onClick={makeRequestWithToken}>获取数据</Button>
+        <div className="mt-4 ">
+          <div className="flex gap-4">
+            <Button onClick={makeRequestWithToken}>获取数据</Button>
+            <Button onClick={() => setApiResponse('')}>隐藏数据</Button>
+          </div>
           <pre>{apiResponse}</pre>
         </div>
-
       </CardContent>
     </Card>
 

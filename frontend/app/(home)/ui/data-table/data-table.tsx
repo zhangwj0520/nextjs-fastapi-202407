@@ -20,10 +20,26 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import type { Person } from './make-data'
-import { fetchData } from './make-data'
 import { columns } from './columns'
-import { Button } from '@/components/ui/button'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+
 import { Input } from '@/components/ui/input'
 
 import {
@@ -135,9 +151,69 @@ export function DataTable() {
                 </TableRow>
               )}
         </TableBody>
-
       </Table>
-      <div className="flex items-center justify-end space-x-2 py-4">
+      <div className="flex justify-between items-center mt-6">
+        <div className="flex items-center">
+          <div>
+            <Select defaultValue="10" value={`${table.getState().pagination.pageSize}`} onValueChange={val => table.setPageSize(Number(val))}>
+              <SelectTrigger className="">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="10">10条/页</SelectItem>
+                  <SelectItem value="20">20条/页</SelectItem>
+                  <SelectItem value="50">50条/页</SelectItem>
+                  <SelectItem value="100">100条/页</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="w-[200px] ml-2">
+            共
+            <span className="text-primary">{dataQuery.data?.total || 0}</span>
+            条数据
+          </div>
+          {dataQuery.isFetching ? 'Loading...' : null}
+        </div>
+        <Pagination className="">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                simple
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+              />
+            </PaginationItem>
+            <Input
+              type="number"
+              max={table.getPageCount()}
+              min={1}
+              value={table.getState().pagination.pageIndex + 1}
+              defaultValue={table.getState().pagination.pageIndex + 1}
+              onChange={(e) => {
+                const page = e.target.value ? Number(e.target.value) - 1 : 0
+                table.setPageIndex(page)
+              }}
+              className="h-8 p-1 text-center"
+            />
+            <span className="mx-1">
+              /
+            </span>
+            {table.getPageCount().toLocaleString()}
+
+            <PaginationItem>
+              <PaginationNext
+                simple
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      </div>
+
+      {/* <div className="flex items-center justify-end space-x-2 py-4">
         <Button
           variant="outline"
           size="sm"
@@ -221,7 +297,7 @@ export function DataTable() {
           ))}
         </select>
         {dataQuery.isFetching ? 'Loading...' : null}
-      </div>
+      </div> */}
     </div>
   )
 }

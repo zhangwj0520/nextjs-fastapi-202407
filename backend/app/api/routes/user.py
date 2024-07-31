@@ -14,6 +14,7 @@ from typing import Optional
 from app.models.user import UsersList
 from app.core.security import get_password_hash
 from app.core.deps import CurrentUser, DB, TokenDep
+from app.models.base import ListResponse
 
 router = APIRouter()
 
@@ -36,12 +37,12 @@ async def read_own_items(
     return [{"item_id": "Foo", "owner": current_user.username}]
 
 
-@router.get("", response_model=UsersList)
+@router.get("", response_model=ListResponse[User])
 async def list_users(
     token: CurrentUser,
     take: int = 10,
     skip: int = 0,
-) -> UsersList:
+) -> ListResponse[User]:
     """
     这个函数的用途是从数据库中检索用户列表
 
@@ -54,7 +55,7 @@ async def list_users(
     """
     list = await User.prisma().find_many(take=take, skip=skip)
     total = await User.prisma().count()
-    return UsersList(list=list, total=total, newSikp=skip + take)
+    return ListResponse(list=list, total=total, newSikp=skip + take)
 
 
 @router.get(

@@ -15,7 +15,7 @@ from app.core.deps import CurrentUser
 router = APIRouter()
 
 
-@router.get("/person")
+@router.get("/person", response_model=ListResponse[Faker])
 async def faker_user_list(
     token: CurrentUser,
     pageSize: int = 10,

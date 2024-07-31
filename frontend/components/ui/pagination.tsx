@@ -43,23 +43,33 @@ PaginationItem.displayName = 'PaginationItem'
 
 type PaginationLinkProps = {
   isActive?: boolean
+  disabled?: boolean
 } & Pick<ButtonProps, 'size'> &
 React.ComponentProps<'a'>
+
+type PaginationPreviousProps = {
+  simple?: boolean
+} & PaginationLinkProps
 
 function PaginationLink({
   className,
   isActive,
   size = 'icon',
+  disabled = false,
   ...props
 }: PaginationLinkProps) {
   return (
     <a
+      aria-disabled={disabled}
       aria-current={isActive ? 'page' : undefined}
       className={cn(
+        'aria-disabled:hover:cursor-not-allowed aria-disabled:pointer-events-none aria-disabled:opacity-50',
         buttonVariants({
           variant: isActive ? 'outline' : 'ghost',
           size,
+
         }),
+        { 'hover:cursor-not-allowed pointer-events-none opacity-50': false },
         className,
       )}
       {...props}
@@ -70,17 +80,20 @@ PaginationLink.displayName = 'PaginationLink'
 
 function PaginationPrevious({
   className,
+  disabled,
+  simple = false,
   ...props
-}: React.ComponentProps<typeof PaginationLink>) {
+}: PaginationPreviousProps) {
   return (
     <PaginationLink
       aria-label="Go to previous page"
       size="default"
+      aria-disabled={disabled}
       className={cn('gap-1 pl-2.5', className)}
       {...props}
     >
       <ChevronLeftIcon className="h-4 w-4" />
-      <span>上一页</span>
+      {!simple && <span>上一页</span>}
     </PaginationLink>
   )
 }
@@ -88,16 +101,19 @@ PaginationPrevious.displayName = 'PaginationPrevious'
 
 function PaginationNext({
   className,
+  disabled,
+  simple = false,
   ...props
-}: React.ComponentProps<typeof PaginationLink>) {
+}: PaginationPreviousProps) {
   return (
     <PaginationLink
       aria-label="Go to next page"
       size="default"
+      aria-disabled={disabled}
       className={cn('gap-1 pr-2.5', className)}
       {...props}
     >
-      <span>下一页</span>
+      {!simple && <span>下一页</span>}
       <ChevronRightIcon className="h-4 w-4" />
     </PaginationLink>
   )
