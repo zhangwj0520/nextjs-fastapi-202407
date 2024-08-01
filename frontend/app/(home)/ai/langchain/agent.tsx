@@ -51,7 +51,6 @@ async function agent(inputs: {
   const remoteRunnable = new RemoteRunnable({
     url: API_URL,
   })
-
   let selectedToolComponent: ToolComponent | null = null
   let selectedToolUI: ReturnType<typeof createStreamableUI> | null = null
 

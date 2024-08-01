@@ -7,7 +7,7 @@ export async function OpenApiConfig() {
   const session = await auth()
 
   return (
-    <SessionProvider session={session}>
+    <SessionProvider basePath="/auth" session={session}>
       <OpenApiClientConfig />
       <OpenApiServerConfig />
     </SessionProvider>

@@ -1,6 +1,7 @@
 'use client'
 
 import { format } from 'date-fns'
+import { zhCN } from 'date-fns/locale'
 import { Card } from '../ui/card'
 import { Progress } from '../ui/progress'
 import { Skeleton } from '../ui/skeleton'
@@ -8,7 +9,9 @@ import { Skeleton } from '../ui/skeleton'
 export interface CurrentWeatherProps {
   temperature: number
   city: string
-  state: string
+  province: string
+  weather: string
+  reporttime: string
 }
 
 export function CurrentWeatherLoading(): JSX.Element {
@@ -36,22 +39,23 @@ export function CurrentWeatherLoading(): JSX.Element {
 }
 
 export function CurrentWeather(props: CurrentWeatherProps): JSX.Element {
-  const currentTime = format(new Date(), 'hh:mm:ss a')
-  const currentDay = format(new Date(), 'EEEE')
-  // assume the maximum temperature is 130 and the minium is -20
-  const weatherAsPercentage = (props.temperature + 20) / 150
+  const currentTime = format(new Date(), 'HH:mm:ss')
+  const currentDay = format(new Date(), 'EEEE', { locale: zhCN })
+  // assume the maximum temperature is 50 and the minium is -20
+  const weatherAsPercentage = (props.temperature + 20) / 70
   return (
     <Card className="w-[325px] max-w-[325px] p-4 h-[300px] max-h-[300px] flex flex-col text-gray-50 bg-black">
       <div className="flex justify-between items-center mb-1">
         <p className="font-medium">{currentDay}</p>
         <p className="font-medium">{currentTime}</p>
       </div>
-      <div className="text-left mb-4">
+      <div className="text-left mb-4 flex justify-between">
         <p className="font-medium">
-          {props.city}
+          {props.province}
           ,
-          {props.state}
+          {props.city}
         </p>
+        <p>{props.weather}</p>
       </div>
       <div className="flex-grow flex flex-col justify-center items-center mb-8">
         <div>

@@ -26,11 +26,11 @@ router = APIRouter()
 class GenerativeUIState(TypedDict, total=False):
     input: HumanMessage
     result: Optional[str]
-    """Plain text response if no tool was used."""
+    """如果未使用工具，则为纯文本响应。"""
     tool_calls: Optional[List[dict]]
-    """A list of parsed tool calls."""
+    """已解析的工具调用列表。"""
     tool_result: Optional[dict]
-    """The result of a tool call."""
+    """工具调用的结果。"""
 
 
 def invoke_model(state: GenerativeUIState, config: RunnableConfig) -> GenerativeUIState:
@@ -39,8 +39,10 @@ def invoke_model(state: GenerativeUIState, config: RunnableConfig) -> Generative
         [
             (
                 "system",
-                "You are a helpful assistant. You're provided a list of tools, and an input from the user.\n"
-                + "Your job is to determine whether or not you have a tool which can handle the users input, or respond with plain text.",
+                "你是一个有用的助手。您提供了一系列的工具,以及来自用户的输入。\n"
+                + "你的工作是确定你是否有可以处理用户输入的工具,或使用纯文本响应进行回答。",
+                # "You are a helpful assistant. You're provided a list of tools, and an input from the user.\n"
+                # + "Your job is to determine whether or not you have a tool which can handle the users input, or respond with plain text.",
             ),
             MessagesPlaceholder("input"),
         ]
@@ -49,7 +51,7 @@ def invoke_model(state: GenerativeUIState, config: RunnableConfig) -> Generative
     tools = [github_repo, invoice_parser, weather_data]
     model_with_tools = model.bind_tools(tools)
     chain = initial_prompt | model_with_tools
-    result = chain.invoke({"input": state["input"]}, config)
+    result = chain.invoke({"input": state["input"]}, config)  # type: ignore
 
     if not isinstance(result, AIMessage):
         raise ValueError("Invalid result from model. Expected AIMessage.")
@@ -90,10 +92,18 @@ def create_graph() -> CompiledGraph:
 
     workflow.add_node("invoke_model", invoke_model)  # type: ignore
     workflow.add_node("invoke_tools", invoke_tools)
+
+    # Add a conditional edge from the starting node to any number of destination nodes.
+    # 添加从起始节点到任意数量的目标节点的条件边。
     workflow.add_conditional_edges("invoke_model", invoke_tools_or_return)
+
+    # 指定要在图中调用的第一个节点。
     workflow.set_entry_point("invoke_model")
+
+    # 将节点标记为图形的终点
     workflow.set_finish_point("invoke_tools")
 
+    # 将状态图编译为 CompiledGraph 对象。
     graph = workflow.compile()
     return graph
 
