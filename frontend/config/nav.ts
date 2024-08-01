@@ -18,6 +18,17 @@ export const data: MenuItemType[] = [
     icon: 'lucide:layout-dashboard',
   },
   {
+    label: 'AI',
+    icon: 'flowbite:messages-outline',
+    children: [
+      {
+        label: 'LangChainPage',
+        link: '/ai/langchain',
+        icon: 'lucide:message-square-more',
+      },
+    ],
+  },
+  {
     label: '组件',
     icon: 'lucide:component',
     children: [
