@@ -9,7 +9,10 @@ export interface Body_login_login_form {
   client_secret?: string | null
 }
 
-export interface FakerUser {
+/**
+ * Represents a Faker record
+ */
+export interface Faker {
   id: string
   indexId: number
   firstName: string
@@ -17,25 +20,49 @@ export interface FakerUser {
   age: number
   visits: number
   progress: number
-  status: 'relationship' | 'complicated' | 'single'
-  subRows?: Array<FakerUser> | null
+  status: FakerStatus
 }
 
-export type status = 'relationship' | 'complicated' | 'single'
+export type FakerStatus = 'relationship' | 'complicated' | 'single'
 
-export const status = {
+export const FakerStatus = {
   RELATIONSHIP: 'relationship',
   COMPLICATED: 'complicated',
   SINGLE: 'single',
 } as const
 
+/**
+ * Shared information between create requests of feedback and feedback objects.
+ */
+export interface FeedbackCreateRequestTokenBased {
+  token_or_url: string
+  score?: number | boolean | null
+  value?: number | boolean | string | {
+    [key: string]: unknown
+  } | null
+  comment?: string | null
+  correction?: {
+    [key: string]: unknown
+  } | null
+  metadata?: {
+    [key: string]: unknown
+  } | null
+}
+
 export interface HTTPValidationError {
   detail?: Array<ValidationError>
 }
 
-export interface ListResponse_FakerUser_ {
-  list: Array<FakerUser>
+export interface ListResponse_Faker_ {
+  list: Array<Faker>
   total: number
+  newSikp: number
+}
+
+export interface ListResponse_User_ {
+  list: Array<User>
+  total: number
+  newSikp: number
 }
 
 export interface LoginModel {
@@ -171,12 +198,6 @@ export interface UserWithoutRelations {
   updatedAt: string
 }
 
-export interface UsersList {
-  list: Array<User>
-  newSikp: number
-  total: number
-}
-
 export interface ValidationError {
   loc: Array<(string | number)>
   msg: string
@@ -210,7 +231,7 @@ export interface GetListUsersApiData {
   take?: number
 }
 
-export type GetListUsersApiResponse = UsersList
+export type GetListUsersApiResponse = ListResponse_User_
 
 export interface PostCreateUserApiData {
   requestBody: UserCreate
@@ -237,6 +258,36 @@ export interface DeleteDeleteUserApiData {
 
 export type DeleteDeleteUserApiResponse = User
 
+export type GetInputSchemaApiResponse = unknown
+
+export interface GetInputSchemaWithConfigApiData {
+  configHash: string
+}
+
+export type GetInputSchemaWithConfigApiResponse = unknown
+
+export type GetOutputSchemaApiResponse = unknown
+
+export interface GetOutputSchemaWithConfigApiData {
+  configHash: string
+}
+
+export type GetOutputSchemaWithConfigApiResponse = unknown
+
+export type GetConfigSchemaApiResponse = unknown
+
+export interface GetConfigSchemaWithConfigApiData {
+  configHash: string
+}
+
+export type GetConfigSchemaWithConfigApiResponse = unknown
+
+export interface PostCreateFeedbackFromTokenApiData {
+  requestBody: FeedbackCreateRequestTokenBased
+}
+
+export type PostCreateFeedbackFromTokenApiResponse = unknown
+
 export type GetRootApiResponse = unknown
 
 export interface PostTestEmailApiData {
@@ -245,26 +296,26 @@ export interface PostTestEmailApiData {
 
 export type PostTestEmailApiResponse = Message
 
-export interface Get列出存储空间下的文件apiData {
+export interface GetListFilesApiData {
   marker?: unknown
   prefix?: unknown
 }
 
-export type Get列出存储空间下的文件apiResponse = Array<QiniuFileInfo>
+export type GetListFilesApiResponse = Array<QiniuFileInfo>
 
-export interface Get列出存储空间下的文件api1Data {
+export interface GetListAllFilesWithMarkerApiData {
   limit?: unknown
   prefix?: unknown
 }
 
-export type Get列出存储空间下的文件api1Response = Array<QiniuFileInfo>
+export type GetListAllFilesWithMarkerApiResponse = Array<QiniuFileInfo>
 
 export interface GetFakerUserListApiData {
   pageIndex?: number
   pageSize?: number
 }
 
-export type GetFakerUserListApiResponse = ListResponse_FakerUser_
+export type GetFakerUserListApiResponse = ListResponse_Faker_
 
 export interface $OpenApiTs {
   '/api/login-form': {
@@ -326,7 +377,7 @@ export interface $OpenApiTs {
         /**
          * Successful Response
          */
-        200: UsersList
+        200: ListResponse_User_
         /**
          * Validation Error
          */
@@ -388,6 +439,96 @@ export interface $OpenApiTs {
       }
     }
   }
+  '/api/chat/input_schema': {
+    get: {
+      res: {
+        /**
+         * Successful Response
+         */
+        200: unknown
+      }
+    }
+  }
+  '/api/chat/c/{config_hash}/input_schema': {
+    get: {
+      req: GetInputSchemaWithConfigApiData
+      res: {
+        /**
+         * Successful Response
+         */
+        200: unknown
+        /**
+         * Validation Error
+         */
+        422: HTTPValidationError
+      }
+    }
+  }
+  '/api/chat/output_schema': {
+    get: {
+      res: {
+        /**
+         * Successful Response
+         */
+        200: unknown
+      }
+    }
+  }
+  '/api/chat/c/{config_hash}/output_schema': {
+    get: {
+      req: GetOutputSchemaWithConfigApiData
+      res: {
+        /**
+         * Successful Response
+         */
+        200: unknown
+        /**
+         * Validation Error
+         */
+        422: HTTPValidationError
+      }
+    }
+  }
+  '/api/chat/config_schema': {
+    get: {
+      res: {
+        /**
+         * Successful Response
+         */
+        200: unknown
+      }
+    }
+  }
+  '/api/chat/c/{config_hash}/config_schema': {
+    get: {
+      req: GetConfigSchemaWithConfigApiData
+      res: {
+        /**
+         * Successful Response
+         */
+        200: unknown
+        /**
+         * Validation Error
+         */
+        422: HTTPValidationError
+      }
+    }
+  }
+  '/api/chat/token_feedback': {
+    post: {
+      req: PostCreateFeedbackFromTokenApiData
+      res: {
+        /**
+         * Successful Response
+         */
+        200: unknown
+        /**
+         * Validation Error
+         */
+        422: HTTPValidationError
+      }
+    }
+  }
   '/api/stream': {
     get: {
       res: {
@@ -415,7 +556,7 @@ export interface $OpenApiTs {
   }
   '/api/netdisk/list': {
     get: {
-      req: Get列出存储空间下的文件apiData
+      req: GetListFilesApiData
       res: {
         /**
          * Successful Response
@@ -430,7 +571,7 @@ export interface $OpenApiTs {
   }
   '/api/netdisk/listwithlimit': {
     get: {
-      req: Get列出存储空间下的文件api1Data
+      req: GetListAllFilesWithMarkerApiData
       res: {
         /**
          * Successful Response
@@ -450,7 +591,7 @@ export interface $OpenApiTs {
         /**
          * Successful Response
          */
-        200: ListResponse_FakerUser_
+        200: ListResponse_Faker_
         /**
          * Validation Error
          */

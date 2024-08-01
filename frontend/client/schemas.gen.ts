@@ -55,7 +55,7 @@ export const $Body_login_login_form = {
   title: 'Body_login-login_form',
 } as const
 
-export const $FakerUser = {
+export const $Faker = {
   properties: {
     id: {
       type: 'string',
@@ -86,28 +86,113 @@ export const $FakerUser = {
       title: 'Progress',
     },
     status: {
-      type: 'string',
-      enum: ['relationship', 'complicated', 'single'],
-      title: 'Status',
+      $ref: '#/components/schemas/FakerStatus',
     },
-    subRows: {
+  },
+  type: 'object',
+  required: ['id', 'indexId', 'firstName', 'lastName', 'age', 'visits', 'progress', 'status'],
+  title: 'Faker',
+  description: 'Represents a Faker record',
+} as const
+
+export const $FakerStatus = {
+  type: 'string',
+  enum: ['relationship', 'complicated', 'single'],
+  title: 'FakerStatus',
+} as const
+
+export const $FeedbackCreateRequestTokenBased = {
+  properties: {
+    token_or_url: {
       anyOf: [
         {
-          items: {
-            $ref: '#/components/schemas/FakerUser',
-          },
-          type: 'array',
+          type: 'string',
+          format: 'uuid',
+        },
+        {
+          type: 'string',
+        },
+      ],
+      title: 'Token Or Url',
+    },
+    score: {
+      anyOf: [
+        {
+          type: 'number',
+        },
+        {
+          type: 'integer',
+        },
+        {
+          type: 'boolean',
         },
         {
           type: 'null',
         },
       ],
-      title: 'Subrows',
+      title: 'Score',
+    },
+    value: {
+      anyOf: [
+        {
+          type: 'number',
+        },
+        {
+          type: 'integer',
+        },
+        {
+          type: 'boolean',
+        },
+        {
+          type: 'string',
+        },
+        {
+          type: 'object',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Value',
+    },
+    comment: {
+      anyOf: [
+        {
+          type: 'string',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Comment',
+    },
+    correction: {
+      anyOf: [
+        {
+          type: 'object',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Correction',
+    },
+    metadata: {
+      anyOf: [
+        {
+          type: 'object',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Metadata',
     },
   },
   type: 'object',
-  required: ['id', 'indexId', 'firstName', 'lastName', 'age', 'visits', 'progress', 'status'],
-  title: 'FakerUser',
+  required: ['token_or_url'],
+  title: 'FeedbackCreateRequestTokenBased',
+  description: 'Shared information between create requests of feedback and feedback objects.',
 } as const
 
 export const $HTTPValidationError = {
@@ -124,11 +209,11 @@ export const $HTTPValidationError = {
   title: 'HTTPValidationError',
 } as const
 
-export const $ListResponse_FakerUser_ = {
+export const $ListResponse_Faker_ = {
   properties: {
     list: {
       items: {
-        $ref: '#/components/schemas/FakerUser',
+        $ref: '#/components/schemas/Faker',
       },
       type: 'array',
       title: 'List',
@@ -137,10 +222,37 @@ export const $ListResponse_FakerUser_ = {
       type: 'integer',
       title: 'Total',
     },
+    newSikp: {
+      type: 'integer',
+      title: 'Newsikp',
+    },
   },
   type: 'object',
-  required: ['list', 'total'],
-  title: 'ListResponse[FakerUser]',
+  required: ['list', 'total', 'newSikp'],
+  title: 'ListResponse[Faker]',
+} as const
+
+export const $ListResponse_User_ = {
+  properties: {
+    list: {
+      items: {
+        $ref: '#/components/schemas/User',
+      },
+      type: 'array',
+      title: 'List',
+    },
+    total: {
+      type: 'integer',
+      title: 'Total',
+    },
+    newSikp: {
+      type: 'integer',
+      title: 'Newsikp',
+    },
+  },
+  type: 'object',
+  required: ['list', 'total', 'newSikp'],
+  title: 'ListResponse[User]',
 } as const
 
 export const $LoginModel = {
@@ -643,29 +755,6 @@ export const $UserWithoutRelations = {
   type: 'object',
   required: ['id', 'email', 'username', 'hashed_password', 'disabled', 'image', 'createdAt', 'updatedAt'],
   title: 'UserWithoutRelations',
-} as const
-
-export const $UsersList = {
-  properties: {
-    list: {
-      items: {
-        $ref: '#/components/schemas/User',
-      },
-      type: 'array',
-      title: 'List',
-    },
-    newSikp: {
-      type: 'integer',
-      title: 'Newsikp',
-    },
-    total: {
-      type: 'integer',
-      title: 'Total',
-    },
-  },
-  type: 'object',
-  required: ['list', 'newSikp', 'total'],
-  title: 'UsersList',
 } as const
 
 export const $ValidationError = {

@@ -24,6 +24,8 @@ export class Interceptors<T> {
 }
 
 export class OpenAPIConfig {
+  TYPE: 'server' | 'client' = 'client'
+  INIT = false
   VERSION = '1.0'
   BASE = ''
   CREDENTIALS: 'include' | 'omit' | 'same-origin' = 'include'

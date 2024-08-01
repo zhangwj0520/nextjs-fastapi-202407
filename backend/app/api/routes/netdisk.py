@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from typing import List
+import os
+
 from app.core.deps import CurrentUser, DB, TokenDep, QiniuBucket
 
 # 引入相关类及函数
@@ -16,7 +18,6 @@ router = APIRouter()
 @router.get(
     "/list",
     response_model=list[QiniuFileInfo],
-    summary="列出存储空间下的文件",
     description="七牛云存储空间下的文件",
 )
 async def list_files(
@@ -44,40 +45,47 @@ async def list_files(
 
     for item in ret["items"]:
         print("item", item)
-        type = item.get("mimeType")
-        if "/" not in item.get("key"):
+        key = item.get("key")
+        # print("key", key)
+        # index = key.rindex("/")
+
+        if key.endswith("/"):
+            print(111)
+            dirList = [x for x in key.split("/") if x]
+            print("dirList", dirList)
+            list.append(
+                QiniuFileInfo(
+                    id=item.get("hash"),
+                    fsize=0,
+                    putTime=item.get("putTime"),
+                    name=dirList[-1],
+                    type="dir",
+                )
+            )
+            # dirName = dirList[0]
+            # if dirName not in dirSet:
+            #     dirSet.add(dirName)
+
+        else:
+            name = os.path.basename(key)
             list.append(
                 QiniuFileInfo(
                     id=item.get("hash"),
                     fsize=item.get("fsize"),
                     mimeType=item.get("mimeType"),
                     putTime=item.get("putTime"),
-                    name=item.get("key"),
+                    name=name,
                     type="file",
                 )
             )
-        else:
-            dirList = item.get("key").split("/")
-            dirName = dirList[0]
-            if dirName not in dirSet:
-                dirSet.add(dirName)
-                list.append(
-                    QiniuFileInfo(
-                        id=item.get("hash"),
-                        fsize=0,
-                        putTime=item.get("putTime"),
-                        name=dirName,
-                        type="dir",
-                    )
-                )
+
     return list
 
 
 @router.get(
     "/listwithlimit",
     response_model=list[QiniuFileInfo],
-    summary="列出存储空间下的文件",
-    description="七牛云存储空间下的文件",
+    description="七牛云存储空间下的文件限制每次请求数量",
 )
 async def list_all_files_with_marker(
     token: CurrentUser,

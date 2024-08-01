@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise'
 import { OpenAPI } from './core/OpenAPI'
 import { request as __request } from './core/request'
-import type { DeleteDeleteUserApiData, DeleteDeleteUserApiResponse, GetFakerUserListApiData, GetFakerUserListApiResponse, GetGetUserApiData, GetGetUserApiResponse, GetListUsersApiData, GetListUsersApiResponse, GetReadOwnItemsApiResponse, GetReadUsersMeApiResponse, GetRootApiResponse, Get列出存储空间下的文件api1Data, Get列出存储空间下的文件api1Response, Get列出存储空间下的文件apiData, Get列出存储空间下的文件apiResponse, PostCreateUserApiData, PostCreateUserApiResponse, PostLoginApiData, PostLoginApiResponse, PostLoginFormApiData, PostLoginFormApiResponse, PostTestEmailApiData, PostTestEmailApiResponse, PutUpdateUserApiData, PutUpdateUserApiResponse } from './types.gen'
+import type { DeleteDeleteUserApiData, DeleteDeleteUserApiResponse, GetConfigSchemaApiResponse, GetConfigSchemaWithConfigApiData, GetConfigSchemaWithConfigApiResponse, GetFakerUserListApiData, GetFakerUserListApiResponse, GetGetUserApiData, GetGetUserApiResponse, GetInputSchemaApiResponse, GetInputSchemaWithConfigApiData, GetInputSchemaWithConfigApiResponse, GetListAllFilesWithMarkerApiData, GetListAllFilesWithMarkerApiResponse, GetListFilesApiData, GetListFilesApiResponse, GetListUsersApiData, GetListUsersApiResponse, GetOutputSchemaApiResponse, GetOutputSchemaWithConfigApiData, GetOutputSchemaWithConfigApiResponse, GetReadOwnItemsApiResponse, GetReadUsersMeApiResponse, GetRootApiResponse, PostCreateFeedbackFromTokenApiData, PostCreateFeedbackFromTokenApiResponse, PostCreateUserApiData, PostCreateUserApiResponse, PostLoginApiData, PostLoginApiResponse, PostLoginFormApiData, PostLoginFormApiResponse, PostTestEmailApiData, PostTestEmailApiResponse, PutUpdateUserApiData, PutUpdateUserApiResponse } from './types.gen'
 
 export class LoginService {
   /**
@@ -88,7 +88,7 @@ export class UserService {
    * @param data The data for the request.
    * @param data.take
    * @param data.skip
-   * @returns UsersList Successful Response
+   * @returns ListResponse_User_ Successful Response
    * @throws ApiError
    */
   public static getListUsersApi(data: GetListUsersApiData = {}): CancelablePromise<GetListUsersApiResponse> {
@@ -190,6 +190,128 @@ export class UserService {
 
 export class StreamService {
   /**
+   * Input Schema
+   * Return the input schema.
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static getInputSchemaApi(): CancelablePromise<GetInputSchemaApiResponse> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/chat/input_schema',
+    })
+  }
+
+  /**
+   * Input Schema With Config
+   * Return the input schema.
+   * @param data The data for the request.
+   * @param data.configHash
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static getInputSchemaWithConfigApi(data: GetInputSchemaWithConfigApiData): CancelablePromise<GetInputSchemaWithConfigApiResponse> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/chat/c/{config_hash}/input_schema',
+      path: {
+        config_hash: data.configHash,
+      },
+      errors: {
+        422: 'Validation Error',
+      },
+    })
+  }
+
+  /**
+   * Output Schema
+   * Return the output schema.
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static getOutputSchemaApi(): CancelablePromise<GetOutputSchemaApiResponse> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/chat/output_schema',
+    })
+  }
+
+  /**
+   * Output Schema With Config
+   * Return the output schema.
+   * @param data The data for the request.
+   * @param data.configHash
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static getOutputSchemaWithConfigApi(data: GetOutputSchemaWithConfigApiData): CancelablePromise<GetOutputSchemaWithConfigApiResponse> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/chat/c/{config_hash}/output_schema',
+      path: {
+        config_hash: data.configHash,
+      },
+      errors: {
+        422: 'Validation Error',
+      },
+    })
+  }
+
+  /**
+   * Config Schema
+   * Return the config schema.
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static getConfigSchemaApi(): CancelablePromise<GetConfigSchemaApiResponse> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/chat/config_schema',
+    })
+  }
+
+  /**
+   * Config Schema With Config
+   * Return the config schema.
+   * @param data The data for the request.
+   * @param data.configHash
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static getConfigSchemaWithConfigApi(data: GetConfigSchemaWithConfigApiData): CancelablePromise<GetConfigSchemaWithConfigApiResponse> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/chat/c/{config_hash}/config_schema',
+      path: {
+        config_hash: data.configHash,
+      },
+      errors: {
+        422: 'Validation Error',
+      },
+    })
+  }
+
+  /**
+   * Create Feedback From Token
+   * Send feedback on an individual run to langsmith.
+   * @param data The data for the request.
+   * @param data.requestBody
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static postCreateFeedbackFromTokenApi(data: PostCreateFeedbackFromTokenApiData): CancelablePromise<PostCreateFeedbackFromTokenApiResponse> {
+    return __request(OpenAPI, {
+      method: 'POST',
+      url: '/api/chat/token_feedback',
+      body: data.requestBody,
+      mediaType: 'application/json',
+      errors: {
+        422: 'Validation Error',
+      },
+    })
+  }
+
+  /**
    * Root
    * @returns unknown Successful Response
    * @throws ApiError
@@ -198,6 +320,71 @@ export class StreamService {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/api/stream',
+    })
+  }
+}
+
+export class ConfigService {
+  /**
+   * Input Schema With Config
+   * Return the input schema.
+   * @param data The data for the request.
+   * @param data.configHash
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static getInputSchemaWithConfigApi(data: GetInputSchemaWithConfigApiData): CancelablePromise<GetInputSchemaWithConfigApiResponse> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/chat/c/{config_hash}/input_schema',
+      path: {
+        config_hash: data.configHash,
+      },
+      errors: {
+        422: 'Validation Error',
+      },
+    })
+  }
+
+  /**
+   * Output Schema With Config
+   * Return the output schema.
+   * @param data The data for the request.
+   * @param data.configHash
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static getOutputSchemaWithConfigApi(data: GetOutputSchemaWithConfigApiData): CancelablePromise<GetOutputSchemaWithConfigApiResponse> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/chat/c/{config_hash}/output_schema',
+      path: {
+        config_hash: data.configHash,
+      },
+      errors: {
+        422: 'Validation Error',
+      },
+    })
+  }
+
+  /**
+   * Config Schema With Config
+   * Return the config schema.
+   * @param data The data for the request.
+   * @param data.configHash
+   * @returns unknown Successful Response
+   * @throws ApiError
+   */
+  public static getConfigSchemaWithConfigApi(data: GetConfigSchemaWithConfigApiData): CancelablePromise<GetConfigSchemaWithConfigApiResponse> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/chat/c/{config_hash}/config_schema',
+      path: {
+        config_hash: data.configHash,
+      },
+      errors: {
+        422: 'Validation Error',
+      },
     })
   }
 }
@@ -226,7 +413,7 @@ export class UtilsService {
 
 export class NetdiskService {
   /**
-   * 列出存储空间下的文件
+   * List Files
    * 七牛云存储空间下的文件
    * @param data The data for the request.
    * @param data.prefix
@@ -234,7 +421,7 @@ export class NetdiskService {
    * @returns QiniuFileInfo Successful Response
    * @throws ApiError
    */
-  public static get列出存储空间下的文件api(data: Get列出存储空间下的文件apiData = {}): CancelablePromise<Get列出存储空间下的文件apiResponse> {
+  public static getListFilesApi(data: GetListFilesApiData = {}): CancelablePromise<GetListFilesApiResponse> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/api/netdisk/list',
@@ -249,15 +436,15 @@ export class NetdiskService {
   }
 
   /**
-   * 列出存储空间下的文件
-   * 七牛云存储空间下的文件
+   * List All Files With Marker
+   * 七牛云存储空间下的文件限制每次请求数量
    * @param data The data for the request.
    * @param data.limit
    * @param data.prefix
    * @returns QiniuFileInfo Successful Response
    * @throws ApiError
    */
-  public static get列出存储空间下的文件api1(data: Get列出存储空间下的文件api1Data = {}): CancelablePromise<Get列出存储空间下的文件api1Response> {
+  public static getListAllFilesWithMarkerApi(data: GetListAllFilesWithMarkerApiData = {}): CancelablePromise<GetListAllFilesWithMarkerApiResponse> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/api/netdisk/listwithlimit',
@@ -286,7 +473,7 @@ export class FakerService {
    * @param data The data for the request.
    * @param data.pageSize
    * @param data.pageIndex
-   * @returns ListResponse_FakerUser_ Successful Response
+   * @returns ListResponse_Faker_ Successful Response
    * @throws ApiError
    */
   public static getFakerUserListApi(data: GetFakerUserListApiData = {}): CancelablePromise<GetFakerUserListApiResponse> {
