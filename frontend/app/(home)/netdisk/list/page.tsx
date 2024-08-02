@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { NetdiskTable } from './table'
-import { NetdiskService } from '@/client'
+
 import { Icon } from '@/components/icon'
 import {
   Breadcrumb,
@@ -15,7 +15,6 @@ export default async function UserPage({
   searchParams: { prefix: string }
 }) {
   const prefix = searchParams.prefix ?? ''
-  const list = await NetdiskService.getListFilesApi({ prefix })
   const pathList = prefix.split('/').filter(Boolean)
   return (
     <div className="bg-card rounded-lg">
@@ -28,7 +27,7 @@ export default async function UserPage({
                 <form
                   action={async () => {
                     'use server'
-                    redirect(`/netdisk-list`)
+                    redirect(`/netdisk/list`)
                   }}
                   className="w-full"
                 >
@@ -56,7 +55,7 @@ export default async function UserPage({
                             action={async () => {
                               'use server'
                               const path = pathList.slice(0, index + 1).map(item => `${item}/`).join()
-                              redirect(`/netdisk-list?prefix=${path}`)
+                              redirect(`/netdisk/list?prefix=${path}`)
                             }}
                             className="w-full"
                           >
@@ -75,7 +74,7 @@ export default async function UserPage({
           </Breadcrumb>
         </div>
 
-        <NetdiskTable list={list} />
+        <NetdiskTable prefix={prefix} />
       </div>
     </div>
   )

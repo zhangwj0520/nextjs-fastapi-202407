@@ -19,10 +19,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { NetdiskService } from '@/client'
 
 import type { QiniuFileInfo } from '@/client'
 
-export function NetdiskTable({ list }: { list: QiniuFileInfo[] }) {
+export async function NetdiskTable({ prefix }: { prefix: string }) {
+  const list = await NetdiskService.getListFilesApi({ prefix })
   return (
     <Table className="mt-4">
       <TableCaption>A list of your recent invoices.</TableCaption>
@@ -43,11 +45,10 @@ export function NetdiskTable({ list }: { list: QiniuFileInfo[] }) {
 
               {item.type === 'dir'
                 ? (
-
                     <form
                       action={async () => {
                         'use server'
-                        redirect(`/netdisk-list?prefix=${item.path}`)
+                        redirect(`/netdisk/list?prefix=${item.path}`)
                       }}
                       className="w-full"
                     >
