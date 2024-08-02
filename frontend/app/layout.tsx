@@ -1,15 +1,19 @@
 import type { Metadata } from 'next'
 import { Inter as FontSans } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react'
+import dayjs from 'dayjs'
 import { Toaster } from '@/components/ui/sonner'
 import { Providers } from '@/components/providers'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { OpenApiConfig } from '@/components/fetch-config'
+import 'dayjs/locale/zh-cn'
 
 import { cn } from '@/lib/utils'
 
 import '@/styles/globals.css'
 import '@/styles/loading.css'
+
+dayjs.locale('zh-cn')
 
 const fontSans = FontSans({
   subsets: ['latin'],

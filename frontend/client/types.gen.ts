@@ -115,6 +115,7 @@ export interface QiniuFileInfo {
   id: string
   type: 'file' | 'dir'
   name: string
+  path?: string | null
   putTime: number
   fsize: number
   mimeType?: string | null

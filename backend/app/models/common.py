@@ -11,6 +11,7 @@ class QiniuFileInfo(BaseModel):
     id: str
     type: Literal["file", "dir"]
     name: str
+    path: str | None = None
     putTime: float
     fsize: float
     mimeType: str | None = None

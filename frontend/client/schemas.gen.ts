@@ -454,6 +454,17 @@ export const $QiniuFileInfo = {
       type: 'string',
       title: 'Name',
     },
+    path: {
+      anyOf: [
+        {
+          type: 'string',
+        },
+        {
+          type: 'null',
+        },
+      ],
+      title: 'Path',
+    },
     putTime: {
       type: 'number',
       title: 'Puttime',

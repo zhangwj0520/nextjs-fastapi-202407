@@ -21,21 +21,16 @@ router = APIRouter()
     description="七牛云存储空间下的文件",
 )
 async def list_files(
-    token: CurrentUser,
+    # token: CurrentUser,
     bucket: QiniuBucket,
     prefix=None,  # 前缀
     marker=None,  # 标记
 ) -> list[QiniuFileInfo]:
     bucket_name = settings.QINIU_BUCKET
-
     list: List[QiniuFileInfo] = []
-
-    # 创建一个空set
-    dirSet = set()
     # 列举条目
     # limit = 10
-    limit = None
-
+    limit = 1000
     # 列举出除'/'的所有文件以及以'/'为分隔的所有前缀
     delimiter = None
     ret, eof, info = bucket.list(bucket_name, prefix, marker, limit, delimiter)
@@ -44,42 +39,34 @@ async def list_files(
         return []
 
     for item in ret["items"]:
-        print("item", item)
-        key = item.get("key")
-        # print("key", key)
-        # index = key.rindex("/")
-
-        if key.endswith("/"):
-            print(111)
-            dirList = [x for x in key.split("/") if x]
-            print("dirList", dirList)
-            list.append(
-                QiniuFileInfo(
-                    id=item.get("hash"),
-                    fsize=0,
-                    putTime=item.get("putTime"),
-                    name=dirList[-1],
-                    type="dir",
+        key = item.get("key").replace(prefix, "")
+        dirList = [x for x in key.split("/") if x]
+        if len(dirList) == 1:
+            if key.endswith("/"):
+                list.append(
+                    QiniuFileInfo(
+                        id=item.get("hash") + key,
+                        fsize=0,
+                        putTime=int(item.get("putTime") / 1000),
+                        name=dirList[-1] + "/",
+                        path=item.get("key"),
+                        type="dir",
+                    )
                 )
-            )
-            # dirName = dirList[0]
-            # if dirName not in dirSet:
-            #     dirSet.add(dirName)
-
-        else:
-            name = os.path.basename(key)
-            list.append(
-                QiniuFileInfo(
-                    id=item.get("hash"),
-                    fsize=item.get("fsize"),
-                    mimeType=item.get("mimeType"),
-                    putTime=item.get("putTime"),
-                    name=name,
-                    type="file",
+            else:
+                list.append(
+                    QiniuFileInfo(
+                        id=item.get("hash") + key,
+                        fsize=item.get("fsize"),
+                        mimeType=item.get("mimeType"),
+                        putTime=int(item.get("putTime") / 1000),
+                        name=key,
+                        type="file",
+                    )
                 )
-            )
 
-    return list
+    # return list
+    return sorted(list, key=lambda x: x.type)
 
 
 @router.get(
