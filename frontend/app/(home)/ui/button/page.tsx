@@ -21,6 +21,13 @@ export default function ButtonDemo() {
     } catch (error) {
     }
   }
+
+  const getNextApi = async () => {
+    const res = await fetch('/api/protected')
+    console.log('res', res)
+    const json = await res.json()
+    console.log('sjon', json)
+  }
   return (
     <Card>
       <CardHeader>
@@ -44,6 +51,12 @@ export default function ButtonDemo() {
           <div className="flex gap-4">
             <Button onClick={makeRequestWithToken}>获取数据</Button>
             <Button onClick={() => setApiResponse('')}>隐藏数据</Button>
+          </div>
+          <pre>{apiResponse}</pre>
+        </div>
+        <div className="mt-4">
+          <div className="flex gap-4">
+            <Button onClick={getNextApi}>Next-Api</Button>
           </div>
           <pre>{apiResponse}</pre>
         </div>

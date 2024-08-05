@@ -16,9 +16,9 @@ router = APIRouter()
 
 
 @router.get(
-    "/list",
+    "/listlimit",
     response_model=list[QiniuFileInfo],
-    description="七牛云存储空间下的文件",
+    description="七牛云存储空间下的文件limit=1000",
 )
 async def list_files(
     # token: CurrentUser,
@@ -70,12 +70,11 @@ async def list_files(
 
 
 @router.get(
-    "/listwithlimit",
+    "/list",
     response_model=list[QiniuFileInfo],
-    description="七牛云存储空间下的文件限制每次请求数量",
+    description="七牛云存储空间下的文件",
 )
 async def list_all_files_with_marker(
-    token: CurrentUser,
     bucket: QiniuBucket,
     limit=10,
     prefix=None,  # 前缀
@@ -85,8 +84,6 @@ async def list_all_files_with_marker(
 
     list: List[QiniuFileInfo] = []
 
-    # 创建一个空set
-    dirSet = set()
     marker = None
     # 列举出除'/'的所有文件以及以'/'为分隔的所有前缀
     delimiter = None
@@ -101,35 +98,37 @@ async def list_all_files_with_marker(
 
         if ret is None:
             return []
-
         for item in ret["items"]:
-            if "/" not in item.get("key"):
-                list.append(
-                    QiniuFileInfo(
-                        id=item.get("hash"),
-                        fsize=item.get("fsize"),
-                        mimeType=item.get("mimeType"),
-                        putTime=item.get("putTime"),
-                        name=item.get("key"),
-                        type="file",
-                    )
-                )
-            else:
-                dirList = item.get("key").split("/")
-                dirName = dirList[0]
-                if dirName not in dirSet:
-                    dirSet.add(dirName)
+            key = item.get("key")
+            print("key", item)
+            if prefix is not None:
+                key = key.replace(prefix, "")
+            dirList = [x for x in key.split("/") if x]
+            if len(dirList) == 1:
+                if key.endswith("/"):
                     list.append(
                         QiniuFileInfo(
-                            id=item.get("hash"),
+                            id=item.get("hash") + key,
                             fsize=0,
-                            putTime=item.get("putTime"),
-                            name=dirName,
+                            putTime=int(item.get("putTime") / 10000),
+                            name=dirList[-1] + "/",
+                            path=item.get("key"),
                             type="dir",
+                        )
+                    )
+                else:
+                    list.append(
+                        QiniuFileInfo(
+                            id=item.get("hash") + key,
+                            fsize=round(item.get("fsize") / 1024, 2),
+                            mimeType=item.get("mimeType"),
+                            putTime=int(item.get("putTime") / 10000),
+                            name=key,
+                            type="file",
                         )
                     )
         marker = ret.get("marker")
         if marker is not None:
             continue
         break
-    return list
+    return sorted(list, key=lambda x: x.type)

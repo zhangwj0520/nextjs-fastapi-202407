@@ -21,10 +21,9 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { NetdiskService } from '@/client'
 
-import type { QiniuFileInfo } from '@/client'
-
 export async function NetdiskTable({ prefix }: { prefix: string }) {
   const list = await NetdiskService.getListFilesApi({ prefix })
+
   return (
     <Table className="mt-4">
       <TableCaption>A list of your recent invoices.</TableCaption>
@@ -62,7 +61,9 @@ export async function NetdiskTable({ prefix }: { prefix: string }) {
                   )
                 : <span>{item.name}</span>}
             </TableCell>
-            <TableCell>{item.fsize || '-'}</TableCell>
+            <TableCell>
+              {item.fsize ? `${item.fsize} KB` : '-'}
+            </TableCell>
             <TableCell>{dayjs(item.putTime).format('YYYY-MM-DD HH:mm:ss')}</TableCell>
             <TableCell>
               <DropdownMenu>
