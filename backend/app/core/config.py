@@ -63,6 +63,8 @@ class Settings(BaseSettings):
     QINIU_SECRET_KEY: str = ""
     QINIU_DOMAIN: str = ""
     QINIU_BUCKET: str = ""
+    QINIU_API: str = ""
+    QINIU_HOST: str = ""
     QINIU_ZONE: str = "Zone_z1"
     QINIU_ACCESS_TYPE: str = "public"
 

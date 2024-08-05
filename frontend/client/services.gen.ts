@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise'
 import { OpenAPI } from './core/OpenAPI'
 import { request as __request } from './core/request'
-import type { DeleteDeleteUserApiData, DeleteDeleteUserApiResponse, GetConfigSchemaApiResponse, GetConfigSchemaWithConfigApiData, GetConfigSchemaWithConfigApiResponse, GetFakerUserListApiData, GetFakerUserListApiResponse, GetGetUserApiData, GetGetUserApiResponse, GetInputSchemaApiResponse, GetInputSchemaWithConfigApiData, GetInputSchemaWithConfigApiResponse, GetListAllFilesWithMarkerApiData, GetListAllFilesWithMarkerApiResponse, GetListFilesApiData, GetListFilesApiResponse, GetListUsersApiData, GetListUsersApiResponse, GetOutputSchemaApiResponse, GetOutputSchemaWithConfigApiData, GetOutputSchemaWithConfigApiResponse, GetReadOwnItemsApiResponse, GetReadUsersMeApiResponse, GetRootApiResponse, PostCreateFeedbackFromTokenApiData, PostCreateFeedbackFromTokenApiResponse, PostCreateUserApiData, PostCreateUserApiResponse, PostLoginApiData, PostLoginApiResponse, PostLoginFormApiData, PostLoginFormApiResponse, PostTestEmailApiData, PostTestEmailApiResponse, PutUpdateUserApiData, PutUpdateUserApiResponse } from './types.gen'
+import type { DeleteDeleteUserApiData, DeleteDeleteUserApiResponse, GetConfigSchemaApiResponse, GetConfigSchemaWithConfigApiData, GetConfigSchemaWithConfigApiResponse, GetFakerUserListApiData, GetFakerUserListApiResponse, GetGetUserApiData, GetGetUserApiResponse, GetInputSchemaApiResponse, GetInputSchemaWithConfigApiData, GetInputSchemaWithConfigApiResponse, GetListAllFilesWithMarkerApiData, GetListAllFilesWithMarkerApiResponse, GetListFilesApiData, GetListFilesApiResponse, GetListUsersApiData, GetListUsersApiResponse, GetOutputSchemaApiResponse, GetOutputSchemaWithConfigApiData, GetOutputSchemaWithConfigApiResponse, GetQiniuBucketOverviewApiResponse, GetReadOwnItemsApiResponse, GetReadUsersMeApiResponse, GetRootApiResponse, PostCreateFeedbackFromTokenApiData, PostCreateFeedbackFromTokenApiResponse, PostCreateUserApiData, PostCreateUserApiResponse, PostLoginApiData, PostLoginApiResponse, PostLoginFormApiData, PostLoginFormApiResponse, PostTestEmailApiData, PostTestEmailApiResponse, PutUpdateUserApiData, PutUpdateUserApiResponse } from './types.gen'
 
 export class LoginService {
   /**
@@ -414,7 +414,7 @@ export class UtilsService {
 export class NetdiskService {
   /**
    * List Files
-   * 七牛云存储空间下的文件
+   * 七牛云存储空间下的文件limit=1000
    * @param data The data for the request.
    * @param data.prefix
    * @param data.marker
@@ -424,7 +424,7 @@ export class NetdiskService {
   public static getListFilesApi(data: GetListFilesApiData = {}): CancelablePromise<GetListFilesApiResponse> {
     return __request(OpenAPI, {
       method: 'GET',
-      url: '/api/netdisk/list',
+      url: '/api/netdisk/listlimit',
       query: {
         prefix: data.prefix,
         marker: data.marker,
@@ -437,7 +437,7 @@ export class NetdiskService {
 
   /**
    * List All Files With Marker
-   * 七牛云存储空间下的文件限制每次请求数量
+   * 七牛云存储空间下的文件
    * @param data The data for the request.
    * @param data.limit
    * @param data.prefix
@@ -447,7 +447,7 @@ export class NetdiskService {
   public static getListAllFilesWithMarkerApi(data: GetListAllFilesWithMarkerApiData = {}): CancelablePromise<GetListAllFilesWithMarkerApiResponse> {
     return __request(OpenAPI, {
       method: 'GET',
-      url: '/api/netdisk/listwithlimit',
+      url: '/api/netdisk/list',
       query: {
         limit: data.limit,
         prefix: data.prefix,
@@ -455,6 +455,19 @@ export class NetdiskService {
       errors: {
         422: 'Validation Error',
       },
+    })
+  }
+
+  /**
+   * Qiniu Bucket Overview
+   * 七牛云存储空间下的文件
+   * @returns QiniuOverview Successful Response
+   * @throws ApiError
+   */
+  public static getQiniuBucketOverviewApi(): CancelablePromise<GetQiniuBucketOverviewApiResponse> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/netdisk/overview',
     })
   }
 }

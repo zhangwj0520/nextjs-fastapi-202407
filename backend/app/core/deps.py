@@ -73,7 +73,7 @@ async def get_db():
 DB = Annotated[Prisma, Depends(get_db)]
 
 
-async def get_qiniu_auth() -> Auth:
+def get_qiniu_auth() -> Auth:
     return Auth(settings.QINIU_ACCESS_KEY, settings.QINIU_SECRET_KEY)
 
 

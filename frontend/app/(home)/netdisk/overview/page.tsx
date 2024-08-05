@@ -1,3 +1,9 @@
+import { Overview } from './overview'
+
 export default async function OverviewPage() {
-  return <div>OverviewPage</div>
+  return (
+    <div>
+      <Overview />
+    </div>
+  )
 }

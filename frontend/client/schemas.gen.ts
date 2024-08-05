@@ -490,6 +490,40 @@ export const $QiniuFileInfo = {
   title: 'QiniuFileInfo',
 } as const
 
+export const $QiniuOverview = {
+  properties: {
+    fileCount: {
+      type: 'integer',
+      title: 'Filecount',
+    },
+    spaceSize: {
+      type: 'integer',
+      title: 'Spacesize',
+    },
+    flowSize: {
+      type: 'integer',
+      title: 'Flowsize',
+    },
+    hits: {
+      type: 'integer',
+      title: 'Hits',
+    },
+    sizeTrend: {
+      additionalProperties: {
+        items: {
+          type: 'integer',
+        },
+        type: 'array',
+      },
+      type: 'object',
+      title: 'Sizetrend',
+    },
+  },
+  type: 'object',
+  required: ['fileCount', 'spaceSize', 'flowSize', 'hits', 'sizeTrend'],
+  title: 'QiniuOverview',
+} as const
+
 export const $SendEmail = {
   properties: {
     email_to: {

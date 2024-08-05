@@ -128,6 +128,16 @@ export const type = {
   DIR: 'dir',
 } as const
 
+export interface QiniuOverview {
+  fileCount: number
+  spaceSize: number
+  flowSize: number
+  hits: number
+  sizeTrend: {
+    [key: string]: Array<(number)>
+  }
+}
+
 export interface SendEmail {
   email_to: string
 }
@@ -310,6 +320,8 @@ export interface GetListAllFilesWithMarkerApiData {
 }
 
 export type GetListAllFilesWithMarkerApiResponse = Array<QiniuFileInfo>
+
+export type GetQiniuBucketOverviewApiResponse = QiniuOverview
 
 export interface GetFakerUserListApiData {
   pageIndex?: number
@@ -555,7 +567,7 @@ export interface $OpenApiTs {
       }
     }
   }
-  '/api/netdisk/list': {
+  '/api/netdisk/listlimit': {
     get: {
       req: GetListFilesApiData
       res: {
@@ -570,7 +582,7 @@ export interface $OpenApiTs {
       }
     }
   }
-  '/api/netdisk/listwithlimit': {
+  '/api/netdisk/list': {
     get: {
       req: GetListAllFilesWithMarkerApiData
       res: {
@@ -582,6 +594,16 @@ export interface $OpenApiTs {
          * Validation Error
          */
         422: HTTPValidationError
+      }
+    }
+  }
+  '/api/netdisk/overview': {
+    get: {
+      res: {
+        /**
+         * Successful Response
+         */
+        200: QiniuOverview
       }
     }
   }
