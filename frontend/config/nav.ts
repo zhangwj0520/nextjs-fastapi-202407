@@ -26,6 +26,11 @@ export const data: MenuItemType[] = [
         link: '/ai/langchain',
         icon: 'lucide:message-square-more',
       },
+      {
+        label: 'vercel-ai',
+        link: '/ai/vercel-ai',
+        icon: 'lucide:message-square-more',
+      },
     ],
   },
   {

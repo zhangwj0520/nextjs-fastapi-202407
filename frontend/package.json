@@ -19,6 +19,7 @@
     "fix": "eslint --fix"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^0.0.40",
     "@faker-js/faker": "^8.4.1",
     "@hookform/resolvers": "^3.9.0",
     "@iconify/react": "^5.0.2",
