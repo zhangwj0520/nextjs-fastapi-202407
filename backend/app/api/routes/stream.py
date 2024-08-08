@@ -23,14 +23,22 @@ async def waypoints_generator():
     ]
     for waypoint in waypoints[0:10]:
         data = json.dumps(waypoint)
+        print("data", data)
         # yield f"event: locationUpdate\ndata: {data}\n\n"
         yield f"data: {data}\n\n"
         await sleep(1)
+    print(11111)
+    yield b""
 
 
 @router.get("")
 async def root():
-    return StreamingResponse(waypoints_generator(), media_type="text/event-stream")
+    return StreamingResponse(
+        waypoints_generator(),
+        media_type="text/event-stream",
+        headers={"Content-Type": "text/event-stream"},
+    )
+
     # return StreamingResponse(function_calling_demo(), media_type="text/event-stream")
 
 
