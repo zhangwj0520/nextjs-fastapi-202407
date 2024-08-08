@@ -301,6 +301,8 @@ export type PostCreateFeedbackFromTokenApiResponse = unknown
 
 export type GetRootApiResponse = unknown
 
+export type GetGetttsApiResponse = (Blob | File)
+
 export interface PostTestEmailApiData {
   requestBody: SendEmail
 }
@@ -549,6 +551,16 @@ export interface $OpenApiTs {
          * Successful Response
          */
         200: unknown
+      }
+    }
+  }
+  '/api/stream/tts': {
+    get: {
+      res: {
+        /**
+         * Successful Response
+         */
+        200: (Blob | File)
       }
     }
   }

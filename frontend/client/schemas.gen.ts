@@ -497,7 +497,7 @@ export const $QiniuOverview = {
       title: 'Filecount',
     },
     spaceSize: {
-      type: 'integer',
+      type: 'number',
       title: 'Spacesize',
     },
     flowSize: {
@@ -511,7 +511,14 @@ export const $QiniuOverview = {
     sizeTrend: {
       additionalProperties: {
         items: {
-          type: 'integer',
+          anyOf: [
+            {
+              type: 'integer',
+            },
+            {
+              type: 'number',
+            },
+          ],
         },
         type: 'array',
       },

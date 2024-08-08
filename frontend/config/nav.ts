@@ -31,6 +31,11 @@ export const data: MenuItemType[] = [
         link: '/ai/vercel-ai',
         icon: 'lucide:message-square-more',
       },
+      {
+        label: 'voice',
+        link: '/ai/voice',
+        icon: 'lucide:message-square-more',
+      },
     ],
   },
   {
