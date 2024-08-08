@@ -5,14 +5,14 @@ import { Button } from '@/components/ui/button'
 import { useLocalStorage } from '@/lib/hooks/use-local-storage'
 import { Icon } from '@/components/icon'
 
-let i = 1
+let index = 0
 export default function TongyiDemo() {
   const [loading, setLoading] = useState(false)
   const [displayedText, setDisplayedText] = useState('')
   const [contents, setContents] = useState([])
   const [parentMsgId, setParentMsgId] = useLocalStorage('parentMsgId', '')
   const [sessionId, setSessionId] = useLocalStorage('sessionId', '')
-  const textMsg = useRef()
+  const textMsg = useRef('')
   const getData = () => {
     setLoading(true)
     const params = {
@@ -44,8 +44,6 @@ export default function TongyiDemo() {
 
   const handleMsg = (msg: string) => {
     try {
-      i++
-      console.log('i', i)
       const json = JSON.parse(msg)
       if (json.msgStatus === 'finished') {
         setParentMsgId(json.msgId)
@@ -65,7 +63,6 @@ export default function TongyiDemo() {
   }
 
   useEffect(() => {
-    let index = 0
     const intervalId = setInterval(() => {
       const text = textMsg.current
       if (text) {
@@ -78,7 +75,7 @@ export default function TongyiDemo() {
       }
     }, 10)
     return () => clearInterval(intervalId)
-  }, [textMsg.current])
+  }, [loading])
 
   useEffect(() => {
     console.log('loading', loading)
