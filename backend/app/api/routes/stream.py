@@ -69,7 +69,9 @@ async def getTTS(
     return StreamingResponse(iterfile(), headers=headers)
 
 
-async def tongyi_generator():
+async def tongyi_generator(
+    userIntent: str = "你好", parentMsgId: str = "", sessionId: str = ""
+):
     headers = {
         "accept": "text/event-stream",
         "accept-language": "zh-CN,zh;q=0.9",
@@ -96,12 +98,12 @@ async def tongyi_generator():
         "mode": "chat",
         "userAction": "chat",
         "requestId": "a340939d929a40aa89fdaa04fc0cf347",
-        "sessionId": "",
+        "sessionId": sessionId,
         "sessionType": "text_chat",
-        "parentMsgId": "",
+        "parentMsgId": parentMsgId,
         "contents": [
             {
-                "content": "你好",
+                "content": userIntent,
                 "contentType": "text",
                 "role": "user",
             }
@@ -122,14 +124,23 @@ async def tongyi_generator():
 
     # 逐行读取响应
     for chunk in response.iter_content(1024):  # Adjust chunk size as needed
-        decoded_line = chunk.decode("utf-8")
-        print(decoded_line)
-        yield f"{decoded_line}"
+        decoded_line = chunk.decode("utf-8", "ignore")
+        # print(decoded_line)
+        if "data: [DONE]" not in decoded_line:
+            yield f"{decoded_line}"
 
 
 @router.get("/tongyi", response_model=bytes)
 async def getTongyi(
-    request: Request,
+    userIntent: str = "",
+    parentMsgId: str = "",
+    sessionId: str = "",
 ) -> StreamingResponse:
+    print("sessionId", sessionId)
 
-    return StreamingResponse(tongyi_generator(), media_type="text/event-stream")
+    return StreamingResponse(
+        tongyi_generator(
+            userIntent=userIntent, sessionId=sessionId, parentMsgId=parentMsgId
+        ),
+        media_type="text/event-stream",
+    )
