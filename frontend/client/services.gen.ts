@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise'
 import { OpenAPI } from './core/OpenAPI'
 import { request as __request } from './core/request'
-import type { DeleteDeleteUserApiData, DeleteDeleteUserApiResponse, GetConfigSchemaApiResponse, GetConfigSchemaWithConfigApiData, GetConfigSchemaWithConfigApiResponse, GetFakerUserListApiData, GetFakerUserListApiResponse, GetGetUserApiData, GetGetUserApiResponse, GetGetttsApiResponse, GetInputSchemaApiResponse, GetInputSchemaWithConfigApiData, GetInputSchemaWithConfigApiResponse, GetListAllFilesWithMarkerApiData, GetListAllFilesWithMarkerApiResponse, GetListFilesApiData, GetListFilesApiResponse, GetListUsersApiData, GetListUsersApiResponse, GetOutputSchemaApiResponse, GetOutputSchemaWithConfigApiData, GetOutputSchemaWithConfigApiResponse, GetQiniuBucketOverviewApiResponse, GetReadOwnItemsApiResponse, GetReadUsersMeApiResponse, GetRootApiResponse, PostCreateFeedbackFromTokenApiData, PostCreateFeedbackFromTokenApiResponse, PostCreateUserApiData, PostCreateUserApiResponse, PostLoginApiData, PostLoginApiResponse, PostLoginFormApiData, PostLoginFormApiResponse, PostTestEmailApiData, PostTestEmailApiResponse, PutUpdateUserApiData, PutUpdateUserApiResponse } from './types.gen'
+import type { DeleteDeleteUserApiData, DeleteDeleteUserApiResponse, GetConfigSchemaApiResponse, GetConfigSchemaWithConfigApiData, GetConfigSchemaWithConfigApiResponse, GetFakerUserListApiData, GetFakerUserListApiResponse, GetGetUserApiData, GetGetUserApiResponse, GetGettongyiApiResponse, GetGetttsApiResponse, GetInputSchemaApiResponse, GetInputSchemaWithConfigApiData, GetInputSchemaWithConfigApiResponse, GetListAllFilesWithMarkerApiData, GetListAllFilesWithMarkerApiResponse, GetListFilesApiData, GetListFilesApiResponse, GetListUsersApiData, GetListUsersApiResponse, GetOutputSchemaApiResponse, GetOutputSchemaWithConfigApiData, GetOutputSchemaWithConfigApiResponse, GetQiniuBucketOverviewApiResponse, GetReadOwnItemsApiResponse, GetReadUsersMeApiResponse, GetRootApiResponse, PostCreateFeedbackFromTokenApiData, PostCreateFeedbackFromTokenApiResponse, PostCreateUserApiData, PostCreateUserApiResponse, PostLoginApiData, PostLoginApiResponse, PostLoginFormApiData, PostLoginFormApiResponse, PostTestEmailApiData, PostTestEmailApiResponse, PutUpdateUserApiData, PutUpdateUserApiResponse } from './types.gen'
 
 export class LoginService {
   /**
@@ -325,13 +325,25 @@ export class StreamService {
 
   /**
    * Gettts
-   * @returns binary Successful Response
+   * @returns unknown Successful Response
    * @throws ApiError
    */
   public static getGetttsApi(): CancelablePromise<GetGetttsApiResponse> {
     return __request(OpenAPI, {
       method: 'GET',
       url: '/api/stream/tts',
+    })
+  }
+
+  /**
+   * Gettongyi
+   * @returns binary Successful Response
+   * @throws ApiError
+   */
+  public static getGettongyiApi(): CancelablePromise<GetGettongyiApiResponse> {
+    return __request(OpenAPI, {
+      method: 'GET',
+      url: '/api/stream/tongyi',
     })
   }
 }

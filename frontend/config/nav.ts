@@ -36,6 +36,11 @@ export const data: MenuItemType[] = [
         link: '/ai/voice',
         icon: 'lucide:message-square-more',
       },
+      {
+        label: 'tongyi',
+        link: '/ai/tongyi',
+        icon: 'lucide:message-square-more',
+      },
     ],
   },
   {
