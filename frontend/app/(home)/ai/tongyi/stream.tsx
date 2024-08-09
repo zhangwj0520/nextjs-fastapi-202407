@@ -24,6 +24,8 @@ export default function TongyiDemo() {
   const getData = () => {
     setLoading(true)
     setStreaming(true)
+    textMsg.current = ''
+    setDisplayedText('')
     const params = {
       parentMsgId,
       sessionId,
@@ -60,10 +62,13 @@ export default function TongyiDemo() {
         setParentMsgId(json.msgId)
         setSessionId(json.sessionId)
         console.log('stop', json)
-        setStreaming(false)
+        setTimeout(() => {
+          setStreaming(false)
+        }, 500)
 
         json.contents.forEach((item) => {
           if (item.contentType === 'text') {
+            console.log('item.')
             // setCurMsg(item.content)
           }
         })
@@ -72,11 +77,12 @@ export default function TongyiDemo() {
         json.contents.forEach((item) => {
           if (item.contentType === 'text') {
             textMsg.current = item.content
+            // console.log('textMsg.current', textMsg.current)
             textContent.current = item
           }
         })
       }
-      console.log('json', json)
+      // console.log('json', json)
     } catch (error) {
 
     }
@@ -84,17 +90,20 @@ export default function TongyiDemo() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       const text = textMsg.current
+      console.log('text', text)
       if (text) {
         if (index < text.length) {
           setDisplayedText(text.substring(0, index + 1))
           index++
         } else {
-          clearInterval(intervalId)
+          if (!streaming) {
+            clearInterval(intervalId)
+          }
         }
       }
-    }, 10)
+    }, 20)
     return () => clearInterval(intervalId)
-  }, [loading])
+  }, [loading, streaming])
 
   useEffect(() => {
     console.log('loading', loading)

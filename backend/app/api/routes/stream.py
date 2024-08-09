@@ -10,6 +10,8 @@ from asyncio import sleep
 import os
 from pathlib import Path
 
+from sse_starlette.sse import EventSourceResponse
+
 
 router = APIRouter()
 
@@ -69,7 +71,7 @@ async def getTTS(
     return StreamingResponse(iterfile(), headers=headers)
 
 
-async def tongyi_generator(
+def tongyi_generator(
     userIntent: str = "你好", parentMsgId: str = "", sessionId: str = ""
 ):
     headers = {
@@ -121,10 +123,12 @@ async def tongyi_generator(
     )
     # 确保请求成功
     response.raise_for_status()
+    i = 0
 
     # 逐行读取响应
     for chunk in response.iter_content(1024):  # Adjust chunk size as needed
         decoded_line = chunk.decode("utf-8", "ignore")
+        # print("decoded_line", decoded_line)
         if "data: [DONE]" not in decoded_line:
             yield f"{decoded_line}"
 
@@ -134,14 +138,18 @@ async def getTongyi(
     userIntent: str = "",
     parentMsgId: str = "",
     sessionId: str = "",
-) -> StreamingResponse:
+):
     print("sessionId", sessionId)
-    headers = {"Content-Disposition": "attachment"}
-
     return StreamingResponse(
         tongyi_generator(
             userIntent=userIntent, sessionId=sessionId, parentMsgId=parentMsgId
         ),
-        headers=headers,
         media_type="text/event-stream",
+        # headers={"Content-Type": "text/event-stream"},
     )
+    # return EventSourceResponse(
+    #     tongyi_generator(
+    #         userIntent=userIntent, sessionId=sessionId, parentMsgId=parentMsgId
+    #     ),
+    #     media_type="text/event-stream",
+    # )
