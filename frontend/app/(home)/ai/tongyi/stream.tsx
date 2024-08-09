@@ -1,24 +1,34 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
 import { Button } from '@/components/ui/button'
 import { useLocalStorage } from '@/lib/hooks/use-local-storage'
 import { Icon } from '@/components/icon'
+import { useStreamableText } from '@/lib/hooks/use-streamable-text'
+import { MemoizedReactMarkdown } from '@/components/ai/markdown'
+import { CodeBlock } from '@/components/ai/codeblock'
 
 let index = 0
 export default function TongyiDemo() {
   const [loading, setLoading] = useState(false)
+  const [streaming, setStreaming] = useState(false)
   const [displayedText, setDisplayedText] = useState('')
   const [contents, setContents] = useState([])
   const [parentMsgId, setParentMsgId] = useLocalStorage('parentMsgId', '')
   const [sessionId, setSessionId] = useLocalStorage('sessionId', '')
   const textMsg = useRef('')
+  const textContent = useRef({})
+  const curMsg = useRef({})
   const getData = () => {
     setLoading(true)
+    setStreaming(true)
     const params = {
       parentMsgId,
       sessionId,
       userIntent: '写一个关于春天的800字作文',
+      // userIntent: '列出昨日10条热点新闻',
       // userIntent: '你是谁1',
     }
     const url = 'http://127.0.0.1:9110/api/stream/tongyi'
@@ -45,14 +55,24 @@ export default function TongyiDemo() {
   const handleMsg = (msg: string) => {
     try {
       const json = JSON.parse(msg)
+      curMsg.current = json
       if (json.msgStatus === 'finished') {
         setParentMsgId(json.msgId)
         setSessionId(json.sessionId)
+        console.log('stop', json)
+        setStreaming(false)
+
+        json.contents.forEach((item) => {
+          if (item.contentType === 'text') {
+            // setCurMsg(item.content)
+          }
+        })
       }
       if (json.contents) {
         json.contents.forEach((item) => {
           if (item.contentType === 'text') {
             textMsg.current = item.content
+            textContent.current = item
           }
         })
       }
@@ -61,7 +81,6 @@ export default function TongyiDemo() {
 
     }
   }
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       const text = textMsg.current
@@ -89,7 +108,50 @@ export default function TongyiDemo() {
       </Button>
 
       <div className="ml-4 flex-1 space-y-2 overflow-hidden px-1">
-        {displayedText}
+        {/* {displayedText} */}
+        {/* {text} */}
+        <MemoizedReactMarkdown
+          className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
+          remarkPlugins={[remarkGfm, remarkMath]}
+          components={{
+            p({ children }) {
+              return <p className="my-4 last:mb-0">{children}</p>
+            },
+            code({ node, inline, className, children, ...props }) {
+              if (children.length) {
+                if (children[0] == '▍') {
+                  return (
+                    <span className="mt-1 animate-pulse cursor-default">▍</span>
+                  )
+                }
+
+                children[0] = (children[0] as string).replace('`▍`', '▍')
+              }
+
+              const match = /language-(\w+)/.exec(className || '')
+
+              if (inline) {
+                return (
+                  <code className={className} {...props}>
+                    {children}
+                  </code>
+                )
+              }
+
+              return (
+                <CodeBlock
+                  key={Math.random()}
+                  language={(match && match[1]) || ''}
+                  value={String(children).replace(/\n$/, '')}
+                  {...props}
+                />
+              )
+            },
+          }}
+        >
+          {displayedText}
+        </MemoizedReactMarkdown>
+
       </div>
 
     </div>

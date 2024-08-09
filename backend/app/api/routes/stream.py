@@ -125,7 +125,6 @@ async def tongyi_generator(
     # 逐行读取响应
     for chunk in response.iter_content(1024):  # Adjust chunk size as needed
         decoded_line = chunk.decode("utf-8", "ignore")
-        # print(decoded_line)
         if "data: [DONE]" not in decoded_line:
             yield f"{decoded_line}"
 
@@ -137,10 +136,12 @@ async def getTongyi(
     sessionId: str = "",
 ) -> StreamingResponse:
     print("sessionId", sessionId)
+    headers = {"Content-Disposition": "attachment"}
 
     return StreamingResponse(
         tongyi_generator(
             userIntent=userIntent, sessionId=sessionId, parentMsgId=parentMsgId
         ),
+        headers=headers,
         media_type="text/event-stream",
     )
