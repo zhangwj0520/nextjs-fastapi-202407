@@ -90,18 +90,21 @@ export default function TongyiDemo() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       const text = textMsg.current
+      console.log('text', text.length, index)
       if (text) {
         if (index < text.length) {
           setDisplayedText(text.substring(0, index + 1))
           index++
         } else {
-          clearInterval(intervalId)
+          if (!streaming) {
+            clearInterval(intervalId)
+          }
         }
       }
-    }, 20)
+    }, 50)
 
     return () => clearInterval(intervalId)
-  }, [loading])
+  }, [loading, streaming])
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({
@@ -109,19 +112,19 @@ export default function TongyiDemo() {
     })
   }, [messagesEndRef?.current?.clientHeight])
   return (
-    <div className="w-full">
+    <div className="w-full h-full relative">
 
-      <Button onClick={() => getData()} disabled={loading}>
+      <Button onClick={() => getData()} disabled={loading} className="sticky top-0">
         {loading && <Icon name="radix-icons:reload" className="mr-2 h-4 w-4 animate-spin" />}
         通义千问
       </Button>
 
-      <div className="ml-4 flex-1 space-y-2 px-1">
+      <div className="ml-4 space-y-2 px-1 h-full" ref={messagesEndRef}>
         {/* {displayedText} */}
         {/* {text} */}
         <MemoizedReactMarkdown
           className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
-          ref={messagesEndRef}
+
           remarkPlugins={[remarkGfm, remarkMath]}
           components={{
             p({ children }) {

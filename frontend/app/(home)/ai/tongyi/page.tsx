@@ -14,7 +14,7 @@ export default async function VercelPage() {
         <CardHeader>
           <CardTitle>流对象生成</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="h-full">
           <TongyiDemo />
         </CardContent>
       </Card>
