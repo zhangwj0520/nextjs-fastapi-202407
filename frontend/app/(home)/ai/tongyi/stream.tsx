@@ -12,6 +12,7 @@ import { CodeBlock } from '@/components/ai/codeblock'
 
 let index = 0
 export default function TongyiDemo() {
+  const messagesEndRef = useRef<HTMLDivElement>(null)
   const [loading, setLoading] = useState(false)
   const [streaming, setStreaming] = useState(false)
   const [displayedText, setDisplayedText] = useState('')
@@ -51,6 +52,9 @@ export default function TongyiDemo() {
       // console.error('Error:', event)
       evtSource.close() // 关闭连接
       setLoading(false)
+      setTimeout(() => {
+        setStreaming(false)
+      }, 500)
     }
   }
 
@@ -62,9 +66,6 @@ export default function TongyiDemo() {
         setParentMsgId(json.msgId)
         setSessionId(json.sessionId)
         console.log('stop', json)
-        setTimeout(() => {
-          setStreaming(false)
-        }, 500)
 
         json.contents.forEach((item) => {
           if (item.contentType === 'text') {
@@ -77,7 +78,6 @@ export default function TongyiDemo() {
         json.contents.forEach((item) => {
           if (item.contentType === 'text') {
             textMsg.current = item.content
-            // console.log('textMsg.current', textMsg.current)
             textContent.current = item
           }
         })
@@ -90,37 +90,38 @@ export default function TongyiDemo() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       const text = textMsg.current
-      console.log('text', text)
       if (text) {
         if (index < text.length) {
           setDisplayedText(text.substring(0, index + 1))
           index++
         } else {
-          if (!streaming) {
-            clearInterval(intervalId)
-          }
+          clearInterval(intervalId)
         }
       }
     }, 20)
+
     return () => clearInterval(intervalId)
-  }, [loading, streaming])
+  }, [loading])
 
   useEffect(() => {
-    console.log('loading', loading)
-  }, [loading])
+    messagesEndRef.current?.scrollIntoView({
+      behavior: 'smooth',
+    })
+  }, [messagesEndRef?.current?.clientHeight])
   return (
-    <div className=" w-full overflow-hidden">
+    <div className="w-full">
 
       <Button onClick={() => getData()} disabled={loading}>
         {loading && <Icon name="radix-icons:reload" className="mr-2 h-4 w-4 animate-spin" />}
         通义千问
       </Button>
 
-      <div className="ml-4 flex-1 space-y-2 overflow-hidden px-1">
+      <div className="ml-4 flex-1 space-y-2 px-1">
         {/* {displayedText} */}
         {/* {text} */}
         <MemoizedReactMarkdown
           className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
+          ref={messagesEndRef}
           remarkPlugins={[remarkGfm, remarkMath]}
           components={{
             p({ children }) {
