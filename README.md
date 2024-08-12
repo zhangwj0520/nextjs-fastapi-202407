@@ -26,6 +26,8 @@ pipx install mysqlclient
 
 ```
 
+阿里 DATABASE_URL="postgresql://postgres:Qwer1234@localhost:5432/app"
+
 ## 问题
 ###  1.停止端口
 

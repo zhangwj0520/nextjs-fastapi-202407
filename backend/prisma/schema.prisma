@@ -1,7 +1,7 @@
 // database
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://postgres:Qwer1234@localhost:5432/app"
 }
 
 // generator
