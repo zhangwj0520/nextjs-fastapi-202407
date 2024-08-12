@@ -126,7 +126,7 @@ def tongyi_generator(
     i = 0
 
     # 逐行读取响应
-    for chunk in response.iter_content(1024):  # Adjust chunk size as needed
+    for chunk in response.iter_content(400):  # Adjust chunk size as needed
         decoded_line = chunk.decode("utf-8", "ignore")
         # print("decoded_line", decoded_line)
         if "data: [DONE]" not in decoded_line:
