@@ -41,7 +41,7 @@ def fake_data(len: int):
                 visits=fake.random_int(min=1, max=1000),
                 progress=fake.random_int(min=1, max=100),
                 status=fake.random_element(["relationship", "complicated", "single"]),
-            ).dict()
+            ).model_dump()
         )
     return data_list
 

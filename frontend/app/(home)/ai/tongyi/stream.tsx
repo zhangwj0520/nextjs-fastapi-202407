@@ -101,7 +101,7 @@ export default function TongyiDemo() {
           }
         }
       }
-    }, 50)
+    }, 20)
 
     return () => clearInterval(intervalId)
   }, [loading, streaming])
