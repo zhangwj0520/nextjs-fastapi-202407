@@ -1,4 +1,5 @@
-import { Icon as IconifyIcon } from '@iconify/react'
+import { Icon as IconifyIcon, addCollection } from '@iconify/react'
+// import { addCollection, enableCache } from 'iconify-icon'
 
 // import dataSet from '@/assets/icons/custom.json'
 
@@ -13,6 +14,21 @@ import { Icon as IconifyIcon } from '@iconify/react'
 //   flip?: string;
 //   id?: string;
 //   onLoad?: IconifyIconOnLoad;
+// }
+import dataSet from './output.json'
+
+console.log('dataSet', dataSet)
+// enableCache('local')
+addCollection(dataSet)
+
+// enableCache('session')
+// export declare interface IconifyIconProps extends IconifyIconCustomisations {
+//   icon: IconifyIcon | string
+//   mode?: IconifyRenderMode
+//   color?: string
+//   flip?: string
+//   id?: string
+//   onLoad?: IconifyIconOnLoad
 // }
 export interface IProps {
   name?: string

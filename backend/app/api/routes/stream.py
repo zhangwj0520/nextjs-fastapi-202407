@@ -129,7 +129,9 @@ def tongyi_generator(
         decoded_line = chunk.decode("utf-8", "ignore")
         # print("decoded_line", decoded_line)
         if "data: [DONE]" not in decoded_line:
+            print("decoded_line", f"{decoded_line}")
             yield f"{decoded_line}"
+            # yield decoded_line
 
 
 @router.get("/tongyi", response_model=bytes)
@@ -144,7 +146,8 @@ async def getTongyi(
             userIntent=userIntent, sessionId=sessionId, parentMsgId=parentMsgId
         ),
         media_type="text/event-stream",
-        # headers={"Content-Type": "text/event-stream"},
+        headers={"Content-Type": "text/event-stream;charset=UTF-8"},
+        # headers={"Content-Type": "application/json"},
     )
     # return EventSourceResponse(
     #     tongyi_generator(

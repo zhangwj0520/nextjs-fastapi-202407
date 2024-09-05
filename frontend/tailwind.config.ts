@@ -14,6 +14,10 @@ const config = {
   ],
   prefix: '',
   theme: {
+    listStyleType: {
+      square: 'square',
+      roman: 'upper-roman',
+    },
     container: {
       center: true,
       padding: '2rem',
@@ -103,7 +107,7 @@ const config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), addDynamicIconSelectors()],
+  plugins: [require('@tailwindcss/typography'), require('tailwindcss-animate'), addDynamicIconSelectors()],
 } satisfies Config
 
 export default config

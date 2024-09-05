@@ -60,7 +60,18 @@ export default function ButtonDemo() {
           </div>
           <pre>{apiResponse}</pre>
         </div>
+
+        <div>
+          <Icon name="lucide:chevrons-left" />
+          <Icon name="custom:app" className="text-red-500" />
+          <span className="icon-[custom-app]"></span>
+
+          {/* <span className="i-lucide:airplay"></span>
+          <span className="icon-[mdi-light--home]"></span>
+          <span className="icon-[custom-app]"></span> */}
+        </div>
       </CardContent>
+
     </Card>
 
   )
