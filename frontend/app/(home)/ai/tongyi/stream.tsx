@@ -13,6 +13,14 @@ import { useStreamableText } from '@/lib/hooks/use-streamable-text'
 import { MemoizedReactMarkdown } from '@/components/ai/markdown'
 import { CodeBlock } from '@/components/ai/codeblock'
 
+function processLatex(str: string) {
+  return str.replace(/```\s*```/g, '')
+    .replace(/\\\[(.*?)\\\]/gs, (_, equation) => `$$${equation}$$`)
+    .replace(/\(\\\\((.*?)\\\\)/gs, (_, equation) => `$$${equation}$$`)
+    .replace(/\\\((.*?)\\\)/gs, (_, equation) => `$$${equation}$$`)
+    .replace(/(^|[^\\])\$(.+?)\$/gs, (_, prefix, equation) => `${prefix}$${equation}$`)
+}
+
 let index = 0
 export default function TongyiChat() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -159,7 +167,7 @@ export default function TongyiChat() {
                   },
                 }}
               >
-                {message.content}
+                {processLatex(message.content)}
               </MemoizedReactMarkdown>
             </div>
           </div>
