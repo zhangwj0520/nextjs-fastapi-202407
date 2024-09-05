@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
+import 'katex/dist/katex.min.css'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useLocalStorage } from '@/lib/hooks/use-local-storage'
@@ -124,6 +126,7 @@ export default function TongyiChat() {
               <MemoizedReactMarkdown
                 className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
                 remarkPlugins={[remarkGfm, remarkMath]}
+                rehypePlugins={[rehypeKatex]}
                 components={{
                   p({ children }) {
                     return <p className="my-1 last:mb-0">{children}</p>
