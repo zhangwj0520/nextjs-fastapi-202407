@@ -12,6 +12,7 @@ import { Icon } from '@/components/icon'
 import { useStreamableText } from '@/lib/hooks/use-streamable-text'
 import { MemoizedReactMarkdown } from '@/components/ai/markdown'
 import { CodeBlock } from '@/components/ai/codeblock'
+import { Avatar } from '@/components/ui/avatar'
 
 function processLatex(str: string) {
   return str.replace(/```\s*```/g, '')
@@ -129,7 +130,12 @@ export default function TongyiChat() {
     <div className="w-full h-full flex flex-col">
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message, i) => (
-          <div key={i} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+          <div key={i} className={`flex items-start ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+            {message.role === 'assistant' && (
+              <Avatar className="mr-2">
+                <Icon name="radix-icons:bot" className="h-6 w-6" />
+              </Avatar>
+            )}
             <div className={`max-w-[70%] p-3 rounded-lg ${message.role === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
               <MemoizedReactMarkdown
                 className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
@@ -170,6 +176,11 @@ export default function TongyiChat() {
                 {processLatex(message.content)}
               </MemoizedReactMarkdown>
             </div>
+            {message.role === 'user' && (
+              <Avatar className="ml-2">
+                <Icon name="radix-icons:person" className="h-6 w-6" />
+              </Avatar>
+            )}
           </div>
         ))}
         <div ref={messagesEndRef} />
