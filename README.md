@@ -17,8 +17,16 @@ pipx install mysqlclient
 
 ### prisma
 
-1. prisma db push 同步数据库
-2. prisma
+1. 将现有数据库配置生成prisma
+
+   ```zsh
+   prisma db pull
+   ```
+  
+2. 
+
+3. prisma db push 同步数据库
+4. prisma
 
 ```zsh
  prisma migrate dev
@@ -26,7 +34,7 @@ pipx install mysqlclient
 
 ```
 
-阿里 DATABASE_URL="postgresql://postgres:Qwer1234@localhost:5432/app"
+阿里 DATABASE_URL="postgresql://postgres:Qwer1234@localhost:20243/app"
 
 ## 问题
 ###  1.停止端口

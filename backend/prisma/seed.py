@@ -4,9 +4,8 @@ import json
 from prisma import Prisma
 from pydantic import BaseModel
 from faker import Faker
-from prisma.models import Faker as FakerModel
 from prisma.enums import FakerStatus
-from prisma.types import FakerCreateInput
+from prisma.types import UserCreateInput
 
 fake = Faker("zh_CN")
 
@@ -52,6 +51,13 @@ async def main() -> None:
 
     list_data = fake_data(1000)
     await db.faker.create_many(data=list_data)
+    await db.user.create(
+        data=UserCreateInput(
+            username="zhangsan",
+            hashed_password="$2b$12$EWIoqYuahCzOuR37qGr.XeFEyHxXMyDYa3Fmz6IxOpwR0TKJBigaq",
+            email="zhangwj0520@hotmail.com",
+        )
+    )
 
     await db.disconnect()
 

@@ -38,3 +38,6 @@ next-env.d.ts
 
 **/*/openapi-ts-error*
 
+# 数据库
+db/
+

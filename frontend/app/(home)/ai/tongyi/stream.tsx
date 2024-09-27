@@ -145,9 +145,9 @@ export default function TongyiChat() {
                   p({ children }) {
                     return <p className="my-1 last:mb-0">{children}</p>
                   },
-                  code({ node, inline, className, children, ...props }) {
+                  code({ node, inline, className, children, ...props }: any) {
                     if (children.length) {
-                      if (children[0] == '▍') {
+                      if (children[0] === '▍') {
                         return (
                           <span className="mt-1 animate-pulse cursor-default">▍</span>
                         )
