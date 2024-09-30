@@ -61,6 +61,7 @@ const ChatDemo: React.FC = () => {
       onmessage(msg) {
         if (msg.data) {
           console.log('msg', JSON.parse(msg.data))
+          // console.log('msg', msg.data)
         }
         // if the server emits an error message, throw an exception
         // so it gets handled by the onerror callback below:

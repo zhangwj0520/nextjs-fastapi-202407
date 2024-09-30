@@ -25,16 +25,6 @@ ROOT_RESOURCE = os.path.join(os.getcwd(), "app/assets/resource")
 
 print("ROOT_RESOURCE", ROOT_RESOURCE)
 
-# ROOT_RESOURCE = os.path.join(os.getcwd(), "resource")
-
-# print("ROOT_RESOURCE", ROOT_RESOURCE)
-
-
-# template_str = (
-#         Path(__file__).parent / "../assets/email-templates" / "build" / template_name
-#     ).read_text()
-
-
 # Add a custom tool named my_image_gen：
 @register_tool("my_image_gen")
 class MyImageGen(BaseTool):
@@ -43,7 +33,7 @@ class MyImageGen(BaseTool):
         {
             "name": "prompt",
             "type": "string",
-            "description": "Detailed description of the desired image content, in English",
+            "description": "所需图像内容的详细说明（中文）",
             "required": True,
         }
     ]
@@ -67,7 +57,7 @@ def init_agent_service():
     }
     system = (
         "根据用户的要求，先画一幅画"
-        # "然后自动运行代码下载图片,并从给定文档中选择图像操作处理图像"
+        "然后自动运行代码下载图片,并从给定文档中选择图像操作处理图像"
     )
     # system = (
     #     "According to the user's request, you first draw a picture and then automatically "
@@ -85,7 +75,7 @@ def init_agent_service():
         description="AI painting service",
         system_message=system,
         function_list=tools,
-        # files=[os.path.join(ROOT_RESOURCE, "doc.pdf")],
+        files=[os.path.join(ROOT_RESOURCE, "doc.pdf")],
     )
 
     return bot
@@ -102,8 +92,28 @@ def chat_generator(
     # # Chat
 
     for response in bot.run(messages=messages):
-        res = json.dumps(response, ensure_ascii=False)
-        print("res", res)
+        res = []
+        for msg in response:
+            # print("msg", msg)
+            # print("msg", msg["content"])
+            msg = dict(msg)
+            try:
+                msg["content"] = json.loads(msg["content"])
+            except:
+                pass
+            if "function_call" in msg:
+                try:
+                    msg["function_call"]["arguments"] = json.loads(
+                        msg["function_call"]["arguments"]
+                    )
+                except:
+                    pass
+
+            res.append(msg)
+            # yield f"data: {json.dumps(msg, ensure_ascii=False)}\n\n"
+            # yield f"data: {dict(msg)}\n\n"
+        res = json.dumps(res, ensure_ascii=False)
+        # print("res", res)
         yield f"data: {res}\n\n"
 
 
