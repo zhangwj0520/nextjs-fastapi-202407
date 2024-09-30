@@ -67,15 +67,13 @@ def init_agent_service():
     }
     system = (
         "根据用户的要求，先画一幅画"
-        "然后自动运行代码下载图片,并从给定文档中选择图像操作处理图像"
+        # "然后自动运行代码下载图片,并从给定文档中选择图像操作处理图像"
     )
     # system = (
     #     "According to the user's request, you first draw a picture and then automatically "
     #     "run code to download the picture and select an image operation from the given document "
     #     "to process the image"
     # )
-
-    print("ROOT_RESOURCE", ROOT_RESOURCE)
 
     tools = [
         "my_image_gen",
@@ -87,7 +85,7 @@ def init_agent_service():
         description="AI painting service",
         system_message=system,
         function_list=tools,
-        files=[os.path.join(ROOT_RESOURCE, "doc.pdf")],
+        # files=[os.path.join(ROOT_RESOURCE, "doc.pdf")],
     )
 
     return bot
@@ -99,23 +97,14 @@ def chat_generator(
     # Define the agent
     bot = init_agent_service()
 
-    # messages = [{"role": "user", "content": "画一个小狗"}]
-    print("messages", messages)
-    # Chat
+    messages = [{"role": "user", "content": "画一个小狗"}]
+    # print("messages", messages)
+    # # Chat
+
     for response in bot.run(messages=messages):
-        # print("bot response:", response)
-
-        # for msg in response:
-        #     # print("bot response:", msg)
-        #     # 将Message转换成json串
-        #     temp = json.dumps(msg, ensure_ascii=False)
-        #     # print("temp====", temp)
-        #     # print(json.dumps(msg, ensure_ascii=False))
-        #     res.extend(temp)
-        #     # yield f"{temp}"
-
-        print("res", response)
-        yield f"data: {response}\n\n"
+        res = json.dumps(response, ensure_ascii=False)
+        print("res", res)
+        yield f"data: {res}\n\n"
 
 
 class ChatBody(BaseModel):
@@ -132,7 +121,7 @@ async def chat(
     return StreamingResponse(
         chat_generator(messages=body.messages),
         media_type="text/event-stream",
-        headers={"Content-Type": "text/event-stream;charset=UTF-8"},
+        headers={"Content-Type": "text/event-stream"},
         # headers={"Content-Type": "application/json"},
     )
 

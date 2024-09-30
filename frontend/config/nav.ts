@@ -41,6 +41,11 @@ export const data: MenuItemType[] = [
         link: '/ai/tongyi',
         icon: 'lucide:message-square-more',
       },
+      {
+        label: 'Qwen-Agent',
+        link: '/ai/agent',
+        icon: 'lucide:message-square-more',
+      },
     ],
   },
   {
