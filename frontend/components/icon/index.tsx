@@ -17,7 +17,7 @@ import { Icon as IconifyIcon, addCollection } from '@iconify/react'
 // }
 import dataSet from './output.json'
 
-console.log('dataSet', dataSet)
+// console.log('dataSet', dataSet)
 // enableCache('local')
 addCollection(dataSet)
 

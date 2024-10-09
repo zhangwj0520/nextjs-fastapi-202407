@@ -64,7 +64,12 @@ export default function ButtonDemo() {
         <div>
           <Icon name="lucide:chevrons-left" />
           <Icon name="custom:app" className="text-red-500" />
-          <span className="icon-[custom-app]"></span>
+          <span className="icon-[custom--app]"></span>
+
+          <Icon name="custom:copy" className="text-red-500" />
+          <span className="icon-[custom--copy]"></span>
+          <Icon name="custom:arrow-down" className="text-red-500" />
+          <span className="icon-[custom--arrow-down]"></span>
 
           {/* <span className="i-lucide:airplay"></span>
           <span className="icon-[mdi-light--home]"></span>

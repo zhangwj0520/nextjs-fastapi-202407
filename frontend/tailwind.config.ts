@@ -4,6 +4,53 @@ import { fontFamily } from 'tailwindcss/defaultTheme'
 
 import { addDynamicIconSelectors } from '@iconify/tailwind'
 
+// Import icons from directory 'svg'
+import customSet from './addDynamicIconSelectors'
+// const customSet = importDirectorySync('icons')
+
+// // Clean up all icons
+// customSet.forEachSync((name, type) => {
+//   if (type !== 'icon') {
+//     return
+//   }
+
+//   // Get SVG object for icon
+//   const svg = customSet.toSVG(name)
+//   if (!svg) {
+//     // Invalid icon
+//     customSet.remove(name)
+//     return
+//   }
+
+//   try {
+//     // Clean up icon
+//     cleanupSVG(svg)
+
+//     // This is a monotone icon, change color to `currentColor`, add it if missing
+//     // Skip this step if icons have palette
+//     parseColors(svg, {
+//       defaultColor: 'currentColor',
+//       callback: (attr, colorStr, color) => {
+//         console.log('====attr', attr)
+//         return !color || isEmptyColor(color)
+//           ? colorStr
+//           : 'currentColor'
+//       },
+//     })
+
+//     // Optimise icon
+//     runSVGO(svg)
+//   } catch (err) {
+//     // Something went wrong when parsing icon: remove it
+//     console.error(`Error parsing ${name}:`, err)
+//     customSet.remove(name)
+//     return
+//   }
+
+//   // Update icon in icon set from SVG object
+//   customSet.fromSVG(name, svg)
+// })
+
 const config = {
   darkMode: ['class'],
   content: [
@@ -107,7 +154,20 @@ const config = {
       },
     },
   },
-  plugins: [require('@tailwindcss/typography'), require('tailwindcss-animate'), addDynamicIconSelectors()],
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('tailwindcss-animate'),
+    addDynamicIconSelectors({
+      iconSets: {
+        custom: customSet,
+      },
+      customise: (content) => {
+        // console.log('content', content)
+        return content
+      },
+
+    }),
+  ],
 } satisfies Config
 
 export default config

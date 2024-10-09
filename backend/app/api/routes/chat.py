@@ -75,7 +75,7 @@ def init_agent_service():
         description="AI painting service",
         system_message=system,
         function_list=tools,
-        files=[os.path.join(ROOT_RESOURCE, "doc.pdf")],
+        # files=[os.path.join(ROOT_RESOURCE, "doc.pdf")],
     )
 
     return bot
@@ -94,8 +94,6 @@ def chat_generator(
     for response in bot.run(messages=messages):
         res = []
         for msg in response:
-            # print("msg", msg)
-            # print("msg", msg["content"])
             msg = dict(msg)
             try:
                 msg["content"] = json.loads(msg["content"])
@@ -110,10 +108,7 @@ def chat_generator(
                     pass
 
             res.append(msg)
-            # yield f"data: {json.dumps(msg, ensure_ascii=False)}\n\n"
-            # yield f"data: {dict(msg)}\n\n"
         res = json.dumps(res, ensure_ascii=False)
-        # print("res", res)
         yield f"data: {res}\n\n"
 
 
