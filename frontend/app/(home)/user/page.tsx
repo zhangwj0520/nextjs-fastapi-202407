@@ -3,11 +3,19 @@ import { Table } from './table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 
-export default async function UserPage({
-  searchParams: { q, skip, take },
-}: {
-  searchParams: { q: string, skip: string, take: string }
-}) {
+export default async function UserPage(
+  props: {
+    searchParams: Promise<{ q: string, skip: string, take: string }>
+  },
+) {
+  const searchParams = await props.searchParams
+
+  const {
+    q,
+    skip,
+    take,
+  } = searchParams
+
   return (
     <Tabs defaultValue="all">
       <div className="flex items-center">

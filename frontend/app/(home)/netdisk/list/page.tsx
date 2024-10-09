@@ -9,11 +9,12 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 
-export default async function UserPage({
-  searchParams,
-}: {
-  searchParams: { prefix: string }
-}) {
+export default async function UserPage(
+  props: {
+    searchParams: Promise<{ prefix: string }>
+  },
+) {
+  const searchParams = await props.searchParams
   const prefix = searchParams.prefix ?? ''
   const pathList = prefix.split('/').filter(Boolean)
   return (

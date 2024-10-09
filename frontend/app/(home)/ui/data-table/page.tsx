@@ -40,11 +40,12 @@ async function getData({ pageIndex, pageSize }: PaginationState) {
 //   }
 // }
 
-export default async function DataTableDemo({
-  searchParams,
-}: {
-  searchParams: { q: string, pageIndex: string, pageSize: string }
-}) {
+export default async function DataTableDemo(
+  props: {
+    searchParams: Promise<{ q: string, pageIndex: string, pageSize: string }>
+  },
+) {
+  const searchParams = await props.searchParams
   // props: {"params":{},"searchParams":{}}
 
   const queryClient = new QueryClient()

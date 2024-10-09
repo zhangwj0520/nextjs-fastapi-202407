@@ -4,11 +4,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 import { UserService } from '@/client'
 
-export default async function UserPage({
-  searchParams,
-}: {
-  searchParams: { q: string, skip: string, take: string }
-}) {
+export default async function UserPage(
+  props: {
+    searchParams: Promise<{ q: string, skip: string, take: string }>
+  },
+) {
+  const searchParams = await props.searchParams
   const search = searchParams.q ?? ''
   const skip = searchParams.skip ?? 0
   const take = searchParams.take ?? 3
