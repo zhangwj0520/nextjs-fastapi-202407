@@ -14,7 +14,6 @@ const filePath = 'components/icon'
 
 // Clean up all icons
 customSet.forEachSync((name, type) => {
-  console.log('name', name)
   if (type !== 'icon') {
     return
   }
