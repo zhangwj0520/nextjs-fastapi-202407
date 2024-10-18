@@ -82,15 +82,15 @@ def init_agent_service():
 
 
 def chat_generator(
-    messages: List[Union[Dict, Message]],
+    query: str,
 ):
     # Define the agent
     bot = init_agent_service()
 
-    messages = [{"role": "user", "content": "画一个小狗"}]
-    # print("messages", messages)
+    messages = [{"role": "user", "content": query}]
+    print("messages", messages)
     # # Chat
-
+    # List[Union[Dict, Message]]
     for response in bot.run(messages=messages):
         res = []
         for msg in response:
@@ -113,18 +113,17 @@ def chat_generator(
 
 
 class ChatBody(BaseModel):
-    messages: List[Union[Dict, Message]]
+    query: str
 
 
 @router.post("", response_model=bytes)
 async def chat(
     body: ChatBody,
 ):
-    print(1111)
     # Convert instances of Message to dictionaries
     # messages = [msg.dict() if isinstance(msg, Message) else msg for msg in messages]
     return StreamingResponse(
-        chat_generator(messages=body.messages),
+        chat_generator(query=body.query),
         media_type="text/event-stream",
         headers={"Content-Type": "text/event-stream"},
         # headers={"Content-Type": "application/json"},
